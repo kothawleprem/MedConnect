@@ -24,3 +24,10 @@ yarn-error.log*
 
 #Django
 /.venv
+/core/.env
+/core/.idea
+/core/core/__pycache__
+/core/doctors/__pycache__
+/core/doctors/migrations
+/core/official/__pycache__
+/core/official/migrations
