@@ -33,3 +33,5 @@ yarn-error.log*
 /core/official/migrations
 /core/patients/__pycache__
 /core/patients/migrations
+/core/consultation/__pycache__
+/core/consultation/migrations
