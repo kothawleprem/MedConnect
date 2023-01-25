@@ -2,7 +2,6 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
 
-import os
 import random
 from cryptography.fernet import Fernet
 
@@ -54,6 +53,7 @@ class VerifyEmailView(APIView):
 class DoctorProfileView(APIView):
 
     def post(self, request):
+
         email = request.data.get("email")
         token = request.data.get("token")
         # verify if user is legit
@@ -62,7 +62,8 @@ class DoctorProfileView(APIView):
         except:
             return Response("Doctor Not Found", status=status.HTTP_404_NOT_FOUND)
         if(doctor.token != token):
-            return Response("Invalid Doctor", status=status.HTTP_404_NOT_FOUND)
+            return Response("Invalid Doctor Token", status=status.HTTP_404_NOT_FOUND)
+
         profile = DoctorProfileModel.objects.get(doctor=doctor)
 
         if("first_name" in request.data.keys()):
