@@ -17,10 +17,9 @@ class AdminDoctorVerificationView(APIView):
     def get(self, request):
         # TODO ADMIN VERIFICATION
         id = request.GET["id"]
-        print(id)
         doctor = DoctorModel.objects.get(id=id)
-        print(doctor)
-        # requests = DoctorAdminVerificationModel.objects.all()
-        # print(requests)
+        requests = DoctorAdminVerificationModel.objects.get(doctor=doctor)
+        print(requests)
+        # TODO SERIALIZED OUTPUT
         return Response("OK", status=status.HTTP_200_OK)
 

@@ -10,23 +10,18 @@ from .models import DoctorModel, DoctorProfileModel, DoctorAdminVerificationMode
 
 class EmailView(APIView):
 
-    def get(self, request):
-        return Response("API Working", status=status.HTTP_200_OK)
-
     def post(self, request):
         email = request.data.get("email")
         try:
             isRegistered = DoctorModel.objects.get(email=email)
             print(isRegistered)
-            print("is reg")
         except:
             doctor = DoctorModel.objects.create(email=email)
             DoctorProfileModel.objects.create(doctor=doctor)
-            print("not reg, just did")
         doctor = DoctorModel.objects.get(email=email)
         otp = random.randint(1000,9999)
+        print(otp)
         doctor.otp = otp
-        print("OTP",otp)
         strKey = "YdgkXWwdxycqNAkJ-_9OfOtLaPCZW2DO0WGTazVKsYs="
         key = strKey.encode()
         fernet = Fernet(key)
@@ -34,7 +29,10 @@ class EmailView(APIView):
         encrypted = fernet.encrypt(mix.encode())
         doctor.token = encrypted.decode()
         doctor.save()
-        return Response(f"{email}, {otp}, API Working", status=status.HTTP_200_OK)
+        response = {
+            "message": "OTP Sent Successfully"
+        }
+        return Response(response, status=status.HTTP_200_OK)
 
 class VerifyEmailView(APIView):
 
@@ -43,7 +41,10 @@ class VerifyEmailView(APIView):
         otp = request.data.get("otp")
         doctor = DoctorModel.objects.get(email=email)
         if doctor.otp != int(otp):
-            return Response("Incorrect OTP", status=status.HTTP_401_UNAUTHORIZED)
+            response = {
+                "message": "Incorrect OTP"
+            }
+            return Response(response, status=status.HTTP_401_UNAUTHORIZED)
         response = {
             "email": email,
             "token": doctor.token
