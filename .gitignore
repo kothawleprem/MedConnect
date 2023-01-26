@@ -3,13 +3,17 @@
 # dependencies
 /web/node_modules
 /web/.pnp
+/patient_web/node_modules
+/patient_web/.pnp
 .pnp.js
 
 # testing
 /web/coverage
+/patient_web/coverage
 
 # production
 /web/build
+/patient_web/build
 
 # misc
 .DS_Store
