@@ -15,10 +15,12 @@ class ConsultationModel(models.Model):
     slot = models.ForeignKey(SlotModel, models.CASCADE)
     doctor = models.ForeignKey(DoctorModel, models.CASCADE)
     patient = models.ForeignKey(PatientModel, models.CASCADE)
-    patient_file = models.FileField()
-    prescription_file = models.FileField()
-    room_id = models.CharField(max_length=255)
-    remarks = models.TextField()
+    patient_file = models.FileField(null=True)
+    prescription_file = models.FileField(null=True)
+    room_id = models.CharField(max_length=255, null=True)
+    remarks = models.TextField(null=True)
+
+
 
 
 
