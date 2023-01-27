@@ -39,3 +39,6 @@ yarn-error.log*
 /core/patients/migrations
 /core/consultation/__pycache__
 /core/consultation/migrations
+
+#Server
+server/node_modules
