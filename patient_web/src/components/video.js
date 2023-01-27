@@ -8,6 +8,7 @@ import Peer from "simple-peer";
 import io from "socket.io-client";
 
 import "./video.css";
+import { imageListClasses } from "@mui/material";
 const socket = io.connect("http://localhost:5000");
 
 const Video = () => {
@@ -42,7 +43,27 @@ const Video = () => {
       setName(data.name);
       setCallerSignal(data.signal);
     });
+    setName("Patient")
+
   }, []);
+
+  let responseData;
+  let intervalId = setInterval(async () => {
+    try {
+      const response = await fetch(
+        `http://127.0.0.1:8000/api/consultation/room/?consultation_id=2`
+      );
+      if (response.status === 200) {
+        const data = await response.json()
+        setIdToCall(data["room_id"]);
+        console.log(data["room_id"])
+        clearInterval(intervalId);
+      }
+      console.log("running");
+    } catch (error) {
+      // Handle error if needed
+    }
+  }, 5000);
 
   const callUser = (id) => {
     const peer = new Peer({
@@ -100,38 +121,29 @@ const Video = () => {
       <div className="container">
         <div className="video-container">
           <div className="video">
+            {callAccepted && !callEnded ? (
+              <video
+                playsInline
+                ref={userVideo}
+                autoPlay
+                className="videoElementOut"
+              />
+            ) : null}
+          </div>
+          <div className="video">
             {stream && (
               <video
                 playsInline
                 muted
                 ref={myVideo}
                 autoPlay
-                style={{ width: "300px" }}
+                className="videoElementIn"
               />
             )}
           </div>
-          <div className="video">
-            {callAccepted && !callEnded ? (
-              <video
-                playsInline
-                ref={userVideo}
-                autoPlay
-                style={{ width: "300px" }}
-              />
-            ) : null}
-          </div>
         </div>
         <div className="myId">
-          <TextField
-            id="filled-basic"
-            label="Name"
-            variant="filled"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            style={{ marginBottom: "20px" }}
-          />
-          <p>{me}</p>
-
+          <p>Your Id: {me}</p>
           <TextField
             id="filled-basic"
             label="ID to call"

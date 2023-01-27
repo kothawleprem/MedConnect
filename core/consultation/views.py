@@ -100,3 +100,29 @@ class PatienBookSlotView(APIView):
             "consultation_id": consultation.id,
         }
         return Response(response, status=status.HTTP_201_CREATED)
+
+class RoomView(APIView):
+    def post(self, request):
+        room_id = request.data.get("room_id")
+        consultation_id = request.data.get("consultation_id")
+        consultation = ConsultationModel.objects.get(id=consultation_id)
+        consultation.room_id = room_id
+        consultation.save()
+        response = {
+            "message": "Added room id!!"
+        }
+        return Response(response, status=status.HTTP_201_CREATED)
+
+    def get(self, request):
+        consultation_id = request.GET["consultation_id"]
+        consultation = ConsultationModel.objects.get(id=consultation_id)
+        room_id = consultation.room_id
+        if room_id is None:
+            response = {
+                "message": "Room not created yet!"
+            }
+            return Response(response, status=status.HTTP_404_NOT_FOUND)
+        response = {
+            "room_id": room_id
+        }
+        return Response(response, status=status.HTTP_200_OK)
