@@ -8,8 +8,7 @@ import Peer from "simple-peer";
 import io from "socket.io-client";
 
 import "./video.css";
-import { imageListClasses } from "@mui/material";
-const socket = io.connect("http://localhost:5000");
+const socket = io.connect("http://192.168.0.103:5000");
 
 const Video = () => {
   const [me, setMe] = useState("");
@@ -21,6 +20,8 @@ const Video = () => {
   const [idToCall, setIdToCall] = useState("");
   const [callEnded, setCallEnded] = useState(false);
   const [name, setName] = useState("");
+  const [saudio, setSaudio] = useState(false);
+  const [svideo, setSvideo] = useState(false)
   const myVideo = useRef();
   const userVideo = useRef();
   const connectionRef = useRef();
@@ -43,27 +44,43 @@ const Video = () => {
       setName(data.name);
       setCallerSignal(data.signal);
     });
-    setName("Patient")
-
+    socket.on("callEnded", () => {
+      console.log("received call ended");
+      setCallEnded(true);
+      connectionRef.current.destroy();
+      window.location.reload(true);
+    });
+    
+    setName("Patient");
   }, []);
 
-  let responseData;
-  let intervalId = setInterval(async () => {
-    try {
-      const response = await fetch(
-        `http://127.0.0.1:8000/api/consultation/room/?consultation_id=2`
-      );
-      if (response.status === 200) {
-        const data = await response.json()
-        setIdToCall(data["room_id"]);
-        console.log(data["room_id"])
-        clearInterval(intervalId);
-      }
-      console.log("running");
-    } catch (error) {
-      // Handle error if needed
-    }
-  }, 5000);
+
+
+  useEffect(() => {
+    navigator.mediaDevices
+      .getUserMedia({ video: true, audio: true })
+      .then((stream) => {
+        setStream(stream);
+        myVideo.current.srcObject = stream;
+      });
+  }, [saudio, svideo])
+
+  // let intervalId = setInterval(async () => {
+  //   try {
+  //     const response = await fetch(
+  //       `http://127.0.0.1:8000/api/consultation/room/?consultation_id=2`
+  //     );
+  //     if (response.status === 200) {
+  //       const data = await response.json()
+  //       setIdToCall(data["room_id"]);
+  //       console.log(data["room_id"])
+  //       clearInterval(intervalId);
+  //     }
+  //     console.log("running");
+  //   } catch (error) {
+  //     // Handle error if needed
+  //   }
+  // }, 5000);
 
   const callUser = (id) => {
     const peer = new Peer({
@@ -86,6 +103,7 @@ const Video = () => {
       setCallAccepted(true);
       peer.signal(signal);
     });
+    
 
     connectionRef.current = peer;
   };
@@ -108,9 +126,24 @@ const Video = () => {
     connectionRef.current = peer;
   };
 
+  const muteCall = () => {
+    console.log(stream)
+    setSaudio(!saudio);
+    console.log("muted")
+    stream.getAudioTracks()[0].enabled = saudio;
+  }
+
+  const stopVideo = () => {
+    console.log(stream);
+    setSvideo(!svideo)
+    console.log("stoped");
+    stream.getVideoTracks()[0].enabled = svideo;
+  }
   const leaveCall = () => {
     setCallEnded(true);
+    socket.emit("disconnectCall");
     connectionRef.current.destroy();
+    window.location.reload(true);
   };
 
   return (
@@ -153,9 +186,17 @@ const Video = () => {
           />
           <div className="call-button">
             {callAccepted && !callEnded ? (
-              <Button variant="contained" color="secondary" onClick={leaveCall}>
-                End Call
-              </Button>
+              <>
+                <Button onClick={muteCall}>Mute</Button>
+                <Button onClick={stopVideo}>Stop Video</Button>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={leaveCall}
+                >
+                  End Call
+                </Button>
+              </>
             ) : (
               <IconButton
                 color="primary"

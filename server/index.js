@@ -4,7 +4,11 @@ const app = express();
 const server = http.createServer(app);
 const io = require("socket.io")(server, {
   cors: {
-    origin: ["http://localhost:3000", "http://localhost:3001"],
+    origin: [
+      "http://localhost:3000",
+      "http://localhost:3001",
+      "http://192.168.0.103:3000",
+    ],
     methods: ["GET", "POST"],
   },
 });
@@ -12,11 +16,14 @@ const io = require("socket.io")(server, {
 io.on("connection", (socket) => {
   socket.emit("me", socket.id);
 
-  socket.on("disconnect", () => {
+
+  socket.on("disconnectCall", () => {
+    console.log("disconnecting!!")
     socket.broadcast.emit("callEnded");
   });
 
   socket.on("callUser", (data) => {
+    console.log("calling")
     io.to(data.userToCall).emit("callUser", {
       signal: data.signalData,
       from: data.from,
