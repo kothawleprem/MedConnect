@@ -3,11 +3,21 @@ import IconButton from "@mui/material/IconButton";
 import TextField from "@mui/material/TextField";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import PhoneIcon from "@mui/icons-material/Phone";
+import VideocamIcon from "@mui/icons-material/Videocam";
+import VideocamOffIcon from "@mui/icons-material/VideocamOff";
+import MicIcon from "@mui/icons-material/Mic";
+import MicOffIcon from "@mui/icons-material/MicOff";
+import CallEndIcon from "@mui/icons-material/CallEnd";
+import Alert from "@mui/material/Alert";
+import Card from "@mui/material/Card";
+import CardHeader from "@mui/material/CardHeader";
+import Avatar from "@mui/material/Avatar";
 import React, { useEffect, useRef, useState } from "react";
 import Peer from "simple-peer";
 import io from "socket.io-client";
 
 import "./video.css";
+import { Grid } from "@mui/material";
 const socket = io.connect("http://192.168.0.103:5000");
 
 const Video = () => {
@@ -63,7 +73,7 @@ const Video = () => {
         setStream(stream);
         myVideo.current.srcObject = stream;
       });
-  }, [saudio, svideo])
+  }, [])
 
   // let intervalId = setInterval(async () => {
   //   try {
@@ -152,73 +162,127 @@ const Video = () => {
         MedConnect - Patient
       </h1>
       <div className="container">
-        <div className="video-container">
-          <div className="video">
+        <Grid container spacing={2} className="video-container">
+          <Grid item xs={8} className="video">
             {callAccepted && !callEnded ? (
-              <video
-                playsInline
-                ref={userVideo}
-                autoPlay
-                className="videoElementOut"
-              />
-            ) : null}
-          </div>
-          <div className="video">
-            {stream && (
-              <video
-                playsInline
-                muted
-                ref={myVideo}
-                autoPlay
-                className="videoElementIn"
-              />
-            )}
-          </div>
-        </div>
-        <div className="myId">
-          <p>Your Id: {me}</p>
-          <TextField
-            id="filled-basic"
-            label="ID to call"
-            variant="filled"
-            value={idToCall}
-            onChange={(e) => setIdToCall(e.target.value)}
-          />
-          <div className="call-button">
-            {callAccepted && !callEnded ? (
-              <>
-                <Button onClick={muteCall}>Mute</Button>
-                <Button onClick={stopVideo}>Stop Video</Button>
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  onClick={leaveCall}
-                >
-                  End Call
-                </Button>
-              </>
+              <center>
+                <video
+                  playsInline
+                  ref={userVideo}
+                  autoPlay
+                  className="videoElementOut"
+                />
+              </center>
             ) : (
-              <IconButton
-                color="primary"
-                aria-label="call"
-                onClick={() => callUser(idToCall)}
-              >
-                <PhoneIcon fontSize="large" />
-              </IconButton>
+              <>
+                <center>
+                  <div className="videoElementOut">
+                  </div>
+                </center>
+              </>
             )}
-            {idToCall}
-          </div>
-        </div>
-        <div>
+          </Grid>
+          <Grid item xs={4} className="video">
+            <div className="div">
+              {stream && (
+                <>
+                  <video
+                    playsInline
+                    muted
+                    ref={myVideo}
+                    autoPlay
+                    className="videoElementIn"
+                  />
+                </>
+              )}
+            </div>
+            <br />
+            <div className="myId">
+              <p>Your Id: {me}</p>
+              <TextField
+                id="filled-basic"
+                label="ID to call"
+                variant="filled"
+                value={idToCall}
+                onChange={(e) => setIdToCall(e.target.value)}
+              />
+              <div className="call-button">
+                {callAccepted && !callEnded ? (
+                  <>
+                    <IconButton onClick={muteCall}>
+                      <MicIcon style={{ color: "white" }} fontSize="large" />
+                    </IconButton>
+                    <br />
+                    <IconButton onClick={stopVideo}>
+                      <VideocamIcon
+                        style={{ color: "white" }}
+                        fontSize="large"
+                      />
+                    </IconButton>
+                    <br />
+                    <IconButton
+                      variant="contained"
+                      color="secondary"
+                      onClick={leaveCall}
+                    >
+                      <CallEndIcon
+                        style={{ color: "white" }}
+                        fontSize="large"
+                      />
+                    </IconButton>
+                    {/* <Button onClick={muteCall}>Mute</Button>
+                    <Button onClick={stopVideo}>Stop Video</Button>
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      onClick={leaveCall}
+                    >
+                      End Call
+                    </Button> */}
+                  </>
+                ) : (
+                  <>
+                    <IconButton
+                      aria-label="call"
+                      onClick={() => callUser(idToCall)}
+                    >
+                      <PhoneIcon style={{ color: "white" }} fontSize="large" />
+                    </IconButton>
+                  </>
+                )}
+              </div>
+            </div>
+          </Grid>
+        </Grid>
+
+        <Grid>
           {receivingCall && !callAccepted ? (
-            <div className="caller">
-              <h1>{name} is calling...</h1>
-              <Button variant="contained" color="primary" onClick={answerCall}>
-                Answer
-              </Button>
+            <div>
+              <center>
+                <Card className="caller">
+                  <CardHeader
+                    avatar={<Avatar>P</Avatar>}
+                    title="Incoming Video Call:"
+                    subheader="Patient"
+                    action={
+                      <IconButton color="primary" onClick={answerCall}>
+                        <p>Accept</p> &nbsp; <PhoneIcon />
+                      </IconButton>
+                    }
+                    className="callerData"
+                  />
+                </Card>
+              </center>
+
+              {/* <Card className="caller">
+                Incoming Video Call: {name}
+                <IconButton color="primary" onClick={answerCall}>
+                  Accept &nbsp; <PhoneIcon />
+                </IconButton>
+              </Card> */}
             </div>
           ) : null}
-        </div>
+        </Grid>
       </div>
     </>
   );

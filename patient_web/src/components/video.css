@@ -3,62 +3,81 @@
 }
 
 .myId {
-	margin-right: 5rem;
-	margin-left: 5rem;
-	margin-top: 5rem;
-	border-radius: 5px;
-	background: #c9d6ff; /* fallback for old browsers */
-	background: -webkit-linear-gradient(to right, #e2e2e2, #c9d6ff); /* Chrome 10-25, Safari 5.1-6 */
+	border: solid;
+	border-width: 2px;
+	border-radius: 20px;
+	border-color: rgb(255, 255, 255);
+	background: #031d4f; /* fallback for old browsers */
+	background: -webkit-linear-gradient(to right, #0c0616, #4776e6); /* Chrome 10-25, Safari 5.1-6 */
 	background: linear-gradient(
 		to right,
-		#e2e2e2,
-		#c9d6ff
+		#060810e6,
+		#061022
 	); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
-	padding: 2rem;
 	display: grid;
-	justify-content: center;
-	align-content: center;
+	width: 250px;
+	height: 300px;
 }
 
 .call-button {
 	text-align: center;
-	margin-top: 2rem;
+	margin-top: 70px;
 }
 
 .video-container {
 	display: grid;
-	justify-content: center;
-	align-content: center;
 }
 
 .videoElementIn{
 	transform: rotateY(180deg);
     -webkit-transform:rotateY(180deg); /* Safari and Chrome */
     -moz-transform:rotateY(180deg); /* Firefox */
-	width: 150px;
+	border: solid;
+	border-width: 2px;
+	border-radius: 20px;
+	border-color: rgb(255, 255, 255);
+	width: 250px;
 }
 
 .videoElementOut{
 	transform: rotateY(180deg);
     -webkit-transform:rotateY(180deg); /* Safari and Chrome */
     -moz-transform:rotateY(180deg); /* Firefox */
-	width: 500px;
-	margin-bottom: 20px;
+	border: solid;
+	border-width: 2px;
+	border-radius: 20px;
+	border-color: rgb(255, 255, 255);
+	background: #031d4f; /* fallback for old browsers */
+	background: -webkit-linear-gradient(to right, #0c0616, #4776e6); /* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(
+		to right,
+		#060810e6,
+		#061022
+	); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+	width: 950px;
+	height: 550px;
 }
 
-@media screen and (max-width: 480px) {
-  .videoElementIn {
+@media screen and (max-width:1500px){
+	.videoElementIn {
 	margin-top: 10px;
-    width: 100px;
+    width: 150px;
   }
   .videoElementOut {
-    width: 300px;
+    width: 800px;
   }
+  .myId {
+	width: 150px;
 }
+}
+
 .caller {
-	text-align: center;
-	color: #fff;
+	margin-top: 30px;
+	width: 400px;
+	height: 75px;
+}
+.callerData {
+	margin-top: -20px;
 }
 
 body {
@@ -69,4 +88,52 @@ body {
 		#031d4f,
 		#010f29
 	); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+@media screen and (max-width:1200px){
+	.videoElementIn {
+	margin-top: 10px;
+    width: 150px;
+  }
+  .videoElementOut {
+    width: 500px;
+  }
+  .myId {
+	width: 150px;
+}
+}
+
+
+@media screen and (max-width:768px){
+	.videoElementIn {
+	margin-top: 10px;
+    width: 150px;
+  }
+  .videoElementOut {
+    width: 300px;
+  }
+  .myId {
+	width: 150px;
+}
+
+}
+@media screen and (max-width: 480px) {
+  .videoElementIn {
+    width: 100px;
+  }
+  .videoElementOut {
+    width: 250px;
+	height: 400px;
+  }
+  .myId {
+	width: 100px;
+	height: 230px;
+}
+.caller {
+	width: 300px;
+
+}
+.call-button {
+	margin-top: 40px;
+}
 }
