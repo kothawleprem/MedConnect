@@ -16,9 +16,10 @@ import React, { useEffect, useRef, useState } from "react";
 import Peer from "simple-peer";
 import io from "socket.io-client";
 
+
 import "./video.css";
 import { Grid } from "@mui/material";
-const socket = io.connect("http://192.168.0.103:5000");
+const socket = io.connect("http://192.168.65.252:5000");
 
 const Video = () => {
   const [me, setMe] = useState("");
@@ -157,10 +158,11 @@ const Video = () => {
   };
 
   return (
-    <>
-      <h1 style={{ textAlign: "center", color: "#fff" }}>
+    < >
+    <div className="body-video"> 
+      <h2 style={{ textAlign: "center", color: "#fff" }}>
         MedConnect - Patient
-      </h1>
+      </h2>
       <div className="container">
         <Grid container spacing={2} className="video-container">
           <Grid item xs={8} className="video">
@@ -283,6 +285,7 @@ const Video = () => {
             </div>
           ) : null}
         </Grid>
+      </div>
       </div>
     </>
   );
