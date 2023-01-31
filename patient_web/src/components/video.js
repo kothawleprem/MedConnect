@@ -13,25 +13,32 @@ import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import Avatar from "@mui/material/Avatar";
 import React, { useEffect, useRef, useState } from "react";
+import { useLocation } from "react-router-dom";
 import Peer from "simple-peer";
 import io from "socket.io-client";
 
 import "./video.css";
 import { Grid } from "@mui/material";
-const socket = io.connect("http://192.168.0.103:5000");
+const socket = io.connect("http://localhost:5000");
 
 const Video = () => {
+  // const [idToCall, setIdToCall] = useState("");
+  // const { state } = useLocation();
+  // const { idToCall } = state;
+  // // setIdToCall(room_id)
+  // console.log(idToCall)
+  let idToCall = localStorage.getItem("id");
+
   const [me, setMe] = useState("");
   const [stream, setStream] = useState();
   const [receivingCall, setReceivingCall] = useState(false);
   const [caller, setCaller] = useState("");
   const [callerSignal, setCallerSignal] = useState();
   const [callAccepted, setCallAccepted] = useState(false);
-  const [idToCall, setIdToCall] = useState("");
   const [callEnded, setCallEnded] = useState(false);
   const [name, setName] = useState("");
   const [saudio, setSaudio] = useState(false);
-  const [svideo, setSvideo] = useState(false)
+  const [svideo, setSvideo] = useState(false);
   const myVideo = useRef();
   const userVideo = useRef();
   const connectionRef = useRef();
@@ -45,6 +52,7 @@ const Video = () => {
       });
 
     socket.on("me", (id) => {
+      console.log(id);
       setMe(id);
     });
 
@@ -60,20 +68,18 @@ const Video = () => {
       connectionRef.current.destroy();
       window.location.reload(true);
     });
-    
+
     setName("Patient");
   }, []);
 
-
-
-  useEffect(() => {
-    navigator.mediaDevices
-      .getUserMedia({ video: true, audio: true })
-      .then((stream) => {
-        setStream(stream);
-        myVideo.current.srcObject = stream;
-      });
-  }, [])
+  // useEffect(() => {
+  //   navigator.mediaDevices
+  //     .getUserMedia({ video: true, audio: true })
+  //     .then((stream) => {
+  //       setStream(stream);
+  //       myVideo.current.srcObject = stream;
+  //     });
+  // }, [])
 
   // let intervalId = setInterval(async () => {
   //   try {
@@ -92,15 +98,18 @@ const Video = () => {
   //   }
   // }, 5000);
 
-  const callUser = (id) => {
+  const callUser = () => {
+    
+    console.log("calling");
     const peer = new Peer({
       initiator: true,
       trickle: false,
       stream: stream,
     });
+    console.log(peer);
     peer.on("signal", (data) => {
       socket.emit("callUser", {
-        userToCall: id,
+        userToCall: idToCall,
         signalData: data,
         from: me,
         name: name,
@@ -108,13 +117,14 @@ const Video = () => {
     });
     peer.on("stream", (stream) => {
       userVideo.current.srcObject = stream;
+      console.log("in peer stream");
     });
     socket.on("callAccepted", (signal) => {
+      console.log("call accepted");
       setCallAccepted(true);
       peer.signal(signal);
     });
     
-
     connectionRef.current = peer;
   };
 
@@ -137,18 +147,18 @@ const Video = () => {
   };
 
   const muteCall = () => {
-    console.log(stream)
+    console.log(stream);
     setSaudio(!saudio);
-    console.log("muted")
+    console.log("muted");
     stream.getAudioTracks()[0].enabled = saudio;
-  }
+  };
 
   const stopVideo = () => {
     console.log(stream);
-    setSvideo(!svideo)
+    setSvideo(!svideo);
     console.log("stoped");
     stream.getVideoTracks()[0].enabled = svideo;
-  }
+  };
   const leaveCall = () => {
     setCallEnded(true);
     socket.emit("disconnectCall");
@@ -176,8 +186,7 @@ const Video = () => {
             ) : (
               <>
                 <center>
-                  <div className="videoElementOut">
-                  </div>
+                  <div className="videoElementOut"></div>
                 </center>
               </>
             )}
@@ -198,13 +207,13 @@ const Video = () => {
             </div>
             <br />
             <div className="myId">
-              <p>Your Id: {me}</p>
+              <p style={{ color: "white" }}>Your Id: {me}</p>
               <TextField
                 id="filled-basic"
                 label="ID to call"
                 variant="filled"
                 value={idToCall}
-                onChange={(e) => setIdToCall(e.target.value)}
+                // onChange={(e) => setIdToCall(e.target.value)}
               />
               <div className="call-button">
                 {callAccepted && !callEnded ? (
@@ -244,7 +253,7 @@ const Video = () => {
                   <>
                     <IconButton
                       aria-label="call"
-                      onClick={() => callUser(idToCall)}
+                      onClick={() => callUser()}
                     >
                       <PhoneIcon style={{ color: "white" }} fontSize="large" />
                     </IconButton>
