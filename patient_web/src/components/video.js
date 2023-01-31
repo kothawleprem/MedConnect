@@ -17,6 +17,7 @@ import { useLocation } from "react-router-dom";
 import Peer from "simple-peer";
 import io from "socket.io-client";
 
+
 import "./video.css";
 import { Grid } from "@mui/material";
 const socket = io.connect("http://localhost:5000");
@@ -167,10 +168,11 @@ const Video = () => {
   };
 
   return (
-    <>
-      <h1 style={{ textAlign: "center", color: "#fff" }}>
+    < >
+    <div className="body-video"> 
+      <h2 style={{ textAlign: "center", color: "#fff" }}>
         MedConnect - Patient
-      </h1>
+      </h2>
       <div className="container">
         <Grid container spacing={2} className="video-container">
           <Grid item xs={8} className="video">
@@ -292,6 +294,7 @@ const Video = () => {
             </div>
           ) : null}
         </Grid>
+      </div>
       </div>
     </>
   );

@@ -7,7 +7,7 @@
 	border-width: 2px;
 	border-radius: 20px;
 	border-color: rgb(255, 255, 255);
-	background: #031d4f; /* fallback for old browsers */
+	background: #f5f6f6; /* fallback for old browsers */
 	background: -webkit-linear-gradient(to right, #0c0616, #4776e6); /* Chrome 10-25, Safari 5.1-6 */
 	background: linear-gradient(
 		to right,
@@ -81,14 +81,15 @@
 	margin-top: -20px;
 }
 
-body {
-	background: #031d4f; /* fallback for old browsers */
-	background: -webkit-linear-gradient(to right, #8e54e9, #4776e6); /* Chrome 10-25, Safari 5.1-6 */
+.body-video {
+	background: #031d4f; 
+	background: -webkit-linear-gradient(to right, #8e54e9, #4776e6); 
 	background: linear-gradient(
 		to right,
 		#031d4f,
 		#010f29
-	); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+	); 
+	/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
 @media screen and (max-width:1200px){
