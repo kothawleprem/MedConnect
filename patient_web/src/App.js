@@ -1,10 +1,18 @@
 import Video from "./components/video";
+import {BrowserRouter as Router, Route, Routes} from "react-router-dom"
+import Home from "./components/LandingPage/Home.js"
+
 
 function App() {
   return (
-    <div className="App">
-      <Video />
-    </div>
+    <>
+     <Router>
+      <Routes>
+      <Route path="/" element={<Home/>}/>
+      <Route path="/video" element={<Video />}/> 
+      </Routes>
+      </Router>
+    </>
   );
 }
 
