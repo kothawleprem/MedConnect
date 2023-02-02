@@ -1,0 +1,84 @@
+.otp-form{
+  margin-top: 100px;
+  margin-left: 200px;
+}
+.otp-reg1{
+  margin-left: 100px;
+  align-content: center;
+  width: 900px;
+} 
+.otp {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    width: 300px;
+    align-items: center;
+  }
+
+  .verifyDiv {
+    padding: 18px;
+  }
+  .resend p {
+    color: black;
+    margin-left: 9px;
+    margin-bottom: 0px;
+  }
+  .inputStyle {
+    width: 50% !important;
+    height: 45px;
+    border-radius: 7px;
+    border: 0px;
+    border-color: black;
+    margin-left: 8px;
+    margin-right: 8px;
+    background: #FF953A;
+    border-style: dashed;
+    font-size: 20px;
+    color: white;
+  }
+  .p3 {
+    font-size: 14px;
+  }
+  .resend .p2{
+    margin-left: 9px;
+    text-decoration: none;
+    font-size: 14px;
+  }
+  .otpElements {
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    margin-top: 20px;
+    margin-bottom: 50px;
+    padding-left: 18px;
+    justify-content: center;
+  }
+  
+  .p1 {
+    font-family: "Poppins", sans-serif;
+    font-weight: 800;
+    margin-top: 25px;
+    font-size: 27px;
+  }
+  
+  .p2 {
+    font-family: "Poppins", sans-serif;
+    font-size: 13px;
+  }
+  
+.butt2{
+    margin-left: 65px;
+}
+.butt2 button{
+    font-family: Poppins,sans-serif;
+    padding: 8px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 30px;
+    width: 150px;
+    background-color: #4365CD;
+    color: white;
+  }
