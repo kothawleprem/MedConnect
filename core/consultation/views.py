@@ -3,9 +3,11 @@ from rest_framework import status
 from rest_framework.views import APIView
 from datetime import time
 
-from patients.models import PatientModel
+from patients.models import PatientModel, PatientProfileModel
 from .models import ConsultationModel, SlotModel
-from doctors.models import DoctorModel
+from doctors.models import DoctorModel, DoctorProfileModel
+
+from .prescription import generate_prescription
 
 
 class SlotView(APIView):
@@ -85,8 +87,8 @@ class SlotListView(APIView):
 class PatienBookSlotView(APIView):
 
     def post(self, request):
-        #TODO: PATIENT VERIFICATION
-        #TODO: FIRST PAYMENT THEN BOOK
+        # TODO: PATIENT VERIFICATION
+        # TODO: FIRST PAYMENT THEN BOOK
         slot_id = request.data.get("slot_id")
         patient_id = request.data.get("patient_id")
         patient = PatientModel.objects.get(id=patient_id)
@@ -95,11 +97,12 @@ class PatienBookSlotView(APIView):
         slot.save()
         consultation = ConsultationModel.objects.create(slot=slot, doctor=slot.doctor, patient=patient)
         consultation.save()
-        #TODO: EMAIL CONFIRMATION
+        # TODO: EMAIL CONFIRMATION
         response = {
             "consultation_id": consultation.id,
         }
         return Response(response, status=status.HTTP_201_CREATED)
+
 
 class RoomView(APIView):
     def post(self, request):
@@ -127,6 +130,39 @@ class RoomView(APIView):
         }
         return Response(response, status=status.HTTP_200_OK)
 
-class Prescription(APIView):
+
+class PrescriptionView(APIView):
 
     def post(self, request):
+        consultation_id = request.data.get("consultation_id")
+        doctor_id = request.data.get("doctor_id")
+        patient_id = request.data.get("patient_id")
+        patient = PatientModel.objects.get(id=patient_id)
+        patient_profile = PatientProfileModel.objects.get(patient=patient)
+        patient_name = patient_profile.first_name + " " + patient_profile.last_name
+        patient_location = patient_profile.city
+
+        doctor = DoctorModel.objects.get(id=doctor_id)
+        doctor_profile = DoctorProfileModel.objects.get(doctor=doctor)
+        doctor_email = doctor.email
+        doctor_name = doctor_profile.first_name + " " + doctor_profile.last_name
+        doctor_signature = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLXx8xhe108eJolj8lt38K5qq7L2no-ienLUJgOFvF9ubXhD9SBC2DvcDJjmMWd1KpT6A&usqp=CAU"
+        medconnect_id = doctor_id
+        reg_no = doctor_profile.reg_no
+        doctor_location = doctor_profile.city
+        doctor_title = doctor_profile.title
+        medicine_list = request.data.get("medicine_list")
+        remarks = request.data.get("remarks")
+        prescription_no = "123"
+        date = "1st Jan 2023"
+        logo_path = "https://raw.githubusercontent.com/kothawleprem/MedConnect/main/templates/medconnect_logo.jpg"
+        rx_path = "https://raw.githubusercontent.com/kothawleprem/MedConnect/main/templates/rx_logo.jpg"
+        generate_prescription(patient_name, doctor_name, medicine_list, logo_path, rx_path, doctor_signature,
+                              prescription_no,
+                              consultation_id, doctor_email, medconnect_id, reg_no, doctor_location, patient_id,
+                              patient_location, date, remarks, doctor_title)
+        print(consultation_id, doctor_id, patient_id, medicine_list, remarks)
+        response = {
+            "message": "Generate Prescription"
+        }
+        return Response(response, status=status.HTTP_201_CREATED)
