@@ -4,10 +4,20 @@ import React, { useState } from "react";
 import Lottie from 'lottie-react';
 import login from './lotties/login.json';
 import validator from 'validator'
+import { Link } from 'react-router-dom';
+import axios from "axios";
+import { useNavigate } from "react-router-dom"
+
+
 function Login() {
   const [emailError, setEmailError] = useState('')
+  const [email, setEmail] = useState('')
+  const navigate = useNavigate();
+
+
   const validateEmail = (e) => {
     var email = e.target.value
+    setEmail(email);
   
     if (validator.isEmail(email)) {
       setEmailError('Valid Email')
@@ -20,6 +30,26 @@ function Login() {
     width: 400
   };
   
+
+  const sendOtp =() =>{
+
+    axios.post('http://localhost:8000/api/doctors/email/', {
+      email: email,
+     
+    })
+    .then(function (response) {
+      console.log(response);
+      if(response.data==200){
+        navigate(`/otp`)
+      
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+  };
+
   return (
         
       <div className="all2">
@@ -29,12 +59,12 @@ function Login() {
                   <div className="reg-content1">
                     <div className="reg-form01">
                       <h2 className="form-title1" align="left"><span>Sign</span> in</h2><br></br>
-                      <form class="reg-form2" name="loginform" id="reg-form1" align="left" action="/Login" method="post">
+                      <form class="reg-form2" name="loginform" id="reg-form1" align="left">
                         
                         <div class="username1">
                           <label for="exampleFormControlInput1" class="form-label">Email address</label><span> *</span>
                           
-                          <input placeholder="Enter valid Email" onChange={(e) => validateEmail(e)} type="text" id="logingrno"  name="logingrno" class="form-control" />
+                          <input placeholder="Enter valid Email" onChange={(e) => validateEmail(e) } type="text" id="logingrno"  name="logingrno" class="form-control" />
                           <span class="msg" style={{
                             
                             color: 'red',
@@ -45,13 +75,13 @@ function Login() {
                         <br/><br/>
                         
                         <div class="butt1">         
-                          <button  type="submit" name="submit" value="Submit">Submit</button>               
+                         <button  onClick={sendOtp} type="submit" name="submit" value="Submit">Submit</button>        
                         </div>
                                     
                         <div class="login2">
                           <span class="forget1">
                             <a href='/Signup'>
-                              <small>Create an account?</small>
+                            
                             </a>        
                           </span>
                         </div>
