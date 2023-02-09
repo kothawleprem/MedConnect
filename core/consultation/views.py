@@ -126,3 +126,7 @@ class RoomView(APIView):
             "room_id": room_id
         }
         return Response(response, status=status.HTTP_200_OK)
+
+class Prescription(APIView):
+
+    def post(self, request):

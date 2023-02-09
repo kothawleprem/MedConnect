@@ -20,15 +20,16 @@ import io from "socket.io-client";
 
 import "./video.css";
 import { Grid } from "@mui/material";
-const socket = io.connect("http://localhost:5000");
+
+  const socket = io.connect("http://localhost:5000");
+
 
 const Video = () => {
-  // const [idToCall, setIdToCall] = useState("");
-  // const { state } = useLocation();
-  // const { idToCall } = state;
-  // // setIdToCall(room_id)
-  // console.log(idToCall)
-  let idToCall = localStorage.getItem("id");
+  const { state } = useLocation();
+  const { idToCall } = state;
+  console.log(idToCall)
+
+  
 
   const [me, setMe] = useState("");
   const [stream, setStream] = useState();
@@ -40,30 +41,34 @@ const Video = () => {
   const [name, setName] = useState("");
   const [saudio, setSaudio] = useState(false);
   const [svideo, setSvideo] = useState(false);
+  const [refresh, setRefresh] = useState(true)
   const myVideo = useRef();
   const userVideo = useRef();
   const connectionRef = useRef();
-
+  
   useEffect(() => {
-    navigator.mediaDevices
-      .getUserMedia({ video: true, audio: true })
-      .then((stream) => {
-        setStream(stream);
-        myVideo.current.srcObject = stream;
-      });
+    // navigator.mediaDevices
+    //   .getUserMedia({ video: true, audio: true })
+    //   .then((stream) => {
+    //     setStream(stream);
+    //     myVideo.current.srcObject = stream;
+    //   });
 
-    socket.on("me", (id) => {
-      console.log(id);
+
+    socket.on("myId", (id) => {
+      console.log("me 1", id);
       setMe(id);
     });
 
     socket.on("callUser", (data) => {
+      console.log("1")
       setReceivingCall(true);
       setCaller(data.from);
       setName(data.name);
       setCallerSignal(data.signal);
     });
     socket.on("callEnded", () => {
+      console.log("2");
       console.log("received call ended");
       setCallEnded(true);
       connectionRef.current.destroy();
@@ -73,14 +78,25 @@ const Video = () => {
     setName("Patient");
   }, []);
 
-  // useEffect(() => {
-  //   navigator.mediaDevices
-  //     .getUserMedia({ video: true, audio: true })
-  //     .then((stream) => {
-  //       setStream(stream);
-  //       myVideo.current.srcObject = stream;
-  //     });
-  // }, [])
+  useEffect(() => {
+    navigator.mediaDevices
+      .getUserMedia({ video: true, audio: true })
+      .then((stream) => {
+        setStream(stream);
+        myVideo.current.srcObject = stream;
+      });
+  }, [])
+
+  useEffect(() => {
+    var refresh = localStorage.getItem("ClientReload");
+    console.log("refresh", refresh)
+    if(refresh){
+      localStorage.removeItem("ClientReload");
+      console.log("reloading")
+       window.location.reload()
+    }
+   
+  },[])
 
   // let intervalId = setInterval(async () => {
   //   try {
@@ -100,15 +116,15 @@ const Video = () => {
   // }, 5000);
 
   const callUser = () => {
-    
-    console.log("calling");
+    console.log("3");
     const peer = new Peer({
       initiator: true,
       trickle: false,
       stream: stream,
     });
-    console.log(peer);
+    console.log("me",me);
     peer.on("signal", (data) => {
+      console.log("4");
       socket.emit("callUser", {
         userToCall: idToCall,
         signalData: data,
@@ -117,11 +133,12 @@ const Video = () => {
       });
     });
     peer.on("stream", (stream) => {
+      console.log("5");
       userVideo.current.srcObject = stream;
       console.log("in peer stream");
     });
     socket.on("callAccepted", (signal) => {
-      console.log("call accepted");
+      console.log("6");
       setCallAccepted(true);
       peer.signal(signal);
     });
@@ -131,15 +148,18 @@ const Video = () => {
 
   const answerCall = () => {
     setCallAccepted(true);
+    console.log("7");
     const peer = new Peer({
       initiator: false,
       trickle: false,
       stream: stream,
     });
     peer.on("signal", (data) => {
+      console.log("8");
       socket.emit("answerCall", { signal: data, to: caller });
     });
     peer.on("stream", (stream) => {
+      console.log("9");
       userVideo.current.srcObject = stream;
     });
 
@@ -173,7 +193,7 @@ const Video = () => {
       <h2 style={{ textAlign: "center", color: "#fff" }}>
         MedConnect - Patient
       </h2>
-      <div className="container">
+      <div className="main-container">
         <Grid container spacing={2} className="video-container">
           <Grid item xs={8} className="video">
             {callAccepted && !callEnded ? (

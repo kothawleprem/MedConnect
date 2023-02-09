@@ -20,6 +20,7 @@ class ConsultationModel(models.Model):
     room_id = models.CharField(max_length=255, null=True)
     remarks = models.TextField(null=True)
 
+class PrescriptionModel(models.Model):
 
 
 
