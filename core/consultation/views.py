@@ -8,6 +8,7 @@ from .models import ConsultationModel, SlotModel
 from doctors.models import DoctorModel, DoctorProfileModel
 
 from .prescription import generate_prescription
+import datetime
 
 
 class SlotView(APIView):
@@ -34,6 +35,12 @@ class SlotView(APIView):
 
         req_st = time(int(start_time[0:2]), int(start_time[3:5]), int(start_time[6:8]))
         req_et = time(int(end_time[0:2]), int(end_time[3:5]), int(end_time[6:8]))
+
+        if(req_st >= req_et):
+            response = {
+                "message": "Invalid Time Slot",
+            }
+            return Response(response, status=status.HTTP_406_NOT_ACCEPTABLE)
         day_slots = SlotModel.objects.filter(doctor__id=doctor_id, date=date).values('start_time', 'end_time').order_by(
             'start_time')
         time_l = []
@@ -70,17 +77,32 @@ class SlotListView(APIView):
     # give date and doctor_id to get slots of that doctor
     def get(self, request):
         doctor_id = request.GET["doctor_id"]
-        date = request.GET["date"]
-        day_slots = SlotModel.objects.filter(doctor__id=doctor_id, date=date).values('id', 'start_time',
-                                                                                     'end_time').order_by('start_time')
+        today = datetime.date.today()
+        tomorrow = today + datetime.timedelta(days=1)
+        today_slots = SlotModel.objects.filter(doctor__id=doctor_id, date=today).values('id', 'start_time',
+                                                                                      'end_time').order_by('start_time')
+        tomorrow_slots = SlotModel.objects.filter(doctor__id=doctor_id, date=tomorrow).values('id', 'start_time',
+                                                                                        'end_time').order_by(
+            'start_time')
         response = []
-        for t in day_slots:
+        today_response = []
+        tomorrow_response = []
+        for t in today_slots:
             res = {
                 'slot_id': t['id'],
                 'start_time': t['start_time'],
                 'end_time': t['end_time']
             }
-            response.append(res)
+            today_response.append(res)
+        response.append(today_response)
+        for t in tomorrow_slots:
+            res = {
+                'slot_id': t['id'],
+                'start_time': t['start_time'],
+                'end_time': t['end_time']
+            }
+            tomorrow_response.append(res)
+        response.append(tomorrow_response)
         return Response(response, status=status.HTTP_200_OK)
 
 

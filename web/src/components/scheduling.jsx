@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 function Scheduling() {
-  return (
-    <div>Scheduling</div>
-  )
+  return <div>Scheduling !!!</div>;
 }
 
-export default Scheduling
+export default Scheduling;

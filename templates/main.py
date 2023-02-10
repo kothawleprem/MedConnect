@@ -118,16 +118,12 @@ def generate_prescription(patient_name, doctor_name, medicine_list, logo_path, r
 
 medicine_list = [
     ("Tablet","Paracetamol", "500 mg", "1-0-1", "-"),
-    ("Tablet","Probiotia", "60 Billion", "0-1-0", "Supplementary Diet"),
-    ("Tablet","Cilacar", "10 mg", "1-0-0", "-"),
-    ("Misc","Glimer", "0.5 mg", "1-0-1", "-"),
-    ("Tablet","Volibo", "2 mg", "0-1-1", "-"),
-    ("Tablet","Rosuvas", "10 mg", "0-0-1", "-"),
+    ("Tablet","Dolo", "10 mg", "0-1-0", "-"),
     ]
 
-remarks = "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like). There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable."
+remarks = "Take rest. Do not work more."
 
-generate_prescription("John Doe", "Jane Smith", medicine_list, "medconnect_logo.jpg", "rx_logo.jpg", "Shubham_Sign.jpeg", "1", "1", "doctor@gmail.com", "1", "123454321234", "Thane, India", "1", "Nere, India", "01 January 2022", remarks, "DNB (Nephro)")
+generate_prescription("Prem Kothawle", "Dr. Shubham Saroj", medicine_list, "medconnect_logo.jpg", "rx_logo.jpg", "Shubham_Sign.jpeg", "1258", "1279", "drssaroj@gmail.com", "86438648464", "123454321234", "Thane, India", "2547", "Nere, India", "10 February 2023", remarks, "M.B.B.S")
 
 
 # patient_name, doctor_name, medicine_list, logo_path, rx_path, signature_path, prescription_no, consultation_no, doctor_email, medconnect_id, reg_no, doctor_location, patient_id, patient_location, date, remarks, doctor_title

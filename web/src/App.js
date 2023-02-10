@@ -6,14 +6,16 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import Login from './Login';
 import Otp from './Otp';
+import Scheduling from './components/Scheduling/scheduling'
 
 function App() {
   return (
     <Router>
       {/* <Navbar /> */}
       <Routes>
-        <Route path='/'  element={<Login/>} />
-        <Route path='/otp'   element={<Otp/>} />
+        <Route path="/" element={<Login />} />
+        <Route path="/otp" element={<Otp />} />
+        <Route path="/scheduling" element={<Scheduling />} />
       </Routes>
     </Router>
   );
