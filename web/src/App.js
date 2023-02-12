@@ -4,16 +4,19 @@ import Navbar from './components/Navbar/Navbar'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './Login';
 import Otp from './Otp';
-
+import Home from './LandingPage/Home.js'
 function App() {
   return (
-    <Router>
-      <Navbar />
+    <>
+     <Router>
       <Routes>
-        <Route path='/' exact component={Login} />
-        <Route path='/Otp' component={Otp} />
-      </Routes>
-    </Router>
+      <Route path="/" element={<Home/>}/>
+      {/* <Route path="/" element={<PreVideo />} />
+      <Route path="/video" element={<Video />}/>  */}
+    </Routes>
+      </Router>
+
+    </>
   );
 }
 

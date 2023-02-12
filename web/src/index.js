@@ -10,12 +10,14 @@ import 'bootstrap/dist/js/bootstrap.bundle.min';
 import Otp from './Otp';
 import Navbar from './components/Navbar/Navbar';
 import Signup from './Signup';
+import Home from './LandingPage/Home';
+import Footer from './LandingPage/Footer';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-   <Login></Login>
+  <App></App>
   </React.StrictMode>
 );
 
