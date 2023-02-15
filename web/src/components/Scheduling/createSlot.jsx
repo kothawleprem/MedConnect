@@ -2,17 +2,24 @@ import React, { useState } from 'react'
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-import TimePicker from "react-time-picker";
+// import TimePicker from "react-time-picker";
 import { ToastContainer, toast } from "react-toastify";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 
  import "react-toastify/dist/ReactToastify.css";
+ import { TimePicker } from 'react-ios-time-picker';
+ import Card from 'react-bootstrap/Card';
+ import Button from 'react-bootstrap/Button';
+
+
 
 const CreateSlot = () => {
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
   const [time, setTime] = React.useState("10:00");
+  const [value, setValue] = useState('10:00 AM');
+
 
   var tzoffset = new Date().getTimezoneOffset() * 60000; //offset in milliseconds
   var localISOTime = new Date(Date.now() - tzoffset).toISOString().slice(0, -1);
@@ -26,7 +33,7 @@ const CreateSlot = () => {
   const handleChangeStart = (e) => {
     e.preventDefault();
     setStartTime({
-      ...startTime,
+      startTime,
       [e.target.name]: e.target.value.trim(),
     });
   };
@@ -37,6 +44,12 @@ const CreateSlot = () => {
       [e.target.name]: e.target.value.trim(),
     });
   };
+
+
+  const onChange = (timeValue) => {
+    setValue(timeValue);
+ }
+
   const handleSubmit = (day) => {
     console.log("submit");
     console.log(startTime["start_time"], endTime["end_time"], day);
@@ -83,19 +96,32 @@ const CreateSlot = () => {
       }
     });
   };
+
+
   return (
     <>
-      <h1>Select Date and Time</h1>
-      <h3>Select Date</h3>
+    <br></br>
+      <h2>Schedul your appointment</h2>
+      <br></br>
+      <p>Select Date</p>
       <Row>
+    
         <Tabs
           defaultActiveKey="today"
           id="uncontrolled-tab-example"
-          className="mb-3"
+          className="mb-5 shadow-sm"
+          // variant="pills"
+
         >
+            
+         
           <Tab eventKey="today" title={today}>
+          {/* <img src="assets/sch.png" style={{height:'250px,width:200px'}} /> */}
+           
+          <Card body   className='shadow-sm' style={{ width: '27rem'}}>
             <Row>
               <Col xs={4}>
+              <p>Enter Start time</p>
                 <input
                   type="text"
                   name="start_time"
@@ -104,7 +130,9 @@ const CreateSlot = () => {
                   required
                 />
               </Col>
+             
               <Col xs={4}>
+              <p>Enter End time</p>
                 <input
                   type="text"
                   name="end_time"
@@ -112,14 +140,26 @@ const CreateSlot = () => {
                   onChange={handleChangeEnd}
                   required
                 />
+              
               </Col>
             </Row>
             <br />
-            <button onClick={() => handleSubmit(today)}>Add Slot</button>
+            <Button onClick={() => handleSubmit(today)} variant="primary" style={{backgroundColor:"orange",borderColor:"orange"}}>Add Slot</Button>
+            {/* <button >Add Slot</button> */}
+
+
+            </Card>
+           
+           
           </Tab>
+          <img  style={{width:"150px",height:"150px"}} src="assets/sch.png"/> 
+
           <Tab eventKey="tomorrow" title={tomorrow}>
+          <Card body style={{ width: '28rem' }}>
+
             <Row>
               <Col xs={4}>
+              <p>Enter Start time</p>
                 <input
                   type="text"
                   name="start_time"
@@ -130,6 +170,7 @@ const CreateSlot = () => {
                 {/* <TimePicker /> */}
               </Col>
               <Col xs={4}>
+              <p>Enter End time</p>
                 <input
                   type="text"
                   name="end_time"
@@ -139,12 +180,17 @@ const CreateSlot = () => {
                 />
               </Col>
             </Row>
+            <br></br>
+            <Button onClick={() => handleSubmit(tomorrow)} variant="primary" style={{backgroundColor:"orange",borderColor:"orange"}}>Add Slot</Button>
+
+            </Card>
             <br />
-            <button onClick={() => handleSubmit(tomorrow)}>Add Slot</button>
           </Tab>
         </Tabs>
+      
       </Row>
       <ToastContainer />
+
     </>
   );
 }

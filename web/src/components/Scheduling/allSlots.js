@@ -3,7 +3,8 @@ import axios from 'axios'
 
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
-
+import Card from 'react-bootstrap/Card';
+import ListGroup from 'react-bootstrap/ListGroup';
 
 
 
@@ -27,20 +28,37 @@ const AllSlots = () => {
       className="mb-3"
     >
       <Tab eventKey="today" title="Today">
+      <Card style={{ width: '18rem' }}>
+      <ListGroup variant="flush">
+
+
         {todaySlots.length > 0 ? (
           <>
             {todaySlots.map((slot) => (
               <>
-                <button key={slot.slot_id}>
+        <ListGroup.Item  key={slot.slot_id}> {slot.start_time} {slot.end_time}</ListGroup.Item>
+      
+     
+
+                {/* <button key={slot.slot_id}>
                   {slot.start_time} {slot.end_time}
-                </button>
+                </button> */}
+             
+
                 <br />
               </>
             ))}
           </>
+             
         ) : (
-          <>No Slots created for this day!!!</>
+          <> No Slots created for this 
+          day!!! 
+          <br/>
+          </>
         )}
+         </ListGroup>
+              </Card>
+
       </Tab>
       <Tab eventKey="tommorow" title="Tommorow">
         {tommorowSlots.length > 0 ? (
