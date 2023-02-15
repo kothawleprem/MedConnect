@@ -7,6 +7,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min';
 import Login from './Login';
 import Otp from './Otp';
 import Scheduling from './components/Scheduling/scheduling'
+import Time from './components/Time';
 
 function App() {
   return (
@@ -16,6 +17,8 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/otp" element={<Otp />} />
         <Route path="/scheduling" element={<Scheduling />} />
+        <Route path="/time" element={<Time />} />
+
       </Routes>
     </Router>
   );

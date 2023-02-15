@@ -1,0 +1,12 @@
+SECRET_KEY = django-insecure-gex59d)l$ic2wa%3wmc*i1gmnhl!u7)jfh)6l3^0c%)mb+0nor
+DB_NAME = postgres
+DB_USER = prem
+DB_PASSWORD = avintra@123
+DB_HOST = medconnectdb.postgres.database.azure.com
+DB_PORT = 5432
+
+LC_DB_NAME = MedConnect
+LC_DB_USER = postgres
+LC_DB_PASSWORD = prem
+LC_DB_HOST = 127.0.0.1
+LC_DB_PORT = 5434
