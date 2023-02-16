@@ -20,11 +20,13 @@ function App() {
         <Route path="/otp" element={<Otp />} />
         <Route path="/verify" element={<Verify />} />
         <Route path="/scheduling" element={<Scheduling />} />
-        <Route path="/time" element={<Time />} />
+
+        {/* <Route path="/time" element={<Time />} /> */}
 
       </Routes>
     </Router>
   );
+  
 }
 
 export default App;

@@ -6,6 +6,8 @@ import Col from "react-bootstrap/Col";
 import AllSlots from './allSlots';
 import CreateSlot from './createSlot';
 import Nav from './Nav';
+import "./Scheduling.css";
+
 
 function Scheduling() {
   return (
