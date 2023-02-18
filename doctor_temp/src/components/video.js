@@ -1,14 +1,14 @@
-import Button from "@mui/material/Button";
+// import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import TextField from "@mui/material/TextField";
-import AssignmentIcon from "@mui/icons-material/Assignment";
+// import AssignmentIcon from "@mui/icons-material/Assignment";
 import PhoneIcon from "@mui/icons-material/Phone";
 import VideocamIcon from "@mui/icons-material/Videocam";
-import VideocamOffIcon from "@mui/icons-material/VideocamOff";
+// import VideocamOffIcon from "@mui/icons-material/VideocamOff";
 import MicIcon from "@mui/icons-material/Mic";
-import MicOffIcon from "@mui/icons-material/MicOff";
+// import MicOffIcon from "@mui/icons-material/MicOff";
 import CallEndIcon from "@mui/icons-material/CallEnd";
-import Alert from "@mui/material/Alert";
+// import Alert from "@mui/material/Alert";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import Avatar from "@mui/material/Avatar";
@@ -160,10 +160,28 @@ const Video = () => {
 
   return (
     <>
-      <h1 style={{ textAlign: "center", color: "#fff" }}>
-        MedConnect - Doctor
-      </h1>
+    
       <div className="container">
+        <div className="header">  
+      
+      <Grid  item xs={30} sm={9} md={9} lg={7.8} xl={7.8} className="head" container flexWrap="nowrap" wrap="nowrap">
+              <div >
+              <img src="Assets/MedConnect.png" alt="/" className="img"/>
+              </div>
+            
+              <div className="title">  
+              <p className="titlehead">
+                General Physcian Consultation Meeting
+              </p> 
+              <p className="subtitle"> Dr Prem Khotawale</p> 
+              </div>
+             
+              
+          </Grid>
+       
+          </div>
+       
+     
         <Grid container spacing={2} className="video-container">
           <Grid item xs={8} className="video">
             {callAccepted && !callEnded ? (
@@ -173,15 +191,39 @@ const Video = () => {
                   ref={userVideo}
                   autoPlay
                   className="videoElementOut"
-                />
+                /> 
+                <div >  
+                <IconButton style={{backgroundColor:"white" , width:"50px"}} className="videoicon" onClick={stopVideo}>
+                      <VideocamIcon
+                        style={{ color: "grey" }}
+                        fontSize="large"
+                      />
+                    </IconButton>
+                    <IconButton style={{backgroundColor:"white" , width:"50px" ,margin:"8px"}} onClick={muteCall} className="videoicon">
+                      <MicIcon style={{ color: "green" }} fontSize="large" />
+                    </IconButton>
+                    <IconButton 
+                    style={{backgroundColor:"red" , width:"50px" }}
+                    className="videoicon"
+                      variant="contained"
+                      color="secondary"
+                      onClick={leaveCall}
+                    >
+                      <CallEndIcon
+                        style={{ color: "white" }}
+                        fontSize="large"
+                      />
+                    </IconButton>
+                    </div>
               </center>
-            ) : (
+              
+             ) : (
               <>
                 <center>
                   <div className="videoElementOut"></div>
                 </center>
               </>
-            )}
+            )} 
           </Grid>
           <Grid item xs={4} className="video">
             <div className="div">
@@ -252,8 +294,10 @@ const Video = () => {
                   </>
                 )}
               </div>
+             
             </div>
           </Grid>
+        
         </Grid>
 
         <Grid>
@@ -284,6 +328,7 @@ const Video = () => {
             </div>
           ) : null}
         </Grid>
+      
       </div>
     </>
   );

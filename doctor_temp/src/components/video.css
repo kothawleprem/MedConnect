@@ -58,13 +58,49 @@
 	height: 550px;
 }
 
+.head{
+	background-color: rgb(255, 255, 255);
+	height: 80px;
+	border-radius: 10px;
+	
+	
+}
+.header{
+	margin: 15px;
+	/* margin-left: 90px; */
+
+}
+.img{
+	margin: 30px;
+	width: 200px;
+}
+.title{
+	/* margin-left:-20px; */
+	
+}
+.videoicon{
+	position: absolute;
+	top:-75px;
+	/* opacity: 0; */
+	/* z-index: -1; */
+}
+.titlehead{
+	font-size: 1rem;
+	font-weight: 800;
+}
+.subtitle{
+	font-size: 1rem;
+	font-weight: 500;
+}
+
+
 @media screen and (max-width:1500px){
 	.videoElementIn {
-	margin-top: 10px;
-    width: 150px;
+	margin-top: 1px;
+    width: 300px;
   }
   .videoElementOut {
-    width: 800px;
+    width: 915px;
   }
   .myId {
 	width: 150px;
@@ -79,14 +115,22 @@
 .callerData {
 	margin-top: -20px;
 }
+.img{
+	margin: 30px;
+	width: 200px;
+}
+.titlehead{
+	font-size: 1rem;
+	font-weight: 800;
+}
 
 body {
-	background: #031d4f; /* fallback for old browsers */
-	background: -webkit-linear-gradient(to right, #8e54e9, #4776e6); /* Chrome 10-25, Safari 5.1-6 */
+	background: #fdfdfd; /* fallback for old browsers */
+	background: -webkit-linear-gradient(to right, #fff3c7, #ffe1c3); /* Chrome 10-25, Safari 5.1-6 */
 	background: linear-gradient(
 		to right,
-		#031d4f,
-		#010f29
+		#fbedc2,
+		#fff4d2
 	); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
@@ -101,6 +145,23 @@ body {
   .myId {
 	width: 150px;
 }
+
+.head{
+	height: 60px;
+}
+.img{
+	margin: 30px;
+	width: 150px;
+}
+.head{
+	height: 70px;
+	width: 80px;
+
+}
+.titlehead{
+	font-size: 1rem;
+	font-weight: 800;
+}
 }
 
 
@@ -114,6 +175,27 @@ body {
   }
   .myId {
 	width: 150px;
+}
+
+.head{
+	height: 40px;
+}
+.img{
+	margin: 30px;
+	width: 80px;
+}
+.head{
+	height: 60px;
+	width: 95px;
+
+}
+.subtitle{
+	font-size: .8rem;
+	font-weight: 500;
+}
+.titlehead{
+	font-size: .8rem;
+	font-weight: 800;
 }
 
 }
@@ -135,5 +217,26 @@ body {
 }
 .call-button {
 	margin-top: 40px;
+}
+
+.head{
+	height: 30px;
+}
+.img{
+	margin: 30px;
+	width: 60px;
+}
+.head{
+	height: 50px;
+	width: 100px;
+
+}
+.subtitle{
+	font-size: .6rem;
+	font-weight: 500;
+}
+.titlehead{
+	font-size: .7rem;
+	font-weight: 800;
 }
 }
