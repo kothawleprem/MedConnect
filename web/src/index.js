@@ -3,21 +3,11 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import Login from './Login';
-import Exp from './Exp';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.bundle.min';
-import Otp from './Otp';
-import Navbar from './components/Navbar/Navbar';
-import Signup from './Signup';
-import Home from './LandingPage/Home';
-import Footer from './LandingPage/Footer';
-
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-  <App></App>
+    <App/>
   </React.StrictMode>
 );
 
