@@ -11,7 +11,7 @@ def sendOTP(email, otp):
                 "email": email
             },
             "content": {
-                "title": "OTP to Authenticate on InfoBot!!",
+                "title": "OTP to Authenticate on MedConnect!!",
                 "body": f"Hi!! Continue your Authenctication Process by using this OTP: {otp}"
             }
         }

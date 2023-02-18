@@ -37,7 +37,7 @@ const AllSlots = () => {
               <>
                     <Card style={{ width: '18rem' }}>
 
-        <ListGroup.Item  key={slot.slot_id}> 1 {slot.start_time}12 {slot.end_time}</ListGroup.Item>
+        <ListGroup.Item  key={slot.slot_id}>  {slot.start_time} {slot.end_time}</ListGroup.Item>
       
      
 

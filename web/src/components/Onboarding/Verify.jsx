@@ -13,6 +13,7 @@ const Verify = () => {
     const [OTP, setOTP] = useState("");
     const [incorrect, setIncorrect] = useState(false);
     const navigate = useNavigate();
+    var status
 
     function handleChange(OTP) {
       setOTP(OTP);
@@ -36,29 +37,58 @@ const Verify = () => {
        } else {
          const res = {
            email: email,
-           otp: OTP["otp"]
+           otp: OTP
          };
+         console.log(res)
 
-         fetch(`http://127.0.0.1:8000/api/doctors/email/`, {
+         fetch(`http://127.0.0.1:8000/api/doctors/verify_email/`, {
            method: "POST",
            headers: {
              Accept: "application/json",
              "Content-Type": "application/json",
            },
            body: JSON.stringify(res),
+         }).then(async (response) => {
+           const res = await response.json();
+           status = response.status;
+           console.log("status", status);
+           if (status === 200) {
+             var token = res["token"];
+             // console.log(token)
+             localStorage.setItem("email", email);
+             localStorage.setItem("token", token);
+             navigate("/scheduling", {
+               state: {
+                 email: email,
+               },
+             });
+           } else {
+             console.log("incorrect otp");
+             toast.warn("Incorrect OTP!", {
+               position: "top-right",
+               autoClose: 5000,
+               hideProgressBar: false,
+               closeOnClick: true,
+               pauseOnHover: true,
+               draggable: true,
+               progress: undefined,
+               theme: "dark",
+             });
+             navigate("/verify", {
+               state: {
+                 email: email,
+               },
+             });
+           }
          });
-         navigate("/scheduling", {
-           state: {
-             email: email["email"],
-           },
-         });
+         
        }
      };
   return (
     <>
       <Container>
         <Row className="border d-flex align-items-center justify-content-center">
-          <Col xs={6}>
+          <Col xs={12} lg={6} md={6}>
             <Form>
               <MuiOtpInput value={OTP} onChange={handleChange} />
               <Button variant="primary" type="submit" onClick={handleSubmit}>
@@ -66,7 +96,7 @@ const Verify = () => {
               </Button>
             </Form>
           </Col>
-          <Col xs={6}>
+          <Col xs={12} lg={6} md={6}>
             <Lottie animationData={otpLottie} width="80%" height="80%" />
           </Col>
         </Row>

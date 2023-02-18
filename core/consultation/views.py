@@ -32,23 +32,35 @@ class SlotView(APIView):
         start_time = request.data.get("start_time")
         end_time = request.data.get("end_time")
         remarks = request.data.get("remarks")
-
-        req_st = time(int(start_time[0:2]), int(start_time[3:5]), int(start_time[6:8]))
-        req_et = time(int(end_time[0:2]), int(end_time[3:5]), int(end_time[6:8]))
-
+        print(start_time, end_time)
+        req_st = time(int(start_time[0:2]), int(start_time[3:5]), 00)
+        req_et = time(int(end_time[0:2]), int(end_time[3:5]), 00)
+        print(req_st, req_et)
         if(req_st >= req_et):
             response = {
                 "message": "Invalid Time Slot",
             }
             return Response(response, status=status.HTTP_406_NOT_ACCEPTABLE)
+        print(date)
         day_slots = SlotModel.objects.filter(doctor__id=doctor_id, date=date).values('start_time', 'end_time').order_by(
             'start_time')
+        print(day_slots)
         time_l = []
         for t in day_slots:
             start_time = t['start_time']
             end_time = t['end_time']
             time_l.append([start_time, end_time])
         flag = 0
+        print(time_l)
+        if len(day_slots) == 0:
+            doctor = DoctorModel.objects.get(id=doctor_id)
+            slot = SlotModel.objects.create(doctor=doctor, date=date, start_time=req_st, end_time=req_et,
+                                            remarks=remarks)
+            response = {
+                "message": "Slot Added!!",
+                "slot_id": slot.id
+            }
+            return Response(response, status=status.HTTP_201_CREATED)
         if req_et < time_l[0][0]:
             flag = 1
         elif req_st > time_l[len(time_l) - 1][1]:

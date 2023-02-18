@@ -9,6 +9,10 @@ import { useNavigate } from "react-router-dom";
 const Email = () => {
     const [email, setEmail] = useState("");
     const navigate = useNavigate();
+    const style = {
+      height: "90%",
+      width: "90%",
+    };
     const handleChange = (e) => {
       setEmail({
         ...email,
@@ -57,7 +61,7 @@ const Email = () => {
       <center>
         <Container>
           <Row className="border d-flex align-items-center justify-content-center">
-            <Col xs={6}>
+            <Col xs={12} lg={6} md={12}>
               <Form>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Label>Email address</Form.Label>
@@ -76,8 +80,8 @@ const Email = () => {
                 </Button>
               </Form>
             </Col>
-            <Col xs={6}>
-              <Lottie animationData={login} width="80%" height="80%" />
+            <Col xs={12} lg={6} md={12}>
+              <Lottie animationData={login} style={style} />
             </Col>
           </Row>
         </Container>

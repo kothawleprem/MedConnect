@@ -60,6 +60,7 @@ const CreateSlot = () => {
       end_time: endTime["end_time"],
       remarks: "NA",
     };
+    console.log(req)
     fetch(`http://127.0.0.1:8000/api/consultation/slot/`, {
       method: "POST",
       headers: {
@@ -100,98 +101,108 @@ const CreateSlot = () => {
 
   return (
     <>
-    <br></br>
+      <br></br>
       <h2>Schedul your appointment</h2>
       <br></br>
       <p>Select Date</p>
       <Row>
-    
         <Tabs
           defaultActiveKey="today"
           id="uncontrolled-tab-example"
           className="mb-5 shadow-sm"
           // variant="pills"
-
         >
-            
-         
           <Tab eventKey="today" title={today}>
-          {/* <img src="assets/sch.png" style={{height:'250px,width:200px'}} /> */}
-           
-          <Card body   className='shadow-sm' style={{ width: '27rem'}}>
-            <Row>
-              <Col xs={4}>
-              <p>Enter Start time</p>
+            {/* <img src="assets/sch.png" style={{height:'250px,width:200px'}} /> */}
 
-                <input
-                  type="text"
-                  name="start_time"
-                  placeholder="Start_time"
-                  onChange={handleChangeStart}
-                  required
-                />
-              </Col>
-             
-              <Col xs={4}>
-              <p>Enter End time</p>
-                <input
-                  type="text"
-                  name="end_time"
-                  placeholder="End_time"
-                  onChange={handleChangeEnd}
-                  required
-                />
-              
-              </Col>
-            </Row>
-            <br />
-            <Button onClick={() => handleSubmit(today)} variant="primary" style={{backgroundColor:"#FF7600",borderColor:"#FF7600", fontWeight:"bold"}}>Add Slot</Button>
-            {/* <button >Add Slot</button> */}
+            <Card body className="shadow-sm" style={{ width: "27rem" }}>
+              <Row>
+                <Col xs={4}>
+                  <p>Enter Start time</p>
 
+                  <input
+                    type="time"
+                    name="start_time"
+                    placeholder="Start_time"
+                    onChange={handleChangeStart}
+                    required
+                  />
+                </Col>
 
+                <Col xs={4}>
+                  <p>Enter End time</p>
+                  <input
+                    type="time"
+                    name="end_time"
+                    placeholder="End_time"
+                    onChange={handleChangeEnd}
+                    required
+                  />
+                </Col>
+              </Row>
+              <br />
+              <Button
+                onClick={() => handleSubmit(today)}
+                variant="primary"
+                style={{
+                  backgroundColor: "#FF7600",
+                  borderColor: "#FF7600",
+                  fontWeight: "bold",
+                }}
+              >
+                Add Slot
+              </Button>
+              {/* <button >Add Slot</button> */}
             </Card>
-           
-           
           </Tab>
-          <img  style={{width:"150px",height:"150px"}} src="assets/sch.png"/> 
+          <img
+            style={{ width: "150px", height: "150px" }}
+            src="assets/sch.png"
+          />
 
           <Tab eventKey="tomorrow" title={tomorrow}>
-          <Card body style={{ width: '28rem' }}>
-
-            <Row>
-              <Col xs={4}>
-              <p>Enter Start time</p>
-                <input
-                  type="text"
-                  name="start_time"
-                  placeholder="Start_time"
-                  onChange={handleChangeStart}
-                  required
-                />
-                {/* <TimePicker /> */}
-              </Col>
-              <Col xs={4}>
-              <p>Enter End time</p>
-                <input
-                  type="text"
-                  name="end_time"
-                  placeholder="End_time"
-                  onChange={handleChangeEnd}
-                  required
-                />
-              </Col>
-            </Row>
-            <br></br>
-            <Button onClick={() => handleSubmit(tomorrow)} variant="primary" style={{backgroundColor:"#FF7600",borderColor:"#FF7600", fontWeight:"bold"}}>Add Slot</Button>
-
+            <Card body style={{ width: "28rem" }}>
+              <Row>
+                <Col xs={4}>
+                  <p>Enter Start time</p>
+                  <input
+                    type="text"
+                    name="start_time"
+                    placeholder="Start_time"
+                    onChange={handleChangeStart}
+                    required
+                  />
+                  {/* <TimePicker /> */}
+                </Col>
+                <Col xs={4}>
+                  <p>Enter End time</p>
+                  <input
+                    type="text"
+                    name="end_time"
+                    placeholder="End_time"
+                    onChange={handleChangeEnd}
+                    required
+                  />
+                </Col>
+              </Row>
+              <br></br>
+              <Button
+                onClick={() => handleSubmit(tomorrow)}
+                variant="primary"
+                style={{
+                  backgroundColor: "#FF7600",
+                  borderColor: "#FF7600",
+                  fontWeight: "bold",
+                }}
+              >
+                Add Slot
+              </Button>
             </Card>
             <br />
           </Tab>
         </Tabs>
-      
       </Row>
       <ToastContainer />
-
     </>
   );
 }

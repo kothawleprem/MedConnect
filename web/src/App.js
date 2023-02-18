@@ -15,9 +15,9 @@ function App() {
     <Router>
       {/* <Navbar /> */}
       <Routes>
-        <Route path="/login" element={<Login />} />
+        {/* <Route path="/login" element={<Login />} /> */}
         <Route path="/" element={<Email />} />
-        <Route path="/otp" element={<Otp />} />
+        {/* <Route path="/otp" element={<Otp />} /> */}
         <Route path="/verify" element={<Verify />} />
         <Route path="/scheduling" element={<Scheduling />} />
         {/* <Route path="/time" element={<Time />} /> */}

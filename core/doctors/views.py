@@ -22,7 +22,7 @@ class EmailView(APIView):
         doctor = DoctorModel.objects.get(email=email)
         otp = random.randint(1000,9999)
         print(otp)
-        sendOTP(email,otp)
+        # sendOTP(email,otp)
         doctor.otp = otp
         strKey = "YdgkXWwdxycqNAkJ-_9OfOtLaPCZW2DO0WGTazVKsYs="
         key = strKey.encode()
