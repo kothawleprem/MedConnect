@@ -28,7 +28,6 @@ const AllSlots = () => {
       className="mb-3"
     >
       <Tab eventKey="today" title="Today">
-      <Card style={{ width: '18rem' }}>
       <ListGroup variant="flush">
 
 
@@ -36,7 +35,9 @@ const AllSlots = () => {
           <>
             {todaySlots.map((slot) => (
               <>
-        <ListGroup.Item  key={slot.slot_id}> {slot.start_time} {slot.end_time}</ListGroup.Item>
+                    <Card style={{ width: '18rem' }}>
+
+        <ListGroup.Item  key={slot.slot_id}> 1 {slot.start_time}12 {slot.end_time}</ListGroup.Item>
       
      
 
@@ -46,36 +47,46 @@ const AllSlots = () => {
              
 
                 <br />
+                </Card>
+                <br />
+
               </>
             ))}
           </>
              
-        ) : (
+      ) : (
           <> No Slots created for this 
           day!!! 
+          
           <br/>
           </>
-        )}
+        )} 
          </ListGroup>
-              </Card>
-
+             
       </Tab>
       <Tab eventKey="tommorow" title="Tommorow">
+
         {tommorowSlots.length > 0 ? (
           <>
+               
+
             {tommorowSlots.map((slot) => (
               <>
+               <Card style={{ width: '18rem' }}>  
                 <button key={slot.slot_id}>
                   {slot.start_time} {slot.end_time}
                 </button>
                 <br />
+                </Card>
               </>
+                
             ))}
           </>
         ) : (
           <>No Slots created for this day!!!</>
         )}
       </Tab>
+     
     </Tabs>
   );
 }
