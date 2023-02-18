@@ -12,7 +12,7 @@
 }
 
 .faq .faq-list li {
-  border-bottom: 1px solid #d9f1f2;
+  border-bottom: 1px solid rgba(254, 119, 101, 0.55);
   margin-bottom: 20px;
   padding-bottom: 20px;
 }
@@ -20,13 +20,13 @@
 .faq .faq-list .question {
   display: block;
   position: relative;
-  font-family: #3fbbc0;
+  font-family: #fe7865;
   font-size: 18px;
   line-height: 24px;
   font-weight: 400;
   padding-left: 25px;
   cursor: pointer;
-  color: #32969a;
+  color: #fe7865;
   transition: 0.3s;
 }
 
@@ -51,7 +51,7 @@
 }
 
 .faq .faq-list .collapsed:hover {
-  color: #3fbbc0;
+  color: #fe7865;
 }
 
 .faq .faq-list .collapsed .icon-show {
