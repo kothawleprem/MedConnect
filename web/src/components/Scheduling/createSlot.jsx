@@ -122,6 +122,7 @@ const CreateSlot = () => {
             <Row>
               <Col xs={4}>
               <p>Enter Start time</p>
+
                 <input
                   type="text"
                   name="start_time"
@@ -144,7 +145,7 @@ const CreateSlot = () => {
               </Col>
             </Row>
             <br />
-            <Button onClick={() => handleSubmit(today)} variant="primary" style={{backgroundColor:"orange",borderColor:"orange"}}>Add Slot</Button>
+            <Button onClick={() => handleSubmit(today)} variant="primary" style={{backgroundColor:"#FF7600",borderColor:"#FF7600", fontWeight:"bold"}}>Add Slot</Button>
             {/* <button >Add Slot</button> */}
 
 
@@ -181,7 +182,7 @@ const CreateSlot = () => {
               </Col>
             </Row>
             <br></br>
-            <Button onClick={() => handleSubmit(tomorrow)} variant="primary" style={{backgroundColor:"orange",borderColor:"orange"}}>Add Slot</Button>
+            <Button onClick={() => handleSubmit(tomorrow)} variant="primary" style={{backgroundColor:"#FF7600",borderColor:"#FF7600", fontWeight:"bold"}}>Add Slot</Button>
 
             </Card>
             <br />
