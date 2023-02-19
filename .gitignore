@@ -5,6 +5,8 @@
 /web/.pnp
 /patient_web/node_modules
 /patient_web/.pnp
+/doctor_temp/node_modules
+/doctor_temp/.pnp
 .pnp.js
 
 # testing
@@ -45,3 +47,5 @@ server/node_modules
 
 #Templates
 /templates
+
+data.txt

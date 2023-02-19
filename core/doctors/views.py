@@ -58,14 +58,14 @@ class DoctorProfileView(APIView):
     def post(self, request):
 
         email = request.data.get("email")
-        token = request.data.get("token")
+        # token = request.data.get("token")
         # verify if user is legit
         try:
             doctor = DoctorModel.objects.get(email=email)
         except:
             return Response("Doctor Not Found", status=status.HTTP_404_NOT_FOUND)
-        if(doctor.token != token):
-            return Response("Invalid Doctor Token", status=status.HTTP_404_NOT_FOUND)
+        # if(doctor.token != token):
+        #     return Response("Invalid Doctor Token", status=status.HTTP_404_NOT_FOUND)
 
         profile = DoctorProfileModel.objects.get(doctor=doctor)
 
@@ -81,7 +81,42 @@ class DoctorProfileView(APIView):
         if ("description" in request.data.keys()):
             description = request.data.get("description")
             profile.description = description
-        #TODO Files.
+        if ("title" in request.data.keys()):
+            title = request.data.get("title")
+            profile.title = title
+        if ("reg_no" in request.data.keys()):
+            reg_no = request.data.get("reg_no")
+            profile.reg_no = reg_no
+        if ("signature" in request.data.keys()):
+            signature = request.data.get("signature")
+            profile.signature = signature
+        if ("city" in request.data.keys()):
+            city = request.data.get("city")
+            profile.city = city
+        if ("files" in request.data.keys()):
+            files = request.data.get("files")
+            profile.files = files
+        if ("link" in request.data.keys()):
+            link = request.data.get("link")
+            profile.link = link
+        if ("specialization" in request.data.keys()):
+            specialization = request.data.get("specialization")
+            profile.specialization = specialization
+        if ("qualification" in request.data.keys()):
+            qualification = request.data.get("qualification")
+            profile.qualification = qualification
+        if ("dob" in request.data.keys()):
+            dob = request.data.get("dob")
+            profile.dob = dob
+        if ("gender" in request.data.keys()):
+            gender = request.data.get("gender")
+            profile.gender = gender
+        if ("photo" in request.data.keys()):
+            photo = request.data.get("photo")
+            profile.photo = photo
+        if ("phone" in request.data.keys()):
+            phone = request.data.get("phone")
+            profile.phone = phone
         profile.save()
         return Response("Created Profile", status=status.HTTP_200_OK)
 
