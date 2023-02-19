@@ -1,45 +1,40 @@
-import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
-import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
+import './Nav.css';
+
 function bar() {
   return (
     <>
-      <Navbar bg="light" expand="lg">
+      <Navbar  expand="lg" className='header-area shadow-sm'>
         <Container fluid>
-          <Navbar.Brand href="#"><span >Terna</span> Medical</Navbar.Brand>
+          <Navbar.Brand  href="#">
+          <img
+              src="Assets/MedConnect.png"
+              width="150"
+              height="25"
+             
+              className="d-inline-block align-top"
+              alt="React Bootstrap logo"
+            />
+
+          </Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
           <Nav
-            className="me-auto my-2 my-lg-0"
+            className="me-auto my-2 my-lg-1 side "
             style={{ maxHeight: '100px' }}
             navbarScroll
           >
-            <Nav.Link href="#">Login</Nav.Link>
+          
+            {/* <Nav.Link style={{fontSize:"17px",fontWeight:"600"}} className='navitem' href="#">Login</Nav.Link> */}
             
-            <Nav.Link href="/Otp">Otp</Nav.Link>
-            
-            <NavDropdown title="Link" id="navbarScrollingDropdown">
-              <NavDropdown.Item href="#">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action4">Another action</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action5">Something else here</NavDropdown.Item>
-            </NavDropdown>
-            
-            <Nav.Link href="#" disabled>Link</Nav.Link>
-
+            <Nav.Link style={{fontSize:"17px",fontWeight:"600"}} className='nav-item' href="/About">About us</Nav.Link>
+            <Nav.Link style={{fontSize:"17px",fontWeight:"600"}} className='nav-item' href="/Contact">Contact us</Nav.Link>
+           
+      
           </Nav>
-          {/* <Form className="d-flex">
-            <Form.Control
-              type="search"
-              placeholder="Search"
-              className="me-2"
-              aria-label="Search"
-            />
-            <Button variant="outline-success">Search</Button>
-          </Form> */}
+         
         </Navbar.Collapse>
       </Container>
     </Navbar>
