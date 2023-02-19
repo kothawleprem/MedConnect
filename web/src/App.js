@@ -9,6 +9,7 @@ import Otp from "./components/Onboarding/Otp";
 import Email from "./components/Onboarding/Email";
 import Verify from "./components/Onboarding/Verify";
 import Scheduling from "./components/Scheduling/scheduling";
+import Dcform from "./dcform";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         {/* <Route path="/otp" element={<Otp />} /> */}
         <Route path="/verify" element={<Verify />} />
         <Route path="/scheduling" element={<Scheduling />} />
+        <Route path="/dcform" element={<Dcform />} />
         {/* <Route path="/time" element={<Time />} /> */}
 
       </Routes>
