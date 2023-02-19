@@ -2,8 +2,8 @@ import "./App.css";
 import { useState } from "react";
 import { create as ipfsHttpClient } from "ipfs-http-client";
 
-const projectId = '2KdPPLUQPwqlijfPMWKTqydNvXa';
-const projectSecretKey = 'a4f67328e14c5df9dbd1a894311b8d1e';
+const projectId = 'project_id';
+const projectSecretKey = 'project_key';
 const authorization = "Basic " + btoa(projectId + ":" + projectSecretKey);
 
 function App() {
