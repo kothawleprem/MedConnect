@@ -17,14 +17,17 @@ class DoctorProfileModel(models.Model):
     reg_no = models.CharField(max_length=255, default="0")
     signature = models.URLField(null=True)
     city = models.CharField(max_length=100, null=True)
+    state = models.CharField(max_length=100, null=True)
     files = models.URLField(null=True)
-    link = models.URLField(null=True)
+    video = models.URLField(null=True)
     specialization = models.CharField(max_length=255, null=True)
     qualification = models.CharField(max_length=255, null=True)
     dob = models.DateField(null=True)
     gender = models.CharField(max_length=255,null=True)
     photo = models.URLField(null=True)
     phone = models.CharField(max_length=15, null=True)
+    address = models.CharField(max_length=255,null=True)
+    pincode = models.CharField(max_length=20, null=True)
 
 
 class DoctorAdminVerificationModel(models.Model):
