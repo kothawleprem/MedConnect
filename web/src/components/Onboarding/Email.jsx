@@ -5,7 +5,7 @@ import login from "../../lotties/login.json";
 import { ToastContainer, toast } from "react-toastify";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import Bar from '../Navbar/Navbar';
 const Email = () => {
     const [email, setEmail] = useState("");
     const navigate = useNavigate();
@@ -58,6 +58,7 @@ const Email = () => {
     };
   return (
     <>
+    <Bar/>
       <center>
         <Container>
           <Row className="border d-flex align-items-center justify-content-center">
