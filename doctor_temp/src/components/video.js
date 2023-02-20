@@ -184,11 +184,11 @@ const Video = () => {
      
         <Grid container spacing={2} className="video-container">
           <Grid item xs={8} className="video">
-            {callAccepted && !callEnded ? (
+            {/* {callAccepted && !callEnded ? ( */}
               <center>
                 <video
                   playsInline
-                  ref={userVideo}
+                  ref={myVideo}
                   autoPlay
                   className="videoElementOut"
                 /> 
@@ -217,13 +217,13 @@ const Video = () => {
                     </div>
               </center>
               
-             ) : (
+             {/* ) : (
               <>
                 <center>
                   <div className="videoElementOut"></div>
                 </center>
               </>
-            )} 
+            )}  */}
           </Grid>
           <Grid item xs={4} className="video">
             <div className="div">

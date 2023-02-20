@@ -10,6 +10,9 @@ import Email from "./components/Onboarding/Email";
 import Verify from "./components/Onboarding/Verify";
 import Scheduling from "./components/Scheduling/scheduling";
 import Dcform from "./dcform";
+import Verification from "./components/Verification";
+import Status from "./components/Status";
+import Formview from "./components/Formview";
 
 function App() {
   return (
@@ -22,6 +25,12 @@ function App() {
         <Route path="/verify" element={<Verify />} />
         <Route path="/scheduling" element={<Scheduling />} />
         <Route path="/dcform" element={<Dcform />} />
+        <Route path="/Verification" element={<Verification />} />
+        <Route path="/Status" element={<Status />} />
+        <Route path="/Formview" element={<Formview />} />
+
+
+
         {/* <Route path="/time" element={<Time />} /> */}
 
       </Routes>
