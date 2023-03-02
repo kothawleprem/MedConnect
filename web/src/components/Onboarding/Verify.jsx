@@ -6,6 +6,10 @@ import { MuiOtpInput } from "mui-one-time-password-input";
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
+import { Link } from 'react-router-dom';
+import "./Email.css"
+import Bar from '../Navbar/Navbar';
+
 
 const Verify = () => {
      const { state } = useLocation();
@@ -106,18 +110,27 @@ const Verify = () => {
      };
   return (
     <>
+      <Bar/>
       <Container>
-        <Row className="border d-flex align-items-center justify-content-center">
-          <Col xs={12} lg={6} md={6}>
+      <br/>
+        <Row className="d-flex align-items-center justify-content-center">
+          <Col xs={12} lg={3} md={6}>
+          <h2 style={{fontWeight:750}} >Verify OTP </h2>
+          <br/>
+
             <Form>
               <MuiOtpInput value={OTP} onChange={handleChange} />
-              <Button variant="primary" type="submit" onClick={handleSubmit}>
+              <br></br>
+
+              {/* <Button variant="primary" type="submit" onClick={handleSubmit}>
                 Submit
-              </Button>
+              </Button> */}
+              <Link style={{ textDecoration: 'none' }} onClick={handleSubmit}> <p className="main-btn">Submit</p> </Link> 
+
             </Form>
           </Col>
-          <Col xs={12} lg={6} md={6}>
-            <Lottie animationData={otpLottie} width="80%" height="80%" />
+          <Col xs={12} lg={5} md={6}>
+            <Lottie animationData={otpLottie}  width="50%" height="50%" />
           </Col>
         </Row>
       </Container>
