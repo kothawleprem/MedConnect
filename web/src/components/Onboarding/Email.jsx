@@ -92,7 +92,7 @@ const Email = () => {
                     We'll never share your email with anyone else.
                   </Form.Text>
                 </Form.Group>
-                <Link style={{ textDecoration: 'none' }} onClick={handleSubmit} to="/Formview"> <p className="main-btn">Submit</p> </Link> 
+                <Link style={{ textDecoration: 'none' }} onClick={handleSubmit} to="/Formview"> <p className="main-btn-email">Submit</p> </Link> 
 
               </Form>
             </Col>

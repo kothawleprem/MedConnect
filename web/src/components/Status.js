@@ -18,7 +18,7 @@ export default function Status() {
       description:""
     });
     const { state } = useLocation();
-    const { email } = state;
+    const email = localStorage.getItem('email')
     
     
     useEffect(() => {

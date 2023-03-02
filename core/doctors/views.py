@@ -9,6 +9,7 @@ from .models import DoctorModel, DoctorProfileModel, DoctorVerificationModel
 
 from core.emails import sendOTP
 
+
 class EmailView(APIView):
 
     def post(self, request):
@@ -20,7 +21,7 @@ class EmailView(APIView):
             doctor = DoctorModel.objects.create(email=email)
             DoctorProfileModel.objects.create(doctor=doctor)
         doctor = DoctorModel.objects.get(email=email)
-        otp = random.randint(1000,9999)
+        otp = random.randint(1000, 9999)
         print(otp)
         # sendOTP(email,otp)
         doctor.otp = otp
@@ -35,6 +36,7 @@ class EmailView(APIView):
             "message": "OTP Sent Successfully"
         }
         return Response(response, status=status.HTTP_200_OK)
+
 
 class VerifyEmailView(APIView):
 
@@ -60,6 +62,7 @@ class VerifyEmailView(APIView):
         }
         return Response(response, status=status.HTTP_200_OK)
 
+
 class DoctorProfileView(APIView):
 
     def post(self, request):
@@ -75,7 +78,7 @@ class DoctorProfileView(APIView):
         #     return Response("Invalid Doctor Token", status=status.HTTP_404_NOT_FOUND)
 
         profile = DoctorProfileModel.objects.get(doctor=doctor)
-        print("date",request.data.get("dob"))
+        print("date", request.data.get("dob"))
         if request.data.get("first_name") is not None:
             first_name = request.data.get("first_name")
             profile.first_name = first_name
@@ -134,6 +137,41 @@ class DoctorProfileView(APIView):
         request_verification = DoctorVerificationModel.objects.create(doctor=doctor)
         return Response("Created Profile", status=status.HTTP_201_CREATED)
 
+    def get(self, request):
+        email = request.GET["email"]
+        # token = request.GET["token"]
+        # verify if user is legit
+        try:
+            doctor = DoctorModel.objects.get(email=email)
+            doctor_profile = DoctorProfileModel.objects.get(doctor=doctor)
+        except:
+            return Response("Doctor Not Found", status=status.HTTP_404_NOT_FOUND)
+        # if (doctor.token != token):
+        #     return Response("Invalid Doctor", status=status.HTTP_404_NOT_FOUND)
+        response = {
+            'first_name': doctor_profile.first_name,
+            'last_name': doctor_profile.last_name,
+            'description': doctor_profile.description,
+            'city': doctor_profile.city,
+            'title': doctor_profile.title,
+            'reg_no': doctor_profile.reg_no,
+            'signature': doctor_profile.signature,
+            'state': doctor_profile.state,
+            'files': doctor_profile.files,
+            'video': doctor_profile.video,
+            'specialization': doctor_profile.specialization,
+            'qualification': doctor_profile.qualification,
+            'dob': doctor_profile.dob,
+            'gender': doctor_profile.gender,
+            'photo': doctor_profile.photo,
+            'phone': doctor_profile.phone,
+            'address': doctor_profile.address,
+            'pincode': doctor_profile.pincode,
+        }
+        # TODO SERIALIZED OUTPUT
+        return Response(response, status=status.HTTP_200_OK)
+
+
 class DoctorRequestVerificationView(APIView):
 
     def post(self, request):
@@ -186,6 +224,3 @@ class DoctorRequestVerificationView(APIView):
         }
 
         return Response(response, status=status.HTTP_200_OK)
-
-
-
