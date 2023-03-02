@@ -26,8 +26,8 @@ function App() {
         <Route path="/scheduling" element={<Scheduling />} />
         <Route path="/dcform" element={<Dcform />} />
         <Route path="/Verification" element={<Verification />} />
-        <Route path="/Status" element={<Status />} />
-        <Route path="/Formview" element={<Formview />} />
+        <Route path="/Status" element={<Status/>} />
+        <Route path="/Formview" element={<Formview/>} />
 
 
 
