@@ -59,6 +59,7 @@ section {
   -o-transition: all 0.4s ease-out 0s;
   transition: all 0.4s ease-out 0s;
   background-color: #fe7865;
+  width: 325px;
 }
 @media (max-width: 767px) {
   .main-btn {

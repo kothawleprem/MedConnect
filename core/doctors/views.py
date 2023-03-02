@@ -134,7 +134,10 @@ class DoctorProfileView(APIView):
             pincode = request.data.get("pincode")
             profile.pincode = pincode
         profile.save()
-        request_verification = DoctorVerificationModel.objects.create(doctor=doctor)
+        try:
+            isCreated = DoctorVerificationModel.objects.get(doctor=doctor)
+        except:
+            request_verification = DoctorVerificationModel.objects.create(doctor=doctor)
         return Response("Created Profile", status=status.HTTP_201_CREATED)
 
     def get(self, request):

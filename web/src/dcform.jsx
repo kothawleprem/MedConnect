@@ -5,7 +5,7 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { create as ipfsHttpClient } from "ipfs-http-client";
 import { useNavigate, useLocation } from "react-router-dom";
 
@@ -41,6 +41,9 @@ const Dcform = () => {
     const navigate = useNavigate();
     const { state } = useLocation();
     const email = localStorage.getItem('email')
+    var m_value = useRef(false);
+    var f_value = useRef(false);
+    var o_value = useRef(false);
 
      useEffect(() => {
        axios
@@ -48,27 +51,38 @@ const Dcform = () => {
          .then(function (response) {
            console.log(response);
            const data = response.data;
-           updateFormData({
-             ...formData,
-             fname: data.first_name,
-             lname: data.last_name,
-             gender: data.gender,
-             dob: data.dob,
-             mob_no: data.phone,
-             address: data.address,
-             city: data.city,
-             state: data.state,
-             pincode: data.pincode,
-             Reg_no: data.reg_no,
-             title: data.title,
-             qualification: data.qualification,
-             specialization: data.specialization,
-             desc: data.description,
-             imp_doc: data.file,
-             v_clip: data.video,
-             photo_doc: data.photo,
-             sign_doc: data.signature,
-           });
+           if (data.gender === "Male"){
+            m_value.current =true
+           }
+           else if (data.gender === "Female"){
+            f_value.current = true;
+           }
+           else{
+            console.log("other....")
+            o_value.current = true;
+           }
+           console.log(m_value.current, f_value, o_value)
+             updateFormData({
+               ...formData,
+               fname: data.first_name,
+               lname: data.last_name,
+               gender: data.gender,
+               dob: data.dob,
+               mob_no: data.phone,
+               address: data.address,
+               city: data.city,
+               state: data.state,
+               pincode: data.pincode,
+               Reg_no: data.reg_no,
+               title: data.title,
+               qualification: data.qualification,
+               specialization: data.specialization,
+               desc: data.description,
+               imp_doc: data.files,
+               v_clip: data.video,
+               photo_doc: data.photo,
+               sign_doc: data.signature,
+             });
          });
      }, []);
  
@@ -158,26 +172,7 @@ const Dcform = () => {
           });
         }
       });
-
-      
-
-      // const files = formData.imp_doc;
-
-      // if (!files || files.length === 0) {
-      //   return alert("No files selected");
-      // }
-  
-      // const file = files[0];
-      // // upload files
-      // const result = await ipfs.add(file);
-      // console.log(result)
-      // // ... submit to API or something
-      
-    
-
-      
     };
-  
 
   return (
     <div>
@@ -237,6 +232,7 @@ const Dcform = () => {
                   name="gender"
                   type="radio"
                   value="Male"
+                  checked={m_value.current}
                   id={`inline-$"radio"-1`}
                 />
                 <Form.Check
@@ -245,6 +241,7 @@ const Dcform = () => {
                   name="gender"
                   type="radio"
                   value="Female"
+                  checked={f_value.current}
                   id={`inline-$"radio"-2`}
                 />
                 <Form.Check
@@ -253,6 +250,7 @@ const Dcform = () => {
                   name="gender"
                   type="radio"
                   value="Other"
+                  checked={o_value.current}
                   id={`inline-$"radio"-3`}
                 />
               </div>
@@ -267,6 +265,7 @@ const Dcform = () => {
                 <input
                   name="dob"
                   type="date"
+                  value={formData.dob}
                   className="form-control"
                   onChange={handleChange}
                 ></input>
@@ -426,6 +425,16 @@ const Dcform = () => {
                   onChange={fileSelectedHandlerDoc}
                   type="file"
                 />
+                {formData.imp_doc !== undefined ? (
+                  <>
+                    Your Previous Document: &nbsp;
+                    <a href={formData.imp_doc} target="_blank">
+                      Click Here
+                    </a>
+                  </>
+                ) : (
+                  <></>
+                )}
               </Form.Group>
 
               <Form.Group as={Col} controlId="formFileMultiple">
@@ -452,6 +461,16 @@ const Dcform = () => {
                   onChange={fileSelectedHandlerPhoto}
                   type="file"
                 />
+                {formData.imp_doc !== undefined ? (
+                  <>
+                    Your Previous Photo: &nbsp;
+                    <a href={formData.photo_doc} target="_blank">
+                      Click Here
+                    </a>
+                  </>
+                ) : (
+                  <></>
+                )}
               </Form.Group>
 
               <Form.Group as={Col} controlId="formFileMultiple">
@@ -463,12 +482,28 @@ const Dcform = () => {
                   onChange={fileSelectedHandlerSign}
                   type="file"
                 />
+                {formData.sign_doc !== undefined ? (
+                  <>
+                    Your Previous Signature: &nbsp;
+                    <a href={formData.imp_doc} target="_blank">
+                      Click Here
+                    </a>
+                  </>
+                ) : (
+                  <></>
+                )}
               </Form.Group>
             </Row>
-
-            <Button variant="primary" onClick={handleSubmit} type="submit">
-              Submit
-            </Button>
+            <center>
+              <Button
+                variant="primary"
+                onClick={handleSubmit}
+                type="submit"
+                className="main-btn"
+              >
+                Submit
+              </Button>
+            </center>
           </Form>
         </div>
       </section>
