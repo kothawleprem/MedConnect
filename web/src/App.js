@@ -24,7 +24,7 @@ function App() {
         <Route path="/otp" element={<Verify />} />
         <Route path="/scheduling" element={<Scheduling />} />
         <Route path="/dcform" element={<Dcform />} />
-        <Route path="/verification" element={<Verification />} />
+        {/* <Route path="/Verification" element={<Verification />} /> */}
         <Route path="/status" element={<Status/>} />
         <Route path="/formview" element={<Formview/>} />
 
