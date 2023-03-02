@@ -3,6 +3,9 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
+
+import axios from "axios";
+import { useEffect } from "react";
 import { create as ipfsHttpClient } from "ipfs-http-client";
 import { useNavigate, useLocation } from "react-router-dom";
 
@@ -37,7 +40,37 @@ const Dcform = () => {
     const [formData, updateFormData] = React.useState(initialFormData);
     const navigate = useNavigate();
     const { state } = useLocation();
-    const { email } = state;
+    const email = localStorage.getItem('email')
+
+     useEffect(() => {
+       axios
+         .get(`http://127.0.0.1:8000/api/doctors/profile/?email=${email}`)
+         .then(function (response) {
+           console.log(response);
+           const data = response.data;
+           updateFormData({
+             ...formData,
+             fname: data.first_name,
+             lname: data.last_name,
+             gender: data.gender,
+             dob: data.dob,
+             mob_no: data.phone,
+             address: data.address,
+             city: data.city,
+             state: data.state,
+             pincode: data.pincode,
+             Reg_no: data.reg_no,
+             title: data.title,
+             qualification: data.qualification,
+             specialization: data.specialization,
+             desc: data.description,
+             imp_doc: data.file,
+             v_clip: data.video,
+             photo_doc: data.photo,
+             sign_doc: data.signature,
+           });
+         });
+     }, []);
  
     const ipfs = ipfsHttpClient({
       url: "https://ipfs.infura.io:5001/api/v0",
@@ -45,6 +78,7 @@ const Dcform = () => {
         authorization,
       },
     });
+
 
 
     const handleChange = (e) => {
@@ -171,6 +205,7 @@ const Dcform = () => {
                 <Form.Control
                   type="text"
                   name="fname"
+                  value={formData.fname}
                   onChange={handleChange}
                   placeholder="Enter First Name"
                 />
@@ -183,6 +218,7 @@ const Dcform = () => {
                 <Form.Control
                   type="text"
                   name="lname"
+                  value={formData.lname}
                   onChange={handleChange}
                   placeholder="Enter Last Name"
                 />
@@ -241,6 +277,7 @@ const Dcform = () => {
                   Enter Mobile No<span style={{ color: "red" }}> *</span>
                 </Form.Label>
                 <Form.Control
+                  value={formData.mob_no}
                   name="mob_no"
                   type="number"
                   placeholder="Enter Mobile No"
@@ -256,6 +293,7 @@ const Dcform = () => {
                 Address<span style={{ color: "red" }}> *</span>
               </Form.Label>
               <Form.Control
+                value={formData.address}
                 name="address"
                 onChange={handleChange}
                 type="text"
@@ -269,6 +307,7 @@ const Dcform = () => {
                   City<span style={{ color: "red" }}> *</span>
                 </Form.Label>
                 <Form.Control
+                  value={formData.city}
                   name="city"
                   onChange={handleChange}
                   type="text"
@@ -281,6 +320,7 @@ const Dcform = () => {
                   State<span style={{ color: "red" }}> *</span>
                 </Form.Label>
                 <Form.Control
+                  value={formData.state}
                   name="state"
                   onChange={handleChange}
                   type="text"
@@ -293,6 +333,7 @@ const Dcform = () => {
                   Pincode<span style={{ color: "red" }}> *</span>
                 </Form.Label>
                 <Form.Control
+                  value={formData.pincode}
                   name="pincode"
                   onChange={handleChange}
                   type="text"
@@ -308,6 +349,7 @@ const Dcform = () => {
                   Registration No<span style={{ color: "red" }}> *</span>
                 </Form.Label>
                 <Form.Control
+                  value={formData.Reg_no}
                   name="Reg_no"
                   onChange={handleChange}
                   type="text"
@@ -321,6 +363,7 @@ const Dcform = () => {
                 </Form.Label>
                 <Form.Control
                   name="title"
+                  value={formData.title}
                   onChange={handleChange}
                   type="text"
                   placeholder="Ex. MBBS, MD,.."
@@ -336,6 +379,7 @@ const Dcform = () => {
                 </Form.Label>
                 <Form.Control
                   name="qualification"
+                  value={formData.qualification}
                   onChange={handleChange}
                   type="text"
                   placeholder="Enter Qualification"
@@ -348,6 +392,7 @@ const Dcform = () => {
                 </Form.Label>
                 <Form.Control
                   name="specialization"
+                  value={formData.specialization}
                   onChange={handleChange}
                   type="text"
                   placeholder="Enter Specialization"
@@ -362,6 +407,7 @@ const Dcform = () => {
               </Form.Label>
               <Form.Control
                 name="desc"
+                value={formData.desc}
                 onChange={handleChange}
                 as="textarea"
                 type="text"
@@ -387,6 +433,7 @@ const Dcform = () => {
                   Video Link<span style={{ color: "red" }}> *</span>
                 </Form.Label>
                 <Form.Control
+                  value={formData.v_clip}
                   name="v_clip"
                   onChange={handleChange}
                   type="text"
