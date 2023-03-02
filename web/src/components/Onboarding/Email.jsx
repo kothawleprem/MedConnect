@@ -28,7 +28,7 @@ const Email = () => {
     const handleSubmit = (e) => {
     
       e.preventDefault();
-      if (email.length == 0) {
+      if (email.length === 0) {
         console.log("no email");
         toast.warn("Please enter an Email Address", {
           position: "top-right",
@@ -54,7 +54,7 @@ const Email = () => {
           },
           body: JSON.stringify(res),
         });
-        navigate("/verify", {
+        navigate("/otp", {
           state: {
             email: email["email"],
           },

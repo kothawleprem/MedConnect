@@ -42,6 +42,11 @@ class VerifyEmailView(APIView):
         email = request.data.get("email")
         otp = request.data.get("otp")
         doctor = DoctorModel.objects.get(email=email)
+        try:
+            doctor_verificaion = DoctorVerificationModel.objects.get(doctor=doctor)
+            hasReq = doctor_verificaion.id
+        except:
+            hasReq = 0
         if doctor.otp != int(otp):
             response = {
                 "message": "Incorrect OTP"
@@ -49,7 +54,9 @@ class VerifyEmailView(APIView):
             return Response(response, status=status.HTTP_401_UNAUTHORIZED)
         response = {
             "email": email,
-            "token": doctor.token
+            "token": doctor.token,
+            "verified": doctor.verified,
+            "hasReq": hasReq
         }
         return Response(response, status=status.HTTP_200_OK)
 
@@ -124,7 +131,8 @@ class DoctorProfileView(APIView):
             pincode = request.data.get("pincode")
             profile.pincode = pincode
         profile.save()
-        return Response("Created Profile", status=status.HTTP_200_OK)
+        request_verification = DoctorVerificationModel.objects.create(doctor=doctor)
+        return Response("Created Profile", status=status.HTTP_201_CREATED)
 
 class DoctorRequestVerificationView(APIView):
 

@@ -11,7 +11,7 @@ const Verify = () => {
      const { state } = useLocation();
      const { email } = state;
     const [OTP, setOTP] = useState("");
-    const [incorrect, setIncorrect] = useState(false);
+    // const [incorrect, setIncorrect] = useState(false);
     const navigate = useNavigate();
     var status
 
@@ -57,11 +57,31 @@ const Verify = () => {
              // console.log(token)
              localStorage.setItem("email", email);
              localStorage.setItem("token", token);
-             navigate("/scheduling", {
-               state: {
-                 email: email,
-               },
-             });
+             var verified = res["verified"]
+             var hasReq = res["hasReq"]
+            if (verified === false){
+              if( hasReq === 0){
+                navigate("/dcform", {
+                  state: {
+                    email: email,
+                  },
+                });
+              }
+              else{
+                navigate("/status", {
+                  state: {
+                    email: email,
+                  },
+                });
+              }
+            }
+            else{
+              navigate("/scheduling", {
+                state: {
+                  email: email,
+                },
+              });
+            }
            } else {
              console.log("incorrect otp");
              toast.warn("Incorrect OTP!", {
