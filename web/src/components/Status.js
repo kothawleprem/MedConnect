@@ -1,4 +1,5 @@
 import React,{useState,useEffect} from 'react'
+import { useNavigate, useLocation } from "react-router-dom";
 import Bar from './Navbar/Navbar'
 import '../Dcform.css'
 import { Link } from 'react-router-dom';
@@ -9,18 +10,20 @@ import axios from "axios";
 
 
 export default function Status() {
-    const [status, setStatus] = useState(true)
-    const [statusimg, setStatusimg] = useState()
+    // const [status, setStatus] = useState(true)
+    // const [statusimg, setStatusimg] = useState()
     const [userRequest, setUserRequest] = useState({
       status: "",
       statusimg: "",
       description:""
     });
+    const { state } = useLocation();
+    const { email } = state;
     
     
     useEffect(() => {
       axios
-      .get("http://127.0.0.1:8000/api/doctors/request_verification?email=kothawleprem@gmail.com", {
+      .get(`http://127.0.0.1:8000/api/doctors/request_verification?email=${email}`, {
         
       })
       .then(function (response) {
@@ -51,7 +54,7 @@ export default function Status() {
         console.log(error);
       });
 
-    }, [])
+    }, [email])
     
 
   return (
@@ -89,7 +92,7 @@ export default function Status() {
 </div>
 <br/>
 <div>
-  { userRequest.status=="Approved" ? <Link style={{ textDecoration: 'none'  }} to="/Scheduling"> <p className="main-btn ">Continue</p> </Link> 
+  { userRequest.status==="Approved" ? <Link style={{ textDecoration: 'none'  }} to="/Scheduling"> <p className="main-btn ">Continue</p> </Link> 
 : <h1> </h1> }
 
 

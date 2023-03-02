@@ -1,10 +1,10 @@
-import { red } from '@mui/material/colors';
 import React from 'react'
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { create as ipfsHttpClient } from "ipfs-http-client";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import './Dcform.css'
 
@@ -35,6 +35,9 @@ const authorization = "Basic " + btoa(projectId + ":" + projectSecretKey);
 
 const Dcform = () => {
     const [formData, updateFormData] = React.useState(initialFormData);
+    const navigate = useNavigate();
+    const { state } = useLocation();
+    const { email } = state;
  
     const ipfs = ipfsHttpClient({
       url: "https://ipfs.infura.io:5001/api/v0",
@@ -82,7 +85,7 @@ const Dcform = () => {
       e.preventDefault()
       console.log(formData);
       const req = {
-        email: "kothawleprem@gmail.com",
+        email: email,
         first_name: formData.fname,
         last_name: formData.lname,
         gender: formData.gender,
@@ -104,13 +107,23 @@ const Dcform = () => {
       };
       console.log(req)
       fetch("http://127.0.0.1:8000/api/doctors/profile/", {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(req),
-        })
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(req),
+      }).then(async (response) => {
+        const res = await response.json();
+        console.log(res)
+        if (response.status === 201) {
+          navigate("/status", {
+            state: {
+              email: email,
+            },
+          });
+        }
+      });
 
       
 
