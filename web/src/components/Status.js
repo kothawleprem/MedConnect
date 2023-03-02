@@ -14,6 +14,7 @@ export default function Status() {
     const [userRequest, setUserRequest] = useState({
       status: "",
       statusimg: "",
+      description:""
     });
     
     
@@ -23,25 +24,26 @@ export default function Status() {
         
       })
       .then(function (response) {
-        console.log(response);
-        if (response.status === "Approved") {
+        console.log(response ,"RESPONSE");
+        if (response.data.status === "Approved") {
           setUserRequest({
-            status:"Rejected" ,
+            status:"Approved" ,
             statusimg:"https://cdn4.iconfinder.com/data/icons/basicolor-arrows-checks/24/ok_check_done-512.png",
-            description:"Congratulation your profile is approve 🎉"
+            description:response.data.remarks
           
           });
           
-        } else if ((response.status === "Rejected")) {
+        } else if ((response.data.status  === "Rejected")) {
           setUserRequest({
             status:"Rejected" ,
-            statusimg:"https://cdn4.iconfinder.com/data/icons/basicolor-arrows-checks/24/ok_check_done-512.png",
-
+            statusimg:"https://cdn-icons-png.flaticon.com/512/2822/2822683.png",
+            description:response.data.remarks
           });
         } else {
           setUserRequest({
             status:"Pending" ,
-            statusimg:"https://cdn4.iconfinder.com/data/icons/basicolor-arrows-checks/24/ok_check_done-512.png",
+            statusimg:"https://cdn-icons-png.flaticon.com/512/3286/3286236.png",
+            description:response.data.remarks
           });
         }
       })

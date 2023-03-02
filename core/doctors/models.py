@@ -23,16 +23,17 @@ class DoctorProfileModel(models.Model):
     specialization = models.CharField(max_length=255, null=True)
     qualification = models.CharField(max_length=255, null=True)
     dob = models.DateField(null=True)
-    gender = models.CharField(max_length=255,null=True)
+    gender = models.CharField(max_length=255, null=True)
     photo = models.URLField(null=True)
     phone = models.CharField(max_length=15, null=True)
-    address = models.CharField(max_length=255,null=True)
+    address = models.CharField(max_length=255, null=True)
     pincode = models.CharField(max_length=20, null=True)
 
 
-class DoctorAdminVerificationModel(models.Model):
+class DoctorVerificationModel(models.Model):
     doctor = models.ForeignKey(DoctorModel, models.CASCADE)
-    remarks = models.CharField(max_length=255)
+    status = models.CharField(max_length=20, default="Pending")
+    remarks = models.CharField(max_length=255, default="Your request has not been reviewed yet!")
 
 
 

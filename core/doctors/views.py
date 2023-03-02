@@ -5,7 +5,7 @@ from rest_framework.views import APIView
 import random
 from cryptography.fernet import Fernet
 
-from .models import DoctorModel, DoctorProfileModel, DoctorAdminVerificationModel
+from .models import DoctorModel, DoctorProfileModel, DoctorVerificationModel
 
 from core.emails import sendOTP
 
@@ -141,13 +141,13 @@ class DoctorRequestVerificationView(APIView):
 
         # check if already requested
         try:
-            DoctorAdminVerificationModel.objects.get(doctor=doctor)
+            DoctorVerificationModel.objects.get(doctor=doctor)
             return Response("Already requested", status=status.HTTP_400_BAD_REQUEST)
         except:
             pass
 
         # create request for verification
-        request_verification = DoctorAdminVerificationModel.objects.create(doctor=doctor)
+        request_verification = DoctorVerificationModel.objects.create(doctor=doctor)
 
         return Response("Requested for Verification", status=status.HTTP_200_OK)
 
@@ -155,25 +155,26 @@ class DoctorRequestVerificationView(APIView):
         # doctor will see the remarks of verification.
 
         email = request.GET["email"]
-        token = request.GET["token"]
+        # token = request.GET["token"]
         # verify if user is legit
         try:
             doctor = DoctorModel.objects.get(email=email)
         except:
             return Response("Doctor Not Found", status=status.HTTP_404_NOT_FOUND)
-        if (doctor.token != token):
-            return Response("Invalid Doctor", status=status.HTTP_404_NOT_FOUND)
+        # if (doctor.token != token):
+        #     return Response("Invalid Doctor", status=status.HTTP_404_NOT_FOUND)
 
         # check if already requested
         try:
-            request_verification = DoctorAdminVerificationModel.objects.get(doctor=doctor)
+            request_verification = DoctorVerificationModel.objects.get(doctor=doctor)
         except:
             return Response("No Request", status=status.HTTP_400_BAD_REQUEST)
-
+        status_ = request_verification.status
         remarks = request_verification.remarks
 
         response = {
-            "remarks": remarks
+            "remarks": remarks,
+            "status": status_
         }
 
         return Response(response, status=status.HTTP_200_OK)
