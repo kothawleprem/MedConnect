@@ -6,12 +6,17 @@ import { ToastContainer, toast } from "react-toastify";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Bar from '../Navbar/Navbar';
+import { Link } from 'react-router-dom';
+import TextField from '@mui/material/TextField';
+import "./Email.css"
+
+
 const Email = () => {
     const [email, setEmail] = useState("");
     const navigate = useNavigate();
     const style = {
-      height: "90%",
-      width: "90%",
+      height: "80%",
+      width: "80%",
     };
     const handleChange = (e) => {
       setEmail({
@@ -59,34 +64,45 @@ const Email = () => {
   return (
     <>
     <Bar/>
-      <center>
+      {/* <center> */}
         <Container>
-          <Row className="border d-flex align-items-center justify-content-center">
-            <Col xs={12} lg={6} md={12}>
+          
+        <br/>
+        <br/>
+          <Row className=" d-flex align-items-center justify-content-center">
+           
+            <Col xs={12} lg={6} md={12} >
               <Form>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
+                  <h2 style={{fontWeight:800}} >Login</h2>
+                  <br/>
                   <Form.Label>Email address</Form.Label>
                   <Form.Control
                     type="email"
                     placeholder="Enter email"
                     name="email"
                     onChange={handleChange}
+                   
+                   style={{width:330}}
+                    
                   />
+                  {/* <TextField type="email" id="standard-basic" label="Enter your email id" variant="standard"  style={{width:330}}/> */}
+
                   <Form.Text className="text-muted">
                     We'll never share your email with anyone else.
                   </Form.Text>
                 </Form.Group>
-                <Button variant="primary" type="submit" onClick={handleSubmit}>
-                  Submit
-                </Button>
+                <Link style={{ textDecoration: 'none' }} onClick={handleSubmit} to="/Formview"> <p className="main-btn">Submit</p> </Link> 
+
               </Form>
             </Col>
-            <Col xs={12} lg={6} md={12}>
-              <Lottie animationData={login} style={style} />
+           
+            <Col xs={12} lg={5} md={12}>
+              <Lottie animationData={login} className='loti-img' style={style} />
             </Col>
           </Row>
         </Container>
-      </center>
+      {/* </center> */}
       <ToastContainer />
     </>
   );

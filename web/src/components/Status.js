@@ -91,6 +91,9 @@ export default function Status() {
 <div>
   { userRequest.status=="Approved" ? <Link style={{ textDecoration: 'none'  }} to="/Scheduling"> <p className="main-btn ">Continue</p> </Link> 
 : <h1> </h1> }
+&nbsp;
+
+<Link style={{ textDecoration: 'none' }} to="/Formview"> <p className="main-btn ">View response</p> </Link> 
 
 
 </div>
