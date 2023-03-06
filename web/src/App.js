@@ -12,6 +12,7 @@ import Dcform from "./dcform";
 import Verification from "./components/Verification";
 import Status from "./components/Status";
 import Formview from "./components/Formview";
+import Dashboard from "./Pages/dashboard";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         {/* <Route path="/Verification" element={<Verification />} /> */}
         <Route path="/status" element={<Status/>} />
         <Route path="/formview" element={<Formview/>} />
+        <Route path="/dashboard" element={<Dashboard/>} />
 
 
 
