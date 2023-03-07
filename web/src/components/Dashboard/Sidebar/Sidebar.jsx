@@ -7,7 +7,7 @@ const Sidebar = () => {
   const isMobile = useMediaQuery({ maxWidth: 767 });
   return (
     <div>
-      <Nav className="flex-column sidebar" expand="lg" fixed="left">
+      <Nav className="flex-column sidebar " expand="lg" fixed="left">
         <Nav.Link href="#">
           <FaHome className="mr-2" /> {isMobile ? null : "Home"}
         </Nav.Link>
