@@ -1,9 +1,16 @@
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
+from rest_framework.authtoken.models import Token
+
+from django.contrib.auth.models import User
 
 import random
 from cryptography.fernet import Fernet
+
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
+
 
 from .models import DoctorModel, DoctorProfileModel, DoctorVerificationModel
 
@@ -14,26 +21,21 @@ class EmailView(APIView):
 
     def post(self, request):
         email = request.data.get("email")
-        try:
-            isRegistered = DoctorModel.objects.get(email=email)
-            print(isRegistered)
-        except:
-            doctor = DoctorModel.objects.create(email=email)
-            DoctorProfileModel.objects.create(doctor=doctor)
-        doctor = DoctorModel.objects.get(email=email)
         otp = random.randint(1000, 9999)
-        print(otp)
+        password_ = str(otp)
+        isRegistered = User.objects.filter(email=email)
+        print(isRegistered)
+        if not isRegistered:
+            user = User.objects.create_user(username=email, email=email, password=password_)
+            doctor = DoctorModel.objects.create(user=user)
+            DoctorProfileModel.objects.create(doctor=doctor)
+        else:
+            user = isRegistered[0]
+        print("otp", password_)
         # sendOTP(email,otp)
-        doctor.otp = otp
-        strKey = "YdgkXWwdxycqNAkJ-_9OfOtLaPCZW2DO0WGTazVKsYs="
-        key = strKey.encode()
-        fernet = Fernet(key)
-        mix = email + str(otp)
-        encrypted = fernet.encrypt(mix.encode())
-        doctor.token = encrypted.decode()
-        doctor.save()
         response = {
-            "message": "OTP Sent Successfully"
+            "message": "OTP Sent Successfully",
+
         }
         return Response(response, status=status.HTTP_200_OK)
 
@@ -41,6 +43,7 @@ class EmailView(APIView):
 class VerifyEmailView(APIView):
 
     def post(self, request):
+        user = request.user
         email = request.data.get("email")
         otp = request.data.get("otp")
         doctor = DoctorModel.objects.get(email=email)
@@ -54,9 +57,14 @@ class VerifyEmailView(APIView):
                 "message": "Incorrect OTP"
             }
             return Response(response, status=status.HTTP_401_UNAUTHORIZED)
+        oldToken = Token.objects.filter(user=user)
+        if not oldToken:
+            token = Token.objects.create(user=user)
+        else:
+            token = oldToken[0]
         response = {
             "email": email,
-            "token": doctor.token,
+            "token": token.key,
             "verified": doctor.verified,
             "hasReq": hasReq
         }
@@ -65,13 +73,22 @@ class VerifyEmailView(APIView):
 
 class DoctorProfileView(APIView):
 
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+
     def post(self, request):
+
+        user = request.user
 
         email = request.data.get("email")
         # token = request.data.get("token")
         # verify if user is legit
+
         try:
-            doctor = DoctorModel.objects.get(email=email)
+            user = User.objects.get(email=email)
+            print(user)
+            doctor = DoctorModel.objects.get(user=user)
         except:
             return Response("Doctor Not Found", status=status.HTTP_404_NOT_FOUND)
         # if(doctor.token != token):
@@ -141,16 +158,17 @@ class DoctorProfileView(APIView):
         return Response("Created Profile", status=status.HTTP_201_CREATED)
 
     def get(self, request):
+        print("user", request.user)
         email = request.GET["email"]
-        # token = request.GET["token"]
         # verify if user is legit
         try:
-            doctor = DoctorModel.objects.get(email=email)
+            user = request.user
+            print(user)
+            doctor = DoctorModel.objects.get(user=user)
             doctor_profile = DoctorProfileModel.objects.get(doctor=doctor)
         except:
             return Response("Doctor Not Found", status=status.HTTP_404_NOT_FOUND)
-        # if (doctor.token != token):
-        #     return Response("Invalid Doctor", status=status.HTTP_404_NOT_FOUND)
+
         response = {
             'first_name': doctor_profile.first_name,
             'last_name': doctor_profile.last_name,
@@ -176,17 +194,19 @@ class DoctorProfileView(APIView):
 
 
 class DoctorRequestVerificationView(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
 
     def post(self, request):
         email = request.data.get("email")
-        token = request.data.get("token")
+        # token = request.data.get("token")
         # verify if user is legit
         try:
             doctor = DoctorModel.objects.get(email=email)
         except:
             return Response("Doctor Not Found", status=status.HTTP_404_NOT_FOUND)
-        if (doctor.token != token):
-            return Response("Invalid Doctor", status=status.HTTP_404_NOT_FOUND)
+        # if (doctor.token != token):
+        #     return Response("Invalid Doctor", status=status.HTTP_404_NOT_FOUND)
 
         # check if already requested
         try:

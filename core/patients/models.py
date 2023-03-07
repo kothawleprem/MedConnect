@@ -1,10 +1,9 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 class PatientModel(models.Model):
-    email = models.EmailField()
-    otp = models.IntegerField(null=True)
-    token = models.CharField(max_length=255, null=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
 
 class PatientProfileModel(models.Model):
     patient = models.ForeignKey(PatientModel, models.CASCADE)
