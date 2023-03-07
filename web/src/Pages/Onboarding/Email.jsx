@@ -5,10 +5,10 @@ import login from "../../lotties/login.json";
 import { ToastContainer, toast } from "react-toastify";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Bar from '../Navbar/Navbar';
+import Bar from '../../components/Navbar/Navbar';
 import { Link } from 'react-router-dom';
-import TextField from '@mui/material/TextField';
-import "./Email.css"
+
+import axios from 'axios';
 
 
 const Email = () => {
@@ -42,25 +42,30 @@ const Email = () => {
         });
         navigate("/");
       } else {
-        const res = {
-          email: email["email"],
-        };
 
-        fetch(`http://127.0.0.1:8000/api/doctors/email/`, {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(res),
-        });
-        navigate("/otp", {
+      const data = {
+        email: email["email"],
+      };
+
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      };
+
+      axios.post('http://127.0.0.1:8000/api/doctors/email/', data, config)
+        .then(response => {
+          console.log(response.data)
+          navigate("/otp", {
           state: {
             email: email["email"],
           },
         });
-      }
+        }
+        )
+        .catch(error => console.log(error));
     };
+  }
   return (
     <>
     <Bar/>

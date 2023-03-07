@@ -8,7 +8,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import { Link } from 'react-router-dom';
 import "./Email.css"
-import Bar from '../Navbar/Navbar';
+import Bar from "../../components/Navbar/Navbar";
 
 
 const Verify = () => {

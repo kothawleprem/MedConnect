@@ -4,8 +4,8 @@ import { Container, Row, Col} from "react-bootstrap";
 import { useMediaQuery } from "react-responsive";
 import './dashboard.css'
 
-import Sidebar from "../components/Dashboard/Sidebar/Sidebar";
-import ContentMain from "../components/Dashboard/Content/ContentMain";
+import Sidebar from "../../components/Dashboard/Sidebar/Sidebar";
+import ContentMain from "../../components/Dashboard/Content/ContentMain";
 
 const Dashboard = () => {
   return (

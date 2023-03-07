@@ -5,14 +5,14 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 // import Login from "./components/Onboarding/Login";
 // import Otp from "./components/Onboarding/Otp";
-import Email from "./components/Onboarding/Email";
-import Verify from "./components/Onboarding/Verify";
+import Email from "./Pages/Onboarding/Email"
+import Verify from "./Pages/Onboarding/Verify";
 import Scheduling from "./components/Scheduling/scheduling";
 import Dcform from "./dcform";
 import Verification from "./components/Verification";
 import Status from "./components/Status";
 import Formview from "./components/Formview";
-import Dashboard from "./Pages/dashboard";
+import Dashboard from "./Pages/Dashboard/dashboard";
 
 function App() {
   return (
