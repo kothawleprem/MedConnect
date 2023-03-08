@@ -1,16 +1,35 @@
 .sidebar-wrapper {
-  background-color: #2583e1;
+  background-color: #4365CD;
   height: 100vh;
   position: sticky;
   top: 0;
-  width: 10%;
+  width: 15%;
+  /* color: white; */
+
 }
 
 .content-wrapper {
- width: 90%;
+ width: 80%;
   padding-top: 3rem;
+ 
 }
 
+
+.sidemenu{
+color: rgb(255, 255, 255);
+background-color: #4365CD;
+margin: 8px;
+border-radius: 10px;
+border-color: #4365CD;
+}
+
+.sidemenu :hover{
+  color: rgb(14, 22, 188);
+  background-color: #ffffff;
+  border-radius: 10px;
+  transition: 0.7s;
+ 
+  }
 
 
 @media (min-width: 992px) {
