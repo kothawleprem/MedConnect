@@ -4,6 +4,8 @@ from rest_framework.views import APIView
 from rest_framework.authtoken.models import Token
 
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
+from django.contrib.auth.hashers import check_password
 
 import random
 from cryptography.fernet import Fernet
@@ -26,11 +28,17 @@ class EmailView(APIView):
         isRegistered = User.objects.filter(email=email)
         print(isRegistered)
         if not isRegistered:
-            user = User.objects.create_user(username=email, email=email, password=password_)
+            user = User.objects.create_user(username=email, email=email, password=otp)
+            auth = authenticate(username=email, password=otp)
+            print("auth",auth)
+            user.save()
             doctor = DoctorModel.objects.create(user=user)
             DoctorProfileModel.objects.create(doctor=doctor)
         else:
             user = isRegistered[0]
+            print("updating password", user)
+            user.set_password(password_)
+            user.save()
         print("otp", password_)
         # sendOTP(email,otp)
         response = {
@@ -43,25 +51,31 @@ class EmailView(APIView):
 class VerifyEmailView(APIView):
 
     def post(self, request):
-        user = request.user
+
         email = request.data.get("email")
         otp = request.data.get("otp")
-        doctor = DoctorModel.objects.get(email=email)
+        user = User.objects.get(email=email)
+        doctor = DoctorModel.objects.get(user=user)
         try:
             doctor_verificaion = DoctorVerificationModel.objects.get(doctor=doctor)
             hasReq = doctor_verificaion.id
         except:
             hasReq = 0
-        if doctor.otp != int(otp):
+        user_ = authenticate(request, username=email, password=str(otp))
+        if not user_:
             response = {
                 "message": "Incorrect OTP"
             }
             return Response(response, status=status.HTTP_401_UNAUTHORIZED)
-        oldToken = Token.objects.filter(user=user)
-        if not oldToken:
+
+        old_token = Token.objects.filter(user=user)
+
+        if not old_token:
             token = Token.objects.create(user=user)
         else:
-            token = oldToken[0]
+            old_token.delete()
+            token = Token.objects.create(user=user)
+
         response = {
             "email": email,
             "token": token.key,
