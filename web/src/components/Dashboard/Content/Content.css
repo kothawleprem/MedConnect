@@ -1,0 +1,40 @@
+.statscard{
+   margin: 10px;
+  flex-direction: column;
+  
+}
+
+.stats-title{
+    margin: 10px;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.stats-total{
+    
+    font-size: 2.3rem;
+    color: black;
+    margin-left: 10px;
+
+}
+.stats-link{
+    margin-top: -40px;
+    /* margin: 9px; */
+   margin-left: 120px;
+
+  
+
+}
+.stats-links{
+/* flex-direction: row; */
+}
+.stats-green{
+    color: green;
+    margin-left: 10px;
+    
+}
+.stats-icon{
+    margin-top: -45px;
+    margin-left: 155px;
+
+}

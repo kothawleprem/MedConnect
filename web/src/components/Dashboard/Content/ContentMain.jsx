@@ -5,6 +5,8 @@ import Stats from './Stats';
 import DashAppointments from './DashAppointments';
 import DashFreeSlots from './DashFreeSlots';
 import DashRecentPatients from './DashRecentPatients';
+import './Content.css'
+
 
 const ContentMain = () => {
   return (
