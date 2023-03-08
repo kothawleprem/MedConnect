@@ -10,6 +10,7 @@ import '../Dcform.css'
 import { Link } from 'react-router-dom';
 
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 
 // import { create as ipfsHttpClient } from "ipfs-http-client";
@@ -42,7 +43,16 @@ const initialFormData = Object.freeze({
 
 const Formview = () => {
     const [formData, updateFormData] = React.useState(initialFormData);
-    const email = localStorage.getItem("email");
+    const email = "test1@gmail.com"
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+      navigate("/dcform", {
+        state: {
+          email: email,
+        },
+      });
+    };
 
     useEffect(() => {
         axios
@@ -220,7 +230,7 @@ const Formview = () => {
                   </Form.Group>
                 </Row>
                 <center>
-                  <Link style={{ textDecoration: "none" }} to="/dcform">
+                  <Link style={{ textDecoration: "none" }} onClick={handleClick()}>
                     {" "}
                     <p className="main-btn">Edit</p>{" "}
                   </Link>

@@ -29,42 +29,40 @@ const Email = () => {
     
       e.preventDefault();
       if (email.length === 0) {
-        console.log("no email");
-        toast.warn("Please enter an Email Address", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
-        navigate("/");
-      } else {
+          toast.warn("Please enter an Email Address", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+          navigate("/");
+      } 
+      else {
+        const data = {
+          email: email["email"],
+        };
 
-      const data = {
-        email: email["email"],
-      };
+        const config = {
+          headers: {
+            'Content-Type': 'application/json',
+          }
+        };
 
-      const config = {
-        headers: {
-          'Content-Type': 'application/json',
-        }
-      };
-
-      axios.post('http://127.0.0.1:8000/api/doctors/email/', data, config)
-        .then(response => {
-          console.log(response.data)
-          navigate("/otp", {
-          state: {
-            email: email["email"],
-          },
-        });
-        }
-        )
+        axios.post('http://127.0.0.1:8000/api/doctors/email/', data, config)
+          .then(response => {
+            console.log(response.data)
+            navigate("/otp", {
+            state: {
+              email: email["email"],
+            },
+          });
+        })
         .catch(error => console.log(error));
-    };
+      };
   }
   return (
     <>

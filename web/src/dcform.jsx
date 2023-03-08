@@ -40,14 +40,22 @@ const Dcform = () => {
     const [formData, updateFormData] = React.useState(initialFormData);
     const navigate = useNavigate();
     const { state } = useLocation();
-    const email = localStorage.getItem('email')
+    const { email } = state;
     var m_value = useRef(false);
     var f_value = useRef(false);
     var o_value = useRef(false);
 
+
      useEffect(() => {
+      const token = localStorage.getItem("token");
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Token ${token}`
+        },
+      }
        axios
-         .get(`http://127.0.0.1:8000/api/doctors/profile/?email=${email}`)
+         .get(`http://127.0.0.1:8000/api/doctors/profile/?email=${email}`, config)
          .then(function (response) {
            console.log(response);
            const data = response.data;
@@ -132,7 +140,7 @@ const Dcform = () => {
     const handleSubmit = async (e) => {
       e.preventDefault()
       console.log(formData);
-      const req = {
+      const data = {
         email: email,
         first_name: formData.fname,
         last_name: formData.lname,
@@ -153,25 +161,47 @@ const Dcform = () => {
         photo: formData.photo_doc,
         signature: formData.sign_doc,
       };
-      console.log(req)
-      fetch("http://127.0.0.1:8000/api/doctors/profile/", {
-        method: "POST",
+
+      const token = localStorage.getItem("token")
+      const config = {
         headers: {
-          Accept: "application/json",
           "Content-Type": "application/json",
+          "Authorization": `Token ${token}`
         },
-        body: JSON.stringify(req),
-      }).then(async (response) => {
-        const res = await response.json();
-        console.log(res)
-        if (response.status === 201) {
-          navigate("/status", {
-            state: {
-              email: email,
-            },
-          });
-        }
-      });
+      };
+
+      axios
+        .post("http://127.0.0.1:8000/api/doctors/profile/", data, config)
+        .then((response) => {
+          console.log(response.data);
+          if (response.status === 201) {
+            navigate("/status", {
+              state: {
+                email: email,
+              },
+            });
+          }
+        })
+        .catch((error) => console.log(error));
+
+      // fetch("http://127.0.0.1:8000/api/doctors/profile/", {
+      //   method: "POST",
+      //   headers: {
+      //     Accept: "application/json",
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify(data),
+      // }).then(async (response) => {
+      //   const res = await response.json();
+      //   console.log(res)
+      //   if (response.status === 201) {
+      //     navigate("/status", {
+      //       state: {
+      //         email: email,
+      //       },
+      //     });
+      //   }
+      // });
     };
 
   return (
