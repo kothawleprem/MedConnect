@@ -19,8 +19,9 @@ const Sidebar = () => {
       <Nav className="flex-column sidebar " expand="lg" fixed="left">
     
     <div className='sidemenu'>   
-        <Nav.Link   href="#">
-          <FaHome className="mr-2" /> {isMobile ? null : "Home"} 
+        <Nav.Link  className='sidemenu' href="#">
+          < FaHome className="mr-2" /> {isMobile ? null : "Home"}
+           
         </Nav.Link>
         </div>
 

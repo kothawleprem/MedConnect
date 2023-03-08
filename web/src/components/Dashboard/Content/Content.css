@@ -21,13 +21,16 @@
     margin-top: -40px;
     /* margin: 9px; */
    margin-left: 120px;
-
+   color: #5041BC;
+   text-decoration-line: underline; 
   
 
 }
+
 .stats-links{
-/* flex-direction: row; */
+ 
 }
+
 .stats-green{
     color: green;
     margin-left: 10px;
@@ -36,5 +39,38 @@
 .stats-icon{
     margin-top: -45px;
     margin-left: 155px;
+
+}
+
+.appoint{
+    display: flex;
+  flex-direction: colum;
+}
+
+.appoint-title{
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: black;
+}
+
+.appoint-img{
+    width: 2rem;
+    height: 2rem;
+    border-radius: 30px;
+}
+
+.appoint-card{
+    background-color: #fefefe;
+   
+}
+
+.appoint-card :hover{
+    background-color: #E9F6FE;
+    /* border-color: #E9F6FE; */
+}
+
+.slot-button{
+height: '30px';
+background-color: #5041BC;
 
 }
