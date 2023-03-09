@@ -25,8 +25,8 @@ class SlotView(APIView):
         slot = SlotModel.objects.get(id=slot_id)
         response = {
             'doctor_id': slot.doctor_id,
-            'date': slot.doctor_id,
-            'start_time': slot.doctor_id,
+            'date': slot.date,
+            'start_time': slot.start_time,
             'end_time': slot.end_time,
             'remarks': slot.remarks,
             'status': slot.status
@@ -89,6 +89,54 @@ class SlotView(APIView):
         }
         return Response(response, status=status.HTTP_406_NOT_ACCEPTABLE)
 
+    def patch(self, request):
+        user = request.user
+        doctor = DoctorModel.objects.get(user=user)
+        slot_id = request.data.get("slot_id")
+        remarks = request.data.get("remarks")
+        try:
+            slot = SlotModel.objects.get(id=slot_id)
+        except:
+            response = {
+                "message": "Invalid Slot"
+            }
+            return Response(response, status=status.HTTP_404_NOT_FOUND)
+        if slot.doctor != doctor:
+            response = {
+                "message": "Invalid Doctor"
+            }
+            return Response(response, status=status.HTTP_404_NOT_FOUND)
+        slot.remarks = remarks
+        slot.save()
+        response = {
+            "message": "Remarks Updated!!",
+        }
+        return Response(response, status=status.HTTP_202_ACCEPTED)
+
+
+
+    def delete(self, request):
+        user = request.user
+        doctor = DoctorModel.objects.get(user=user)
+        slot_id = request.data.get("slot_id")
+        try:
+            slot = SlotModel.objects.get(id=slot_id)
+        except:
+            response = {
+                "message": "Invalid Slot"
+            }
+            return Response(response, status=status.HTTP_404_NOT_FOUND)
+        if slot.doctor != doctor:
+            response = {
+                "message": "Invalid Doctor"
+            }
+            return Response(response, status=status.HTTP_404_NOT_FOUND)
+        slot.delete()
+        response = {
+            "message": "Slot Deleted!!",
+        }
+        return Response(response, status=status.HTTP_204_NO_CONTENT)
+
 
 class SlotListView(APIView):
     authentication_classes = [TokenAuthentication]
@@ -101,18 +149,20 @@ class SlotListView(APIView):
         today = datetime.date.today()
         tomorrow = today + datetime.timedelta(days=1)
         today_slots = SlotModel.objects.filter(doctor=doctor, date=today).values('id', 'start_time',
-                                                                                      'end_time').order_by('start_time')
+                                                                                      'end_time','status').order_by('start_time')
         tomorrow_slots = SlotModel.objects.filter(doctor=doctor, date=tomorrow).values('id', 'start_time',
-                                                                                        'end_time').order_by(
+                                                                                        'end_time','status').order_by(
             'start_time')
         response = []
         today_response = []
         tomorrow_response = []
         for t in today_slots:
+            print(t)
             res = {
                 'slot_id': t['id'],
                 'start_time': t['start_time'],
-                'end_time': t['end_time']
+                'end_time': t['end_time'],
+                'status': t['status']
             }
             today_response.append(res)
         response.append(today_response)
@@ -120,7 +170,8 @@ class SlotListView(APIView):
             res = {
                 'slot_id': t['id'],
                 'start_time': t['start_time'],
-                'end_time': t['end_time']
+                'end_time': t['end_time'],
+                'status': t['status']
             }
             tomorrow_response.append(res)
         response.append(tomorrow_response)

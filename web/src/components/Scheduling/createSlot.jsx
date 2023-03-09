@@ -53,6 +53,8 @@ const CreateSlot = () => {
   const handleSubmit = (day) => {
     console.log("submit");
     console.log(startTime["start_time"], endTime["end_time"], day);
+    const token = localStorage.getItem("token");
+
     const req = {
       doctor_id: 3,
       date: day,
@@ -61,11 +63,14 @@ const CreateSlot = () => {
       remarks: "NA",
     };
     console.log(req)
+    
+
     fetch(`http://127.0.0.1:8000/api/consultation/slot/`, {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
+        Authorization: `Token ${token}`,
       },
       body: JSON.stringify(req),
     }).then(async (response) => {
