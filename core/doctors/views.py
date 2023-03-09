@@ -5,7 +5,6 @@ from rest_framework.authtoken.models import Token
 
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
-from django.contrib.auth.hashers import check_password
 
 import random
 from cryptography.fernet import Fernet
@@ -51,7 +50,6 @@ class EmailView(APIView):
 class VerifyEmailView(APIView):
 
     def post(self, request):
-
         email = request.data.get("email")
         otp = request.data.get("otp")
         user = User.objects.get(email=email)
@@ -93,14 +91,10 @@ class DoctorProfileView(APIView):
 
     def post(self, request):
 
-        user = request.user
-
-        email = request.data.get("email")
-        # token = request.data.get("token")
         # verify if user is legit
 
         try:
-            user = User.objects.get(email=email)
+            user = request.user
             print(user)
             doctor = DoctorModel.objects.get(user=user)
         except:
@@ -172,12 +166,9 @@ class DoctorProfileView(APIView):
         return Response("Created Profile", status=status.HTTP_201_CREATED)
 
     def get(self, request):
-        print("user", request.user)
-        email = request.GET["email"]
         # verify if user is legit
         try:
             user = request.user
-            print(user)
             doctor = DoctorModel.objects.get(user=user)
             doctor_profile = DoctorProfileModel.objects.get(doctor=doctor)
         except:
@@ -212,15 +203,13 @@ class DoctorRequestVerificationView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
-        email = request.data.get("email")
-        # token = request.data.get("token")
         # verify if user is legit
         try:
-            doctor = DoctorModel.objects.get(email=email)
+            user = request.user
+            doctor = DoctorModel.objects.get(user=user)
         except:
             return Response("Doctor Not Found", status=status.HTTP_404_NOT_FOUND)
-        # if (doctor.token != token):
-        #     return Response("Invalid Doctor", status=status.HTTP_404_NOT_FOUND)
+
 
         # check if already requested
         try:
@@ -237,15 +226,12 @@ class DoctorRequestVerificationView(APIView):
     def get(self, request):
         # doctor will see the remarks of verification.
 
-        email = request.GET["email"]
-        # token = request.GET["token"]
         # verify if user is legit
         try:
-            doctor = DoctorModel.objects.get(email=email)
+            user = request.user
+            doctor = DoctorModel.objects.get(user=user)
         except:
             return Response("Doctor Not Found", status=status.HTTP_404_NOT_FOUND)
-        # if (doctor.token != token):
-        #     return Response("Invalid Doctor", status=status.HTTP_404_NOT_FOUND)
 
         # check if already requested
         try:

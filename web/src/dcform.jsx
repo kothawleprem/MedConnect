@@ -5,9 +5,9 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 
 import axios from "axios";
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 import { create as ipfsHttpClient } from "ipfs-http-client";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import './Dcform.css'
 
@@ -38,12 +38,12 @@ const authorization = "Basic " + btoa(projectId + ":" + projectSecretKey);
 
 const Dcform = () => {
     const [formData, updateFormData] = React.useState(initialFormData);
+    const [checkboxState, setCheckboxState] = useState({});
     const navigate = useNavigate();
-    const { state } = useLocation();
-    const { email } = state;
-    var m_value = useRef(false);
-    var f_value = useRef(false);
-    var o_value = useRef(false);
+
+    var mv = false;
+    var fv = false;
+    var ov = false;
 
 
      useEffect(() => {
@@ -55,21 +55,35 @@ const Dcform = () => {
         },
       }
        axios
-         .get(`http://127.0.0.1:8000/api/doctors/profile/?email=${email}`, config)
+         .get(`http://127.0.0.1:8000/api/doctors/profile/`, config)
          .then(function (response) {
            console.log(response);
            const data = response.data;
            if (data.gender === "Male"){
-            m_value.current =true
+            mv =true
            }
            else if (data.gender === "Female"){
-            f_value.current = true;
+            fv = true;
            }
-           else{
-            console.log("other....")
-            o_value.current = true;
+           else if (data.gender === "Other") {
+             ov = true;
            }
-           console.log(m_value.current, f_value, o_value)
+           setCheckboxState({
+             bullet1: mv || false,
+             bullet2: fv || false,
+             bullet3: ov || false,
+           });
+          //  if (data.gender === "Male"){
+          //   m_value.current =true
+          //  }
+          //  else if (data.gender === "Female"){
+          //   f_value.current = true;
+          //  }
+          //  else if (data.gender === "Other") {
+          //    console.log("other....");
+          //    o_value.current = true;
+          //  }
+          //  console.log(m_value.current, f_value, o_value)
              updateFormData({
                ...formData,
                fname: data.first_name,
@@ -100,6 +114,11 @@ const Dcform = () => {
         authorization,
       },
     });
+
+    const handleCheckboxChange = (event) => {
+      const { id, checked } = event.target;
+      setCheckboxState({ ...checkboxState, [id]: checked });
+    };
 
 
 
@@ -141,7 +160,6 @@ const Dcform = () => {
       e.preventDefault()
       console.log(formData);
       const data = {
-        email: email,
         first_name: formData.fname,
         last_name: formData.lname,
         gender: formData.gender,
@@ -176,32 +194,14 @@ const Dcform = () => {
           console.log(response.data);
           if (response.status === 201) {
             navigate("/status", {
-              state: {
-                email: email,
-              },
+              // state: {
+              //   email: email,
+              // },
             });
           }
         })
         .catch((error) => console.log(error));
 
-      // fetch("http://127.0.0.1:8000/api/doctors/profile/", {
-      //   method: "POST",
-      //   headers: {
-      //     Accept: "application/json",
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify(data),
-      // }).then(async (response) => {
-      //   const res = await response.json();
-      //   console.log(res)
-      //   if (response.status === 201) {
-      //     navigate("/status", {
-      //       state: {
-      //         email: email,
-      //       },
-      //     });
-      //   }
-      // });
     };
 
   return (
@@ -262,8 +262,9 @@ const Dcform = () => {
                   name="gender"
                   type="radio"
                   value="Male"
-                  checked={m_value.current}
-                  id={`inline-$"radio"-1`}
+                  id="bullet1"
+                  checked={checkboxState.bullet1}
+                  onChange={handleCheckboxChange}
                 />
                 <Form.Check
                   inline
@@ -271,8 +272,9 @@ const Dcform = () => {
                   name="gender"
                   type="radio"
                   value="Female"
-                  checked={f_value.current}
-                  id={`inline-$"radio"-2`}
+                  id="bullet2"
+                  checked={checkboxState.bullet2}
+                  onChange={handleCheckboxChange}
                 />
                 <Form.Check
                   inline
@@ -280,8 +282,9 @@ const Dcform = () => {
                   name="gender"
                   type="radio"
                   value="Other"
-                  checked={o_value.current}
-                  id={`inline-$"radio"-3`}
+                  id="bullet3"
+                  checked={checkboxState.bullet3}
+                  onChange={handleCheckboxChange}
                 />
               </div>
             </Form.Group>

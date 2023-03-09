@@ -3,15 +3,22 @@ from rest_framework import status
 from rest_framework.views import APIView
 from datetime import time
 
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
+
 from patients.models import PatientModel, PatientProfileModel
 from .models import ConsultationModel, SlotModel
 from doctors.models import DoctorModel, DoctorProfileModel
+
 
 from .prescription import generate_prescription
 import datetime
 
 
 class SlotView(APIView):
+
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
 
     def get(self, request):
         slot_id = request.GET["slot_id"]
@@ -27,7 +34,8 @@ class SlotView(APIView):
         return Response(response, status=status.HTTP_200_OK)
 
     def post(self, request):
-        doctor_id = request.data.get("doctor_id")
+        user = request.user
+        doctor = DoctorModel.objects.get(user=user)
         date = request.data.get("date")
         start_time = request.data.get("start_time")
         end_time = request.data.get("end_time")
@@ -42,7 +50,7 @@ class SlotView(APIView):
             }
             return Response(response, status=status.HTTP_406_NOT_ACCEPTABLE)
         print(date)
-        day_slots = SlotModel.objects.filter(doctor__id=doctor_id, date=date).values('start_time', 'end_time').order_by(
+        day_slots = SlotModel.objects.filter(doctor=doctor, date=date).values('start_time', 'end_time').order_by(
             'start_time')
         print(day_slots)
         time_l = []
@@ -53,7 +61,6 @@ class SlotView(APIView):
         flag = 0
         print(time_l)
         if len(day_slots) == 0:
-            doctor = DoctorModel.objects.get(id=doctor_id)
             slot = SlotModel.objects.create(doctor=doctor, date=date, start_time=req_st, end_time=req_et,
                                             remarks=remarks)
             response = {
@@ -70,7 +77,6 @@ class SlotView(APIView):
                 if time_l[i][1] < req_st and time_l[i + 1][0] > req_et:
                     flag = 1
         if flag == 1:
-            doctor = DoctorModel.objects.get(id=doctor_id)
             slot = SlotModel.objects.create(doctor=doctor, date=date, start_time=req_st, end_time=req_et,
                                             remarks=remarks)
             response = {
@@ -85,15 +91,18 @@ class SlotView(APIView):
 
 
 class SlotListView(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
 
     # give date and doctor_id to get slots of that doctor
     def get(self, request):
-        doctor_id = request.GET["doctor_id"]
+        user = request.user
+        doctor = DoctorModel.objects.get(user=user)
         today = datetime.date.today()
         tomorrow = today + datetime.timedelta(days=1)
-        today_slots = SlotModel.objects.filter(doctor__id=doctor_id, date=today).values('id', 'start_time',
+        today_slots = SlotModel.objects.filter(doctor=doctor, date=today).values('id', 'start_time',
                                                                                       'end_time').order_by('start_time')
-        tomorrow_slots = SlotModel.objects.filter(doctor__id=doctor_id, date=tomorrow).values('id', 'start_time',
+        tomorrow_slots = SlotModel.objects.filter(doctor=doctor, date=tomorrow).values('id', 'start_time',
                                                                                         'end_time').order_by(
             'start_time')
         response = []

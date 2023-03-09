@@ -43,21 +43,19 @@ const initialFormData = Object.freeze({
 
 const Formview = () => {
     const [formData, updateFormData] = React.useState(initialFormData);
-    const email = "test1@gmail.com"
     const navigate = useNavigate();
 
-    const handleClick = () => {
-      navigate("/dcform", {
-        state: {
-          email: email,
-        },
-      });
-    };
-
     useEffect(() => {
+      const token = localStorage.getItem("token");
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Token ${token}`,
+        },
+      };
         axios
           .get(
-            `http://127.0.0.1:8000/api/doctors/profile/?email=${email}`
+            `http://127.0.0.1:8000/api/doctors/profile/`, config
           )
           .then(function (response) {
             console.log(response);
@@ -84,7 +82,8 @@ const Formview = () => {
               sign_doc: data.signature,
             });
           });
-    },[])
+    },[updateFormData])
+
 
 
 
@@ -107,7 +106,7 @@ const Formview = () => {
 
                   <Form.Group as={Col} controlId="formGridPassword">
                     <Form.Label>
-                      Last Name<span style={{ color: "red" }}> </span>:
+                      Last Name<span style={{ color: "red" }}> </span> :
                     </Form.Label>{" "}
                     {formData.lname}
                   </Form.Group>
@@ -116,21 +115,22 @@ const Formview = () => {
                 {/* Gender */}
                 <Form.Group className="mb-3" controlId="formGridAddress1">
                   <Form.Label>
-                    Choose Gender<span style={{ color: "red" }}> </span> :
+                    Gender<span style={{ color: "red" }}> </span> :
                   </Form.Label>
+                  {formData.gender}
                 </Form.Group>
 
                 {/* DOB and Phone No */}
                 <Row className="mb-3">
                   <Form.Group as={Col} controlId="formGridAddress1">
                     <Form.Label>
-                      Choose Birth Date<span style={{ color: "red" }}> </span>:
+                      Birth Date<span style={{ color: "red" }}> </span>:
                     </Form.Label>
                   </Form.Group>
 
                   <Form.Group as={Col} controlId="formGridPassword">
                     <Form.Label>
-                      Enter Mobile No<span style={{ color: "red" }}> </span>:
+                      Mobile No<span style={{ color: "red" }}> </span>:
                     </Form.Label>
                   </Form.Group>
                 </Row>
@@ -230,9 +230,8 @@ const Formview = () => {
                   </Form.Group>
                 </Row>
                 <center>
-                  <Link style={{ textDecoration: "none" }} onClick={handleClick()}>
-                    {" "}
-                    <p className="main-btn">Edit</p>{" "}
+                  <Link style={{ textDecoration: "none" }} to="/dcform">
+                    <p className="main-btn">Edit</p>
                   </Link>
                 </center>
               </Form>

@@ -17,15 +17,17 @@ export default function Status() {
       statusimg: "",
       description:""
     });
-    const { state } = useLocation();
-    const email = localStorage.getItem('email')
-    
     
     useEffect(() => {
+      const token = localStorage.getItem("token");
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Token ${token}`,
+        },
+      };
       axios
-      .get(`http://127.0.0.1:8000/api/doctors/request_verification?email=${email}`, {
-        
-      })
+      .get(`http://127.0.0.1:8000/api/doctors/request_verification/`, config)
       .then(function (response) {
         console.log(response ,"RESPONSE");
         if (response.data.status === "Approved") {
@@ -54,7 +56,7 @@ export default function Status() {
         console.log(error);
       });
 
-    }, [email])
+    }, [])
     
 
   return (
