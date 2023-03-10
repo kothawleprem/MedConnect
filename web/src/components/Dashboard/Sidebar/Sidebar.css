@@ -4,14 +4,18 @@
   position: sticky;
   top: 0;
   width: 15%;
+  /* border-top-right-radius: 50px; */
   /* color: white; */
 
 }
 
 .content-wrapper {
- width: 80%;
+ width: 85%;
   padding-top: 3rem;
- 
+  /* border-radius: 40px; */
+  background-color: rgb(255, 255, 255);
+  border-top-left-radius:40px;
+  border-bottom-left-radius:40px;
 }
 
 
@@ -20,6 +24,7 @@ color: rgb(255, 255, 255);
 background-color: #4365CD;
 border-radius: 10px;
 border-color: #4365CD;
+margin: 5px;
 }
 
 .sidemenu :hover{

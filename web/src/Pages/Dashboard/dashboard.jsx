@@ -10,7 +10,7 @@ import ContentMain from "../../components/Dashboard/Content/ContentMain";
 const Dashboard = () => {
   return (
     <div>
-      <Container fluid>
+      <Container style={{backgroundColor:'#4365CD'}} fluid>
         <Row>
           <Col
             xl={3}
@@ -27,6 +27,7 @@ const Dashboard = () => {
             md={10}
             sm={6}
             className="content-wrapper"
+          
           >
             <ContentMain/>
           </Col>
