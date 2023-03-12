@@ -6,13 +6,14 @@ import DashAppointments from './DashAppointments';
 import DashFreeSlots from './DashFreeSlots';
 import DashRecentPatients from './DashRecentPatients';
 import './Content.css'
+import DashCallender from './DashCallender';
 
 
 const ContentMain = () => {
   return (
     <div>
       <Row>
-        <Col>Greetings</Col>
+        <Col style={{fontWeight:'500'}}>Greetings</Col>
       </Row>
       <br />
       <div >
@@ -23,6 +24,9 @@ const ContentMain = () => {
         <Col xl={4} lg={4} md={12} sm={12}>
           <DashAppointments/>
         </Col>
+      
+       
+
         <Col xl={8} lg={8} md={12} sm={12}>
           <Row>
             <DashFreeSlots/>
@@ -31,6 +35,9 @@ const ContentMain = () => {
           <Row>
             <DashRecentPatients/>
           </Row>
+        </Col>
+        <Col xl={4} lg={4} md={12} sm={12}>
+          <DashCallender/>
         </Col>
       </Row>
     </div>
