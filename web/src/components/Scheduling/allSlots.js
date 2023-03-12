@@ -50,7 +50,7 @@ const AllSlots = () => {
           throw new Error("Network response was not ok");
         }
         else{
-          if(response.status == 204){
+          if(response.status === 204){
           toast.success("Slot Deleted, please refresh!", {
             position: "top-right",
             autoClose: 5000,

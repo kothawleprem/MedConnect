@@ -2,14 +2,11 @@ import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import Bar from "../../components/Navbar/Navbar";
-import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Form from "react-bootstrap/Form";
 import axios from "axios";
-import { Textarea } from "react-rainbow-components";
-import { handleBreakpoints } from "@mui/system";
 import { ToastContainer, toast } from "react-toastify";
 
 const EditSlotRemarks = () => {
@@ -26,10 +23,6 @@ const EditSlotRemarks = () => {
         "Content-Type": "application/json",
         Authorization: `Token ${token}`,
       },
-    };
-    const data = {
-      slot_id: slot_id,
-      remarks: remarks,
     };
     axios
       .get(
@@ -65,7 +58,7 @@ const EditSlotRemarks = () => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
         } else {
-          if (response.status == 204) {
+          if (response.status === 204) {
             navigate('/scheduling')
           }
         }
