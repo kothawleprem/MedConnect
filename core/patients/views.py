@@ -1,34 +1,39 @@
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
+from rest_framework.authtoken.models import Token
 
 import os
 import random
 from cryptography.fernet import Fernet
 
-from .models import PatientModel
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
+
+from .models import PatientModel, PatientProfileModel
+
 
 class EmailView(APIView):
 
     def post(self, request):
 
         email = request.data.get("email")
-        try:
-            isRegistered = PatientModel.objects.get(email=email)
-            print(isRegistered)
-        except:
-            patient = PatientModel.objects.create(email=email)
-        patient = PatientModel.objects.get(email=email)
-        otp = random.randint(1000,9999)
-        print(otp)
-        patient.otp = otp
-        strKey = "YdgkXWwdxycqNAkJ-_9OfOtLaPCZW2DO0WGTazVKsYs="
-        key = strKey.encode()
-        fernet = Fernet(key)
-        mix = email + str(otp)
-        encrypted = fernet.encrypt(mix.encode())
-        patient.token = encrypted.decode()
-        patient.save()
+        otp = random.randint(1000, 9999)
+        password_ = str(otp)
+        isRegistered = User.objects.filter(email=email)
+        if not isRegistered:
+            user = User.objects.create_user(username=email, email=email, password=password_)
+            auth = authenticate(username=email, password=password_)
+            print("auth",auth)
+            user.save()
+            patient = PatientModel.objects.create(user=user)
+            PatientProfileModel.objects.create(patient=patient)
+        else:
+            user = isRegistered[0]
+            print("updating password", user)
+            user.set_password(password_)
+            user.save()
+        print("otp", password_)
         response = {
             "message": "OTP Sent Successfully"
         }
@@ -39,14 +44,25 @@ class VerifyEmailView(APIView):
     def post(self, request):
         email = request.data.get("email")
         otp = request.data.get("otp")
-        patient = PatientModel.objects.get(email=email)
-        if patient.otp != int(otp):
+        user = User.objects.get(email=email)
+        patient = PatientModel.objects.get(user=user)
+        user_ = authenticate(request, username=email, password=str(otp))
+        if not user_:
             response = {
                 "message": "Incorrect OTP"
             }
             return Response(response, status=status.HTTP_401_UNAUTHORIZED)
+
+        old_token = Token.objects.filter(user=user)
+
+        if not old_token:
+            token = Token.objects.create(user=user)
+        else:
+            old_token.delete()
+            token = Token.objects.create(user=user)
+
         response = {
             "email": email,
-            "token": patient.token
+            "token": token.key,
         }
         return Response(response, status=status.HTTP_200_OK)

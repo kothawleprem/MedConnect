@@ -346,3 +346,29 @@ class ManagePaymentView(APIView):
         amount = consultation.amount
         payment = PaymentModel.objects.create(consultation=consultation, stripe_id=stripe_id, amount = amount, status=status)
         return Response("Payment Created with ID: ", payment.id)
+
+class DoctorPatientView(APIView):
+    # all patients associated with that doctor
+    def get(self, request):
+        user = request.user
+        limit = int(request.GET["limit"])
+        doctor = DoctorModel.objects.get(user=user)
+        all_consultations = ConsultationModel.objects.filter(doctor=doctor).order_by("-id")
+        response = []
+        for consultation in all_consultations:
+            if(limit > 0):
+                patient = consultation.patient
+                patient_profile = PatientProfileModel.objects.get(patient=patient)
+                slot = consultation.slot
+                res = {
+                    "patient_name": patient_profile.first_name + " " + patient_profile.last_name,
+                    "consultation_id": consultation.id,
+                    "date": slot.date,
+                    "city": patient_profile.city
+                }
+                response.append(res)
+                limit = limit - 1
+            else:
+                break
+        print(response)
+        return Response(response, status=status.HTTP_200_OK)
