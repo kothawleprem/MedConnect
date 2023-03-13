@@ -22,3 +22,6 @@ tzdata==2022.7
 weasyprint==57.2
 webencodings==0.5.1
 zopfli==0.2.2
+
+trycourier~=4.4.0
+stripe~=5.2.0

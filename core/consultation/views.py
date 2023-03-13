@@ -7,12 +7,19 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
 from patients.models import PatientModel, PatientProfileModel
-from .models import ConsultationModel, SlotModel
+from .models import ConsultationModel, SlotModel, PaymentModel
 from doctors.models import DoctorModel, DoctorProfileModel
 
 
 from .prescription import generate_prescription
 import datetime
+
+import json
+import os
+import stripe
+
+# This is your test secret API key.
+stripe.api_key = 'sk_test_51MkrgDSEJKAQ1ZUPYt1TtU75zyAODRkI7DMcgHyA6rSUxqqWjWlLZN8QCXS9SAXm1XLnNwnK7lD4OLWGhXWmCy4i00DP31GbYb'
 
 
 class SlotView(APIView):
@@ -145,6 +152,7 @@ class SlotListView(APIView):
     # give date and doctor_id to get slots of that doctor
     def get(self, request):
         user = request.user
+        status = request.GET["status"]
         doctor = DoctorModel.objects.get(user=user)
         today = datetime.date.today()
         tomorrow = today + datetime.timedelta(days=1)
@@ -156,26 +164,73 @@ class SlotListView(APIView):
         response = []
         today_response = []
         tomorrow_response = []
-        for t in today_slots:
-            print(t)
-            res = {
-                'slot_id': t['id'],
-                'start_time': t['start_time'],
-                'end_time': t['end_time'],
-                'status': t['status']
-            }
-            today_response.append(res)
-        response.append(today_response)
-        for t in tomorrow_slots:
-            res = {
-                'slot_id': t['id'],
-                'start_time': t['start_time'],
-                'end_time': t['end_time'],
-                'status': t['status']
-            }
-            tomorrow_response.append(res)
-        response.append(tomorrow_response)
-        return Response(response, status=status.HTTP_200_OK)
+        print(status)
+        if status == "True":
+            print("in true")
+            for t in today_slots:
+                if t['status'] is True:
+                    consultation = ConsultationModel.objects.get(slot__id=t['id'])
+                    res = {
+                        'slot_id': t['id'],
+                        'start_time': t['start_time'],
+                        'end_time': t['end_time'],
+                        'status': t['status']
+                    }
+                    today_response.append(res)
+            response.append(today_response)
+            for t in tomorrow_slots:
+                if t['status'] is True:
+                    res = {
+                        'slot_id': t['id'],
+                        'start_time': t['start_time'],
+                        'end_time': t['end_time'],
+                        'status': t['status']
+                    }
+                    tomorrow_response.append(res)
+            response.append(tomorrow_response)
+        elif status == "False":
+            print("in false")
+            for t in today_slots:
+                if t['status'] is False:
+                    res = {
+                        'slot_id': t['id'],
+                        'start_time': t['start_time'],
+                        'end_time': t['end_time'],
+                        'status': t['status']
+                    }
+                    today_response.append(res)
+            response.append(today_response)
+            for t in tomorrow_slots:
+                if t['status'] is False:
+                    res = {
+                        'slot_id': t['id'],
+                        'start_time': t['start_time'],
+                        'end_time': t['end_time'],
+                        'status': t['status']
+                    }
+                    tomorrow_response.append(res)
+            response.append(tomorrow_response)
+        else:
+            print("in none")
+            for t in today_slots:
+                res = {
+                    'slot_id': t['id'],
+                    'start_time': t['start_time'],
+                    'end_time': t['end_time'],
+                    'status': t['status']
+                }
+                today_response.append(res)
+            response.append(today_response)
+            for t in tomorrow_slots:
+                res = {
+                    'slot_id': t['id'],
+                    'start_time': t['start_time'],
+                    'end_time': t['end_time'],
+                    'status': t['status']
+                }
+                tomorrow_response.append(res)
+            response.append(tomorrow_response)
+        return Response(response)
 
 
 class PatienBookSlotView(APIView):
@@ -260,3 +315,34 @@ class PrescriptionView(APIView):
             "message": "Generate Prescription"
         }
         return Response(response, status=status.HTTP_201_CREATED)
+
+class PaymentView(APIView):
+
+    def post(self, request):
+        try:
+            amount = request.data.get("amount")
+            # Create a PaymentIntent with the order amount and currency
+            intent = stripe.PaymentIntent.create(
+                amount=amount,
+                currency='inr',
+                automatic_payment_methods={
+                    'enabled': True,
+                },
+            )
+            print("payment completed", intent)
+            return Response({
+                'clientSecret': intent['client_secret']
+            })
+        except Exception as e:
+            return Response("error")
+
+class ManagePaymentView(APIView):
+
+    def post(self, request):
+        stripe_id = request.data.get("stripe_id")
+        consultation_id = request.data.get("consultation_id")
+        status = request.data.get("status")
+        consultation = ConsultationModel.objects.get(id=consultation_id)
+        amount = consultation.amount
+        payment = PaymentModel.objects.create(consultation=consultation, stripe_id=stripe_id, amount = amount, status=status)
+        return Response("Payment Created with ID: ", payment.id)

@@ -27,8 +27,8 @@ class EmailView(APIView):
         isRegistered = User.objects.filter(email=email)
         print(isRegistered)
         if not isRegistered:
-            user = User.objects.create_user(username=email, email=email, password=otp)
-            auth = authenticate(username=email, password=otp)
+            user = User.objects.create_user(username=email, email=email, password=password_)
+            auth = authenticate(username=email, password=password_)
             print("auth",auth)
             user.save()
             doctor = DoctorModel.objects.create(user=user)
