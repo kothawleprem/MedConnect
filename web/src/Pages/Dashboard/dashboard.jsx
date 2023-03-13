@@ -4,8 +4,11 @@ import { Container, Row, Col} from "react-bootstrap";
 import { useMediaQuery } from "react-responsive";
 import './dashboard.css'
 
+
 import Sidebar from "../../components/Dashboard/Sidebar/Sidebar";
 import ContentMain from "../../components/Dashboard/Content/ContentMain";
+import Dcform from "../../dcform";
+
 
 const Dashboard = () => {
   return (
@@ -19,7 +22,11 @@ const Dashboard = () => {
             sm={6}
             className="sidebar-wrapper"
           >
+            
+           
             <Sidebar/>
+            
+            
           </Col>
           <Col
             xl={9}
@@ -29,6 +36,8 @@ const Dashboard = () => {
             className="content-wrapper"
           
           >
+
+
             <ContentMain/>
           </Col>
         </Row>

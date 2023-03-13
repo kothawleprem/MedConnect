@@ -15,6 +15,7 @@ import Formview from "./components/Formview";
 import Dashboard from "./Pages/Dashboard/dashboard";
 import EditSlotRemarks from "./Pages/Consultation/EditSlotRemarks";
 
+
 function App() {
   return (
     <Router>
@@ -31,6 +32,7 @@ function App() {
         <Route path="/formview" element={<Formview />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/editslotremarks" element={<EditSlotRemarks />} />
+
 
         {/* <Route path="/time" element={<Time />} /> */}
       </Routes>

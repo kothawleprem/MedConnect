@@ -2,7 +2,7 @@ import React from 'react'
 import { Button, Nav } from "react-bootstrap";
 import { FaHome, FaUser, FaCog,FaClipboardList } from "react-icons/fa";
 import { MdPayment } from "react-icons/md";
-
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import { useMediaQuery } from "react-responsive";
 import './Sidebar.css'
 
@@ -10,6 +10,7 @@ import './Sidebar.css'
 const Sidebar = () => {
   const isMobile = useMediaQuery({ maxWidth: 767 });
   return (
+   
     <div className="side-bar" >
       {/* <img
         alt=""
@@ -22,7 +23,7 @@ const Sidebar = () => {
       <p  style={{fontSize:'1.8rem',fontWeight:'900',color:'white',marginTop:"8px"}}><span style={{color:'orange'}}>Med</span>Connect</p>
       <Nav className="flex-column sidebar " expand="lg" fixed="left">
         <div className="sidemenu">
-          <Nav.Link className="sidemenu" href="#">
+          <Nav.Link className="sidemenu" to="/">
             <FaHome className="mr-2" /> {isMobile ? null : "Dashboard"}
           </Nav.Link>
         </div>
@@ -52,6 +53,7 @@ const Sidebar = () => {
         </div>
       </Nav>
     </div>
+    
   );
 };
 
