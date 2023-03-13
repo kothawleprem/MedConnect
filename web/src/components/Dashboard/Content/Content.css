@@ -98,3 +98,29 @@ border-radius: '10px';
   
  
 }
+
+.appt-table{
+    
+  flex-direction: row;
+   
+}
+
+.view-butt{
+    border-radius: 20px;
+    background-color:#6970f1;
+    width: 8rem; 
+    border-color: #7076e8;
+    font-weight: 600;
+    margin-bottom: 5px;
+    
+}
+
+
+
+.view-butt:hover{
+    background-color:#6970f1;
+    color:'black';
+    
+}
+
+
