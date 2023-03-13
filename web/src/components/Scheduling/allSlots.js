@@ -74,16 +74,17 @@ const AllSlots = () => {
           Authorization: `Token ${token}`,
         },
       };
-      axios.get(
-        `http://127.0.0.1:8000/api/consultation/slot_list/`, config
-      ).then( response => {
-        const data = response.data;
-        console.log(response);
-        setTodaySlots(data[0]);
-        setTommorowSlots(data[1])
-      }
-        
-      )
+      axios
+        .get(
+          `http://127.0.0.1:8000/api/consultation/slot_list/?status=None`,
+          config
+        )
+        .then((response) => {
+          const data = response.data;
+          console.log(response);
+          setTodaySlots(data[0]);
+          setTommorowSlots(data[1]);
+        });
         // fetch(
         //   `http://127.0.0.1:8000/api/consultation/slot_list/?doctor_id=3&date=2023-01-26`
         // ).then(async (response) => {

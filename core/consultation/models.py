@@ -18,6 +18,14 @@ class ConsultationModel(models.Model):
     patient_file = models.FileField(null=True)
     room_id = models.CharField(max_length=255, null=True)
     remarks = models.TextField(null=True)
+    amount = models.IntegerField(default=0)
+
+class PaymentModel(models.Model):
+    consultation = models.ForeignKey(ConsultationModel, models.CASCADE)
+    amount = models.IntegerField(default=0)
+    stripe_id = models.CharField(max_length=255)
+    status = models.CharField(max_length=255)
+
 
 class PrescriptionModel(models.Model):
     consultation = models.ForeignKey(ConsultationModel, models.CASCADE)
