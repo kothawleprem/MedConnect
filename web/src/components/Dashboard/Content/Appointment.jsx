@@ -57,13 +57,8 @@ const Appointment = () => {
 
 
 
-<<<<<<< HEAD
 {slot.map((slot) => (
         <Card  className='appoint-card' style={{margin:'5px'}}>
-=======
-{data.map((user) => (
-        <Card  className='appoint-card' style={{margin:'5px'}} key={user.id}>
->>>>>>> 3e98574e0f8f548f7a6f1c60b4164484f518cbc7
           <Card.Body  >
             <Row> 
           
