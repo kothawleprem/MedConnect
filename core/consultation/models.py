@@ -19,6 +19,7 @@ class ConsultationModel(models.Model):
     room_id = models.CharField(max_length=255, null=True)
     remarks = models.TextField(null=True)
     amount = models.IntegerField(default=0)
+    completed = models.BooleanField(default=False)
 
 class PaymentModel(models.Model):
     consultation = models.ForeignKey(ConsultationModel, models.CASCADE)
