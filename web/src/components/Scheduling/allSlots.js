@@ -106,9 +106,8 @@ const AllSlots = () => {
             {todaySlots.length > 0 ? (
               <>
                 {todaySlots.map((slot) => (
-                  <>
-                    <Card style={{ width: "18rem" }}>
-                      <ListGroup.Item key={slot.slot_id}>
+                    <Card style={{ width: "18rem" }} key={slot.slot_id}>
+                      <ListGroup.Item>
                         {" "}
                         {slot.start_time} {slot.end_time} <br />
                         <Button onClick={() => handleEditClick(slot.slot_id)}>
@@ -132,8 +131,8 @@ const AllSlots = () => {
 
                       <br />
                     </Card>
-                    <br />
-                  </>
+                 
+
                 ))}
               </>
             ) : (

@@ -22,6 +22,20 @@ const DashRecentPatients = () => {
       console.log(data)
     })
   }, [])
+
+  const renderTableRows = () => {
+    return patients.map((patient) => {
+      return (
+        <tr key={patient.patient_id}>
+          <td>{patient.patient_name}</td>
+          <td>{patient.consultation_id}</td>
+          <td>{patient.date}</td>
+          <td>{patient.city}</td>
+          <td>View</td>
+        </tr>
+      );
+    });
+  };
   return (
     <div>
       <Card>
@@ -37,50 +51,22 @@ const DashRecentPatients = () => {
             </tr>
           </thead>
           <tbody className="ap-table">
-            <tr>
+          {patients !== undefined ? renderTableRows() : <></> }
+            {/* {renderTableRows()} */}
+            {/* <tr>
               <td>
-                {/* <img
+                <img
                   alt=""
                   src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
                   className="appoint-img"
-                /> */}
+                />
                 Jhon dev
               </td>
               <td>OPS-234</td>
               <td>5/3/23</td>
               <td>Male</td>
               <td>Diabetes</td>
-            </tr>
-
-            <tr>
-              <td>
-                {/* <img
-                  alt=""
-                  src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                  className="appoint-img"
-                /> */}
-                Jhon dev
-              </td>
-              <td>OPS-234</td>
-              <td>5/3/23</td>
-              <td>Male</td>
-              <td>Diabetes</td>
-            </tr>
-
-            <tr>
-              <td>
-                {/* <img
-                  alt=""
-                  src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                  className="appoint-img"
-                /> */}
-                Jhon dev
-              </td>
-              <td>OPS-234</td>
-              <td>5/3/23</td>
-              <td>Male</td>
-              <td>Diabetes</td>
-            </tr>
+            </tr> */}
           </tbody>
         </Table>
       </Card>

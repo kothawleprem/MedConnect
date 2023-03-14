@@ -10,7 +10,6 @@ from patients.models import PatientModel, PatientProfileModel
 from .models import ConsultationModel, SlotModel, PaymentModel
 from doctors.models import DoctorModel, DoctorProfileModel
 
-
 from .prescription import generate_prescription
 import datetime
 
@@ -23,7 +22,6 @@ stripe.api_key = 'sk_test_51MkrgDSEJKAQ1ZUPYt1TtU75zyAODRkI7DMcgHyA6rSUxqqWjWlLZ
 
 
 class SlotView(APIView):
-
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
@@ -51,7 +49,7 @@ class SlotView(APIView):
         req_st = time(int(start_time[0:2]), int(start_time[3:5]), 00)
         req_et = time(int(end_time[0:2]), int(end_time[3:5]), 00)
         print(req_st, req_et)
-        if(req_st >= req_et):
+        if (req_st >= req_et):
             response = {
                 "message": "Invalid Time Slot",
             }
@@ -120,8 +118,6 @@ class SlotView(APIView):
         }
         return Response(response, status=status.HTTP_202_ACCEPTED)
 
-
-
     def delete(self, request):
         user = request.user
         doctor = DoctorModel.objects.get(user=user)
@@ -157,31 +153,42 @@ class SlotListView(APIView):
         today = datetime.date.today()
         tomorrow = today + datetime.timedelta(days=1)
         today_slots = SlotModel.objects.filter(doctor=doctor, date=today).values('id', 'start_time',
-                                                                                      'end_time','status').order_by('start_time')
+                                                                                 'end_time', 'status').order_by(
+            'start_time')
         tomorrow_slots = SlotModel.objects.filter(doctor=doctor, date=tomorrow).values('id', 'start_time',
-                                                                                        'end_time','status').order_by(
+                                                                                       'end_time', 'status').order_by(
             'start_time')
         response = []
         today_response = []
         tomorrow_response = []
+
         print(status)
         if status == "True":
+            limit_t = 3
             print("in true")
             for t in today_slots:
-                if t['status'] is True:
+                if limit_t > 0 and t['status'] is True:
                     consultation = ConsultationModel.objects.get(slot__id=t['id'])
+                    patient = consultation.patient
+                    patient_profile = PatientProfileModel.objects.get(patient=patient)
                     res = {
                         'slot_id': t['id'],
+                        "patient_name": patient_profile.first_name + " " + patient_profile.last_name,
                         'start_time': t['start_time'],
                         'end_time': t['end_time'],
                         'status': t['status']
                     }
                     today_response.append(res)
+                    limit_t -= 1
             response.append(today_response)
             for t in tomorrow_slots:
                 if t['status'] is True:
+                    consultation = ConsultationModel.objects.get(slot__id=t['id'])
+                    patient = consultation.patient
+                    patient_profile = PatientProfileModel.objects.get(patient=patient)
                     res = {
                         'slot_id': t['id'],
+                        "patient_name": patient_profile.first_name + " " + patient_profile.last_name,
                         'start_time': t['start_time'],
                         'end_time': t['end_time'],
                         'status': t['status']
@@ -189,19 +196,22 @@ class SlotListView(APIView):
                     tomorrow_response.append(res)
             response.append(tomorrow_response)
         elif status == "False":
-            print("in false")
+            limit_f = 9
             for t in today_slots:
-                if t['status'] is False:
+                st = str(t['start_time'])
+                et = str(t['end_time'])
+                if limit_f > 0 and t['status'] is False:
                     res = {
                         'slot_id': t['id'],
-                        'start_time': t['start_time'],
-                        'end_time': t['end_time'],
+                        'start_time': st[:-3],
+                        'end_time': et[:-3],
                         'status': t['status']
                     }
                     today_response.append(res)
+                    limit_f -= 1
             response.append(today_response)
             for t in tomorrow_slots:
-                if t['status'] is False:
+                if limit_f > 0 and t['status'] is False:
                     res = {
                         'slot_id': t['id'],
                         'start_time': t['start_time'],
@@ -209,6 +219,7 @@ class SlotListView(APIView):
                         'status': t['status']
                     }
                     tomorrow_response.append(res)
+                    limit_f -= 1
             response.append(tomorrow_response)
         else:
             print("in none")
@@ -316,6 +327,7 @@ class PrescriptionView(APIView):
         }
         return Response(response, status=status.HTTP_201_CREATED)
 
+
 class PaymentView(APIView):
 
     def post(self, request):
@@ -336,6 +348,7 @@ class PaymentView(APIView):
         except Exception as e:
             return Response("error")
 
+
 class ManagePaymentView(APIView):
 
     def post(self, request):
@@ -344,8 +357,10 @@ class ManagePaymentView(APIView):
         status = request.data.get("status")
         consultation = ConsultationModel.objects.get(id=consultation_id)
         amount = consultation.amount
-        payment = PaymentModel.objects.create(consultation=consultation, stripe_id=stripe_id, amount = amount, status=status)
+        payment = PaymentModel.objects.create(consultation=consultation, stripe_id=stripe_id, amount=amount,
+                                              status=status)
         return Response("Payment Created with ID: ", payment.id)
+
 
 class DoctorPatientView(APIView):
     # all patients associated with that doctor
@@ -356,11 +371,12 @@ class DoctorPatientView(APIView):
         all_consultations = ConsultationModel.objects.filter(doctor=doctor).order_by("-id")
         response = []
         for consultation in all_consultations:
-            if(limit > 0):
+            if limit > 0 and consultation.completed is True:
                 patient = consultation.patient
                 patient_profile = PatientProfileModel.objects.get(patient=patient)
                 slot = consultation.slot
                 res = {
+                    "patient_id": patient.id,
                     "patient_name": patient_profile.first_name + " " + patient_profile.last_name,
                     "consultation_id": consultation.id,
                     "date": slot.date,

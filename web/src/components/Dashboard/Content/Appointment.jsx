@@ -43,7 +43,7 @@ const Appointment = () => {
 
 
 {data.map((user) => (
-        <Card  className='appoint-card' style={{margin:'5px'}}>
+        <Card  className='appoint-card' style={{margin:'5px'}} key={user.id}>
           <Card.Body  >
             <Row> 
           
