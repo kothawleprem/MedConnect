@@ -17,6 +17,7 @@ import EditSlotRemarks from "./Pages/Consultation/EditSlotRemarks";
 import Payments from "./Pages/Payments/Payments";
 import CapturePayments from "./Pages/Payments/CapturePayments";
 
+
 function App() {
   return (
     <Router>
@@ -36,6 +37,7 @@ function App() {
         <Route path="/payments" element={<Payments />} />
         <Route path="/capturePayments" element={<CapturePayments />} />
         
+
 
         {/* <Route path="/time" element={<Time />} /> */}
       </Routes>
