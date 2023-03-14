@@ -1,9 +1,27 @@
 import React from 'react'
 import { Row, Col, Card } from "react-bootstrap";
 import Table from 'react-bootstrap/Table';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 
 const DashRecentPatients = () => {
+  const [patients, setPatients] = useState()
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Token ${token}`,
+      },
+    };
+    axios.get("http://127.0.0.1:8000/api/consultation/patients/?limit=3", config)
+    .then(function(response) {
+      const data = response.data
+      setPatients(data)
+      console.log(data)
+    })
+  }, [])
   return (
     <div>
       <Card>
