@@ -2,7 +2,7 @@ import React from 'react'
 import { Button, Nav } from "react-bootstrap";
 import { FaHome, FaUser, FaCog,FaClipboardList } from "react-icons/fa";
 import { MdPayment } from "react-icons/md";
-
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import { useMediaQuery } from "react-responsive";
 import './Sidebar.css'
 
@@ -83,6 +83,7 @@ const Sidebar = (props) => {
         </div>
       </Nav>
     </div>
+    
   );
 };
 
