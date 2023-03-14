@@ -1,24 +1,39 @@
-import React, {useState} from 'react'
+import React from 'react'
 import Card from 'react-bootstrap/Card';
-import Table from 'react-bootstrap/Table';
-import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col'
 import { Button } from "react-bootstrap";
+import { useNavigate } from 'react-router-dom';
 
 
-const data = [
-  { id: 1, name: "John Doe", time:"ongoing",type:"Clinic Consulting" },
-  { id: 2,  name: "Shubham saroj", time:"11:30",type:"Clinic Consulting" },
-  { id: 3,  name: "Onkar d vidhte", time:"12:30",type:"Emergency" },
-  { id: 4,  name: "Onkar d vidhte", time:"12:30",type:"Emergency" },
-  { id: 5,  name: "Onkar d vidhte", time:"12:30",type:"Emergency" },
-  { id: 6,  name: "Onkar d vidhte", time:"12:30",type:"Emergency" },
+
+const slot = [
+  { slot_id: 1, name: "John Doe", time:"ongoing",type:"Clinic Consulting" },
+  { slot_id: 2,  name: "Shubham saroj", time:"11:30",type:"Clinic Consulting" },
+  { slot_id: 3,  name: "Onkar d vidhte", time:"12:30",type:"Emergency" },
+  { slot_id: 4,  name: "Onkar d vidhte", time:"12:30",type:"Emergency" },
+  { slot_id: 5,  name: "Onkar d vidhte", time:"12:30",type:"Emergency" },
+  { slot_id: 6,  name: "Onkar d vidhte", time:"12:30",type:"Emergency" },
 ];
 
 
 const Appointment = () => {
-  const [view, setView] = useState(true)
+  const navigate = useNavigate();
+
+  
+
+  const handleSubmit = (slot_id) => {
+    console.log(slot_id)
+    navigate("/viewappointments", {
+      state: {
+        slot_id: slot_id,
+      },
+    });
+  }
+
+
+
+  
   return (
     <div>
         <Card> 
@@ -33,7 +48,7 @@ const Appointment = () => {
         <Col>Patient Name</Col>
         <Col>Type</Col>
         <Col>Time</Col>
-        <Col>Status</Col>
+        <Col>View</Col>
      
       </Row>
       </Card.Body> 
@@ -42,16 +57,16 @@ const Appointment = () => {
 
 
 
-{data.map((user) => (
+{slot.map((slot) => (
         <Card  className='appoint-card' style={{margin:'5px'}}>
           <Card.Body  >
             <Row> 
           
-          <Col> <Card.Subtitle>{user.name}</Card.Subtitle></Col>
-          <Col><Card.Subtitle>{user.time}</Card.Subtitle></Col>
-          <Col><Card.Subtitle>{user.type}</Card.Subtitle></Col>
+          <Col> <Card.Subtitle>{slot.name}</Card.Subtitle></Col>
+          <Col><Card.Subtitle>{slot.time}</Card.Subtitle></Col>
+          <Col><Card.Subtitle>{slot.type}</Card.Subtitle></Col>
           <Col><Card.Subtitle> 
-          <Button  className='view-butt'> view </Button>
+          <Button onClick={() => handleSubmit(slot.slot_id)}  className='view-butt'> view </Button>
             
             </Card.Subtitle></Col>
 
