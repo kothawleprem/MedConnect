@@ -8,7 +8,11 @@ export default function ViewAppointment() {
     
     <div>
        <Link to="/dashboard">back to dashboard </Link>
-      ViewAppointment{state.slot_id}</div>
+           ViewAppointment{state.slot_id}
+      
+      
+      
+      </div>
 
   )
 }
