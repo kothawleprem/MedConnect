@@ -7,7 +7,7 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
 from patients.models import PatientModel, PatientProfileModel
-from .models import ConsultationModel, SlotModel, PaymentModel
+from .models import ConsultationModel, SlotModel, PaymentModel, PrescriptionModel
 from doctors.models import DoctorModel, DoctorProfileModel
 
 from .prescription import generate_prescription
@@ -149,6 +149,10 @@ class SlotListView(APIView):
     def get(self, request):
         user = request.user
         status = request.GET["status"]
+        print(request.GET)
+        limit = 100
+        if "limit" in request.GET:
+            limit = int(request.GET["limit"])
         doctor = DoctorModel.objects.get(user=user)
         today = datetime.date.today()
         tomorrow = today + datetime.timedelta(days=1)
@@ -164,36 +168,38 @@ class SlotListView(APIView):
 
         print(status)
         if status == "True":
-            limit_t = 3
+            count_t = 0
+            count_to = 0
             print("in true")
             for t in today_slots:
-                if limit_t > 0 and t['status'] is True:
+                if count_t < limit and t['status'] is True:
                     consultation = ConsultationModel.objects.get(slot__id=t['id'])
                     patient = consultation.patient
                     patient_profile = PatientProfileModel.objects.get(patient=patient)
                     res = {
-                        'slot_id': t['id'],
+                        'consultation_id': consultation.id,
                         "patient_name": patient_profile.first_name + " " + patient_profile.last_name,
                         'start_time': t['start_time'],
                         'end_time': t['end_time'],
                         'status': t['status']
                     }
                     today_response.append(res)
-                    limit_t -= 1
+                    count_t += 1
             response.append(today_response)
             for t in tomorrow_slots:
-                if t['status'] is True:
+                if count_to < limit and t['status'] is True:
                     consultation = ConsultationModel.objects.get(slot__id=t['id'])
                     patient = consultation.patient
                     patient_profile = PatientProfileModel.objects.get(patient=patient)
                     res = {
-                        'slot_id': t['id'],
+                        'consultation_id': consultation.id,
                         "patient_name": patient_profile.first_name + " " + patient_profile.last_name,
                         'start_time': t['start_time'],
                         'end_time': t['end_time'],
                         'status': t['status']
                     }
                     tomorrow_response.append(res)
+                    count_to += 1
             response.append(tomorrow_response)
         elif status == "False":
             limit_f = 9
@@ -388,3 +394,75 @@ class DoctorPatientView(APIView):
                 break
         print(response)
         return Response(response, status=status.HTTP_200_OK)
+
+
+class ConsultiationView(APIView):
+
+    def get(self, request):
+        # access: 1->doctor 2-> patient
+        access = request.GET["access"]
+        user = request.user
+        consultation_id = request.GET["consultation_id"]
+        consultation = ConsultationModel.objects.get(id=consultation_id)
+        slot = consultation.slot
+        patient = consultation.patient
+        patient_profile = PatientProfileModel.objects.get(patient=patient)
+        specialization = "Temp"
+        start_time = slot.start_time
+        end_time = slot.end_time
+        date = slot.date
+        patient_name = patient_profile.first_name + " " + patient_profile.last_name
+        patient_city = patient_profile.city
+        patient_gender = "Male"
+        remarks = consultation.remarks
+        amount = consultation.amount
+
+        # past consultation
+        previous_consultations = []
+        past_consultations = ConsultationModel.objects.filter(patient=patient)
+        if (len(past_consultations) > 0):
+            for con in past_consultations:
+                if con.id == consultation.id:
+                    continue
+                prescription = PrescriptionModel.objects.get(consultation=con)
+                res = {
+                    "consultation_id": con.id,
+                    "date": con.slot.date,
+                    "prescription_file": str(prescription.prescription_file),
+                    "remarks": con.remarks
+                }
+                previous_consultations.append(res)
+        print("past", previous_consultations)
+
+        response = {
+            'consultation_id': consultation_id,
+            'completed': consultation.completed,
+            'specialization': specialization,
+            'start_time': start_time,
+            'end_time': end_time,
+            'date': date,
+            'patient_name': patient_name,
+            "patient_age": 21,
+            'patient_city': patient_city,
+            'patient_gender': patient_gender,
+            'remarks': remarks,
+            'amount': amount,
+            'previous_consultations': previous_consultations
+        }
+        return Response(response, status=status.HTTP_200_OK)
+
+class ConsultationRemarksView(APIView):
+
+    def put(self, request):
+        consultation_id = request.data.get("consultation_id")
+        remarks = request.data.get("remarks")
+        try:
+            consultation = ConsultationModel.objects.get(id=consultation_id)
+        except:
+            return Response("Invalid Consultation Id", status=status.HTTP_404_NOT_FOUND)
+        consultation.remarks = remarks
+        consultation.save()
+        response = {
+            "message": "Remarks Updated"
+        }
+        return Response(response, status=status.HTTP_202_ACCEPTED)

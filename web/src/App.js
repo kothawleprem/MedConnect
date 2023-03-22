@@ -9,14 +9,14 @@ import Email from "./Pages/Onboarding/Email"
 import Verify from "./Pages/Onboarding/Verify";
 import Scheduling from "./components/Scheduling/scheduling";
 import Dcform from "./dcform";
-import Verification from "./components/Verification";
+// import Verification from "./components/Verification";
 import Status from "./components/Status";
 import Formview from "./components/Formview";
 import Dashboard from "./Pages/Dashboard/dashboard";
 import EditSlotRemarks from "./Pages/Consultation/EditSlotRemarks";
 import Payments from "./Pages/Payments/Payments";
 import CapturePayments from "./Pages/Payments/CapturePayments";
-import ViewAppointment from "./components/Dashboard/Content/ViewAppointment";
+import ViewAppointment from "./Pages/Consultation/ViewAppointment";
 
 
 function App() {

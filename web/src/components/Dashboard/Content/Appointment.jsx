@@ -1,82 +1,102 @@
-import React from 'react'
-import Card from 'react-bootstrap/Card';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col'
+import React, { useState, useEffect } from "react";
+import Card from "react-bootstrap/Card";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 import { Button } from "react-bootstrap";
-import { useNavigate } from 'react-router-dom';
-
-
-
-const slot = [
-  { slot_id: 1, name: "John Doe", time:"ongoing",type:"Clinic Consulting" },
-  { slot_id: 2,  name: "Shubham saroj", time:"11:30",type:"Clinic Consulting" },
-  { slot_id: 3,  name: "Onkar d vidhte", time:"12:30",type:"Emergency" },
-  { slot_id: 4,  name: "Onkar d vidhte", time:"12:30",type:"Emergency" },
-  { slot_id: 5,  name: "Onkar d vidhte", time:"12:30",type:"Emergency" },
-  { slot_id: 6,  name: "Onkar d vidhte", time:"12:30",type:"Emergency" },
-];
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 
 const Appointment = () => {
+  const [slots, setSlots] = useState();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Token ${token}`,
+      },
+    };
+    axios
+      .get(
+        "http://127.0.0.1:8000/api/consultation/slot_list/?status=True",
+        config
+      )
+      .then(function (response) {
+        const data = response.data;
+        setSlots(data[0]);
+        console.log(data[0]);
+      });
+  }, []);
+
   const navigate = useNavigate();
 
-  
-
-  const handleSubmit = (slot_id) => {
-    console.log(slot_id)
+  const handleSubmit = (consultation_id) => {
+    console.log(consultation_id);
     navigate("/viewappointments", {
       state: {
-        slot_id: slot_id,
+        consultation_id: consultation_id,
       },
     });
-  }
+  };
 
-
-
-  
   return (
     <div>
-        <Card> 
-      <Card.Body style={{padding:"10px"}}>
-        <p className='appoint-title'>Appointments</p>
+      <Card>
+        <Card.Body style={{ padding: "10px" }}>
+          <p className="appoint-title">Appointments</p>
         </Card.Body>
-     
 
-<Card className='appoint-card' style={{margin:'5px' ,backgroundColor:"aliceblue"}}>  
-  <Card.Body>  
-<Row>
-        <Col>Patient Name</Col>
-        <Col>Type</Col>
-        <Col>Time</Col>
-        <Col>View</Col>
-     
-      </Row>
-      </Card.Body> 
-      </Card>
-    
-
-
-
-{slot.map((slot) => (
-        <Card  className='appoint-card' style={{margin:'5px'}}>
-          <Card.Body  >
-            <Row> 
-          
-          <Col> <Card.Subtitle>{slot.name}</Card.Subtitle></Col>
-          <Col><Card.Subtitle>{slot.time}</Card.Subtitle></Col>
-          <Col><Card.Subtitle>{slot.type}</Card.Subtitle></Col>
-          <Col><Card.Subtitle> 
-          <Button onClick={() => handleSubmit(slot.slot_id)}  className='view-butt'> view </Button>
-            
-            </Card.Subtitle></Col>
-
-           </Row>
+        <Card
+          className="appoint-card"
+          style={{ margin: "5px", backgroundColor: "aliceblue" }}
+        >
+          <Card.Body>
+            <Row>
+              <Col>Patient Name</Col>
+              <Col>Type</Col>
+              <Col>Time</Col>
+              <Col>View</Col>
+            </Row>
           </Card.Body>
         </Card>
-         ))}
-    </Card>
-    </div>
-  )
-}
 
-export default Appointment
+        {slots !== undefined &&
+          slots.map((slot) => (
+            <Card
+              className="appoint-card"
+              style={{ margin: "5px" }}
+              key={slot.consultation_id}
+            >
+              <Card.Body>
+                <Row>
+                  <Col>
+                    <Card.Subtitle>{slot.patient_name}</Card.Subtitle>
+                  </Col>
+                  <Col>
+                    <Card.Subtitle>{slot.start_time}</Card.Subtitle>
+                  </Col>
+                  <Col>
+                    <Card.Subtitle>Need to Define</Card.Subtitle>
+                  </Col>
+                  <Col>
+                    <Card.Subtitle>
+                      <Button
+                        onClick={() => handleSubmit(slot.consultation_id)}
+                        className="view-butt"
+                      >
+                        view
+                      </Button>
+                    </Card.Subtitle>
+                  </Col>
+                </Row>
+              </Card.Body>
+            </Card>
+          ))}
+      </Card>
+    </div>
+  );
+};
+
+export default Appointment;
