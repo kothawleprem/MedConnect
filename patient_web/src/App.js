@@ -8,6 +8,8 @@ import Book from "./components/Book";
 
 import Email from "./Pages/Onboarding/Email";
 import Verify from "./Pages/Onboarding/Verify";
+import Dashboard from "./Pages/Dashboard/dashboard";
+import Consultation from "./Pages/Consultation/Consultation";
 
 
 
@@ -22,6 +24,11 @@ function App() {
       <Route path="/bookapointment" element={<Book />}/> */}
           <Route path="/verify" element={<Verify />} />
           <Route path="/email" element={<Email />} />
+          <Route path="/consultation" element={<Consultation />} />
+
+          {/* <Route path="/dashboard" element={<Dashboard />} /> */}
+
+
         </Routes>
       </Router>
     </>
