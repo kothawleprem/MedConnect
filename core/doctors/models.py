@@ -2,6 +2,11 @@ from django.db import models
 from django.contrib.auth.models import User
 
 # Create your models here.
+class SpecializationModel(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
 
 class DoctorModel(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -9,6 +14,7 @@ class DoctorModel(models.Model):
 
 class DoctorProfileModel(models.Model):
     doctor = models.ForeignKey(DoctorModel, models.CASCADE)
+    specialization = models.ForeignKey(SpecializationModel, models.CASCADE, null=True)
     name = models.CharField(max_length=200, default="None")
     description = models.TextField()
     title = models.CharField(max_length=255, default="0")
@@ -18,7 +24,6 @@ class DoctorProfileModel(models.Model):
     state = models.CharField(max_length=100, null=True)
     files = models.URLField(null=True)
     video = models.URLField(null=True)
-    specialization = models.CharField(max_length=255, null=True)
     qualification = models.CharField(max_length=255, null=True)
     dob = models.DateField(null=True)
     gender = models.CharField(max_length=255, null=True)
