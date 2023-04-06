@@ -1,0 +1,39 @@
+/* .side{
+    margin-left: 59rem; 
+  } */
+  @media only screen and (min-width: 768px) and (max-width: 2500px) {
+    .side{
+        margin-left:965px;
+    } }
+
+  .navitem{
+    color: #fe7865;
+  }
+
+
+  .navitem:hover a{
+    color: #fe7865;
+  }
+  .header-area{
+    background-color: #ffffff;
+  
+
+  }
+
+  /* .header-area .navbar .navbar-nav .nav-item  {
+    font-size: 16px;
+    font-weight: 800;
+    color: #c82a2a;
+    -webkit-transition: all 0.4s ease-out 0s;
+    -moz-transition: all 0.4s ease-out 0s;
+    -ms-transition: all 0.4s ease-out 0s;
+    -o-transition: all 0.4s ease-out 0s;
+    transition: all 0.4s ease-out 0s; }
+  .header-area .navbar .navbar-nav .nav-item.active a, .header-area .navbar .navbar-nav .nav-item:hover a {
+    color: #fe7865; } */
+
+     
+
+  
+
+     
