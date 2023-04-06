@@ -32,10 +32,10 @@ export default function Header() {
                                 </li>
 
                                 <li className="nav-item">
-                                    <Link  style={{ textDecoration: 'none' }} to="/finddoctor">Find Doctors</Link>
+                                    <Link  style={{ textDecoration: 'none' }} to="/search">Find Doctors</Link>
                                 </li>
                                 <li className="nav-item">
-                                    < Link  style={{ textDecoration: 'none' }} to="/service">Video Consult</Link>
+                                    < Link  style={{ textDecoration: 'none' }} to="/bySpecialization">Specialization</Link>
                                 </li>
                 
                                 <li  className="nav-item">
