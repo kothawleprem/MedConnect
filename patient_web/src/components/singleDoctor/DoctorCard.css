@@ -1,0 +1,29 @@
+.button{
+    background-color: #fe7865;
+    border-color:#fe7865;
+   margin-top: 10px;
+   width: auto;
+   border-radius: 20px;
+}
+
+.doctorcard{
+    width: 21rem;
+}
+
+.exp{
+    height: 30px;
+    /* margin: 10px; */
+    width: auto;
+    align-content: center;
+    align-items: center;
+    border-radius: 10px;
+    text-align: center;
+}
+.dcimg{
+    /* height: 140px; */
+}
+.dctititle{
+font-weight: 600;
+color: black;
+
+}
