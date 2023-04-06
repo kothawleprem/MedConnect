@@ -8,7 +8,7 @@ import random
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 
-from doctors.models import DoctorProfileModel
+from doctors.models import DoctorProfileModel, SpecializationModel
 from .models import PatientModel, PatientProfileModel
 
 
@@ -71,7 +71,43 @@ class DoctorSearchView(APIView):
 
     def get(self, request):
         query = request.GET["query"]
-        print(query)
         queryset = DoctorProfileModel.objects.filter(name__icontains=query)
-        print(queryset)
-        return Response("ok")
+        response = []
+        if(queryset):
+            for q in queryset:
+                print(q.name, q.photo, q.city, q.specialization, q.qualification)
+                res = {
+                    "doctor_id": q.doctor.id,
+                    "name": q.name,
+                    "photo": q.photo,
+                    "city": q.city,
+                    "specialization": q.specialization,
+                    "qualification": q.qualification
+                }
+                response.append(res)
+            return Response(response, status=status.HTTP_200_OK)
+        else:
+            return Response("No Result", status=status.HTTP_200_OK)
+
+class DoctorsBySpecializationView(APIView):
+
+    def get(self, request):
+        specialization_name = request.GET["specialization"]
+        specialization = SpecializationModel.objects.get(name=specialization_name)
+        all_doctors = DoctorProfileModel.objects.filter(specialization=specialization)
+        response = []
+        if (all_doctors):
+            for q in all_doctors:
+                print(q.name, q.photo, q.city, q.specialization, q.qualification)
+                res = {
+                    "doctor_id": q.doctor.id,
+                    "name": q.name,
+                    "photo": q.photo,
+                    "city": q.city,
+                    "specialization": q.specialization.name,
+                    "qualification": q.qualification
+                }
+                response.append(res)
+            return Response(response, status=status.HTTP_200_OK)
+        else:
+            return Response("No Result", status=status.HTTP_200_OK)

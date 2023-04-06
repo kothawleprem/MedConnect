@@ -13,7 +13,7 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
 
-from .models import DoctorModel, DoctorProfileModel, DoctorVerificationModel
+from .models import DoctorModel, DoctorProfileModel, DoctorVerificationModel, SpecializationModel
 
 from core.emails import sendOTP
 
@@ -135,7 +135,8 @@ class DoctorProfileView(APIView):
             files = request.data.get("files")
             profile.files = files
         if request.data.get("specialization") is not None:
-            specialization = request.data.get("specialization")
+            specialization_name = request.data.get("specialization")
+            specialization = SpecializationModel.objects.get(name=specialization_name)
             profile.specialization = specialization
         if request.data.get("qualification") is not None:
             qualification = request.data.get("qualification")
