@@ -30,8 +30,10 @@ yarn-error.log*
 
 #Django
 /.venv
+/.idea
 /core/.env
-/core/.idea
+/core/.idea/
+/core/.venv
 /core/core/__pycache__
 /core/doctors/__pycache__
 /core/doctors/migrations
@@ -49,3 +51,4 @@ server/node_modules
 /templates
 
 data.txt
+
