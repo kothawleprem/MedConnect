@@ -1,0 +1,168 @@
+.statscard{
+   margin: 10px;
+  flex-direction: column;
+  
+}
+
+.stats-title{
+    margin: 10px;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.stats-total{
+    
+    font-size: 2.3rem;
+    color: black;
+    margin-left: 10px;
+
+}
+.stats-link{
+    margin-top: -40px;
+    /* margin: 9px; */
+   margin-left: 120px;
+   color: #5041BC;
+   text-decoration-line: underline; 
+  
+
+}
+
+.stats-links{
+ 
+}
+
+.stats-green{
+    color: green;
+    margin-left: 10px;
+    
+}
+.stats-icon{
+    margin-top: -45px;
+    margin-left: 155px;
+    height: 30px;
+    width: 30px;
+
+}
+
+.appoint{
+    display: flex;
+  flex-direction: colum;
+}
+
+.appoint-title{
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: black;
+}
+
+.appoint-img{
+    width: 2rem;
+    height: 2rem;
+    border-radius: 30px;
+}
+
+.appoint-card{
+    background-color: #fefefe;
+   
+}
+
+.appoint-card :hover{
+    background-color: #E9F6FE;
+    /* border-color: #E9F6FE; */
+}
+
+.slot-button{
+height: '50px';
+background-color: #5041BC;
+border-radius: '10px';
+
+
+}
+
+.st-butt{
+    /* border-radius: '10rem'; */
+    background-color:#1B1C2D;
+    /* width: 9rem;  */
+    border-color: #1B1C2D;
+    font-weight: 600;
+    margin-bottom: 5px;
+    
+}
+
+.st-butticon{
+    width: 1.8rem;
+    height: 1.8rem;
+    /* margin-left: 0.8rem; */
+}
+
+.ap-table{
+    background-color: aliceblue;
+  
+ 
+}
+
+.appt-table{
+    
+  flex-direction: row;
+   
+}
+
+.view-butt{
+    border-radius: 20px;
+    background-color:#6970f1;
+    width: 8rem; 
+    border-color: #7076e8;
+    font-weight: 600;
+    margin-bottom: 5px;
+    
+}
+
+
+
+.view-butt:hover{
+    background-color:#6970f1;
+    color:'black';
+    
+}
+
+.spl-buttn{
+   width: 6rem;
+   height: 2rem;
+   border: 2px solid #EEEE;
+    background-color: rgb(250, 250, 250);
+    color: #EEEE;
+   border-radius: 35px;
+    font-weight: 400;
+    align-items: center;
+    align-content: center;
+    margin: 5px;
+    font-size: 15px;
+   
+    
+   
+}
+
+.glass{
+
+    background-image:linear-gradient(to bottom right, rgba(255,255,255,0.2), rgba(255,255,255,0));
+    backdrop-filter: "blur(10px)"; 
+    box-shadow: 5px 5px 5px rgba(167, 167, 167, 0.5);
+
+}
+
+.profileCard{
+}
+
+.boldtext{
+    font-weight: 500;
+    color: black;
+}
+
+.profilebtn{
+    border-radius: 30px;
+    width: auto;
+    border: 2px solid rgb(93, 93, 93);
+    margin: 2px;
+   
+
+}

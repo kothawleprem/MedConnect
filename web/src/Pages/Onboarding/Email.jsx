@@ -52,16 +52,17 @@ const Email = () => {
           }
         };
 
-        axios.post('http://127.0.0.1:8000/api/doctors/email/', data, config)
-          .then(response => {
-            console.log(response.data)
+        axios
+          .post("http://127.0.0.1:8000/api/patients/email/", data, config)
+          .then((response) => {
+            console.log(response.data);
             navigate("/otp", {
-            state: {
-              email: email["email"],
-            },
-          });
-        })
-        .catch(error => console.log(error));
+              state: {
+                email: email["email"],
+              },
+            });
+          })
+          .catch((error) => console.log(error));
       };
   }
   return (

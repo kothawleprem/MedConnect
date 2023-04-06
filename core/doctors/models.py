@@ -9,8 +9,7 @@ class DoctorModel(models.Model):
 
 class DoctorProfileModel(models.Model):
     doctor = models.ForeignKey(DoctorModel, models.CASCADE)
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
+    name = models.CharField(max_length=200, default="None")
     description = models.TextField()
     title = models.CharField(max_length=255, default="0")
     reg_no = models.CharField(max_length=255, default="0")

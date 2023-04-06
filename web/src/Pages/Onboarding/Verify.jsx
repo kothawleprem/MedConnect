@@ -58,41 +58,43 @@ const Verify = () => {
           }
         };
 
-        axios.post('http://127.0.0.1:8000/api/doctors/verify_email/', data, config)
-          .then(response => {
-            const data = response.data
-            console.log(response.data)
+        axios
+          .post(
+            "http://127.0.0.1:8000/api/patients/verify_email/",
+            data,
+            config
+          )
+          .then((response) => {
+            const data = response.data;
+            console.log(response.data);
             status = response.status;
             if (status === 200) {
               var token = data["token"];
               localStorage.setItem("token", token);
               var verified = data["verified"];
               var hasReq = data["hasReq"];
-              if (verified === false){
-                if( hasReq === 0){
+              if (verified === false) {
+                if (hasReq === 0) {
                   navigate("/dcform", {
                     state: {
                       email: email,
                     },
                   });
-                }
-                else{
+                } else {
                   navigate("/status", {
                     state: {
                       email: email,
                     },
                   });
                 }
-              }
-              else{
+              } else {
                 navigate("/scheduling", {
                   state: {
                     email: email,
                   },
                 });
               }
-            } 
-            else {
+            } else {
               console.log("incorrect otp");
               toast.warn("Incorrect OTP!", {
                 position: "top-right",
@@ -111,7 +113,7 @@ const Verify = () => {
               });
             }
           })
-          .catch(error => console.log(error));
+          .catch((error) => console.log(error));
 
 
       }

@@ -3,13 +3,12 @@ from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.authtoken.models import Token
 
-import os
 import random
-from cryptography.fernet import Fernet
 
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 
+from doctors.models import DoctorProfileModel
 from .models import PatientModel, PatientProfileModel
 
 
@@ -45,6 +44,7 @@ class VerifyEmailView(APIView):
         email = request.data.get("email")
         otp = request.data.get("otp")
         user = User.objects.get(email=email)
+        print(user)
         patient = PatientModel.objects.get(user=user)
         user_ = authenticate(request, username=email, password=str(otp))
         if not user_:
@@ -66,3 +66,12 @@ class VerifyEmailView(APIView):
             "token": token.key,
         }
         return Response(response, status=status.HTTP_200_OK)
+
+class DoctorSearchView(APIView):
+
+    def get(self, request):
+        query = request.GET["query"]
+        print(query)
+        queryset = DoctorProfileModel.objects.filter(name__icontains=query)
+        print(queryset)
+        return Response("ok")
