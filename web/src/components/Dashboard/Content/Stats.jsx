@@ -15,7 +15,11 @@ const Stats = () => {
         
           <Card.Subtitle className="stats-title">Total Unique Patients</Card.Subtitle>
           <Card.Title className='stats-total'>251</Card.Title>
-          <FaBeer size={30} className='stats-icon' />
+
+          {/* <FaBeer size={30} className='stats-icon' /> */}
+
+          <img src="https://cdn-icons-png.flaticon.com/512/3358/3358902.png" className='stats-icon' />
+
           <div className='stats-links'> 
          
           <p className='stats-green'> 15%</p>
@@ -33,9 +37,11 @@ const Stats = () => {
         
         <Card.Subtitle className="stats-title">Total Patient Interactions</Card.Subtitle>
         <Card.Title className='stats-total'>251</Card.Title>
-        <FaBeer size={30} className='stats-icon' />
+        <img src="https://cdn-icons-png.flaticon.com/512/1988/1988907.png" className='stats-icon' />
+
+        {/* <FaBeer size={30} className='stats-icon' /> */}
         <div className='stats-links'> 
-       
+
         <p className='stats-green'> 15%</p>
         <Link to='/'>  
         <p className='stats-link'>View Report</p>
@@ -50,7 +56,9 @@ const Stats = () => {
         
         <Card.Subtitle className="stats-title">Total Appointments</Card.Subtitle>
         <Card.Title className='stats-total'>251</Card.Title>
-        <FaBeer size={30} className='stats-icon' />
+        <img src="https://cdn-icons-png.flaticon.com/512/7269/7269814.png" className='stats-icon' />
+
+        {/* <FaBeer size={30} className='stats-icon' /> */}
         <div className='stats-links'> 
        
         <p className='stats-green'> 15%</p>
@@ -68,7 +76,9 @@ const Stats = () => {
         
         <Card.Subtitle className="stats-title">Total Appointments</Card.Subtitle>
         <Card.Title className='stats-total'>251</Card.Title>
-        <FaBeer size={30} className='stats-icon' />
+        <img src="https://cdn-icons-png.flaticon.com/512/3358/3358902.png" className='stats-icon' />
+
+        {/* <FaBeer size={30} className='stats-icon' /> */}
         <div className='stats-links'> 
        
         <p className='stats-green'> 15%</p>
