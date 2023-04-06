@@ -249,3 +249,33 @@ class DoctorRequestVerificationView(APIView):
 
         return Response(response, status=status.HTTP_200_OK)
 
+
+class DoctorSetAvailabilityView(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        try:
+            user = request.user
+            print(user)
+            doctor = DoctorModel.objects.get(user=user)
+        except:
+            return Response("Doctor Not Found", status=status.HTTP_404_NOT_FOUND)
+        isAvailable = doctor.isAvailable
+        response = {
+            "isAvailable": isAvailable
+        }
+        return Response(response, status=status.HTTP_200_OK)
+
+    def put(self, request):
+        try:
+            user = request.user
+            print(user)
+            doctor = DoctorModel.objects.get(user=user)
+        except:
+            return Response("Doctor Not Found", status=status.HTTP_404_NOT_FOUND)
+        available = request.data.get("isAvailable")
+        doctor.isAvailable = available
+        doctor.save()
+        return Response("Availability Set", status=status.HTTP_202_ACCEPTED)
+

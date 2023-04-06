@@ -18,7 +18,7 @@ import os
 import stripe
 
 # This is your test secret API key.
-stripe.api_key = 'sk_test_51MkrgDSEJKAQ1ZUPYt1TtU75zyAODRkI7DMcgHyA6rSUxqqWjWlLZN8QCXS9SAXm1XLnNwnK7lD4OLWGhXWmCy4i00DP31GbYb'
+# stripe.api_key = 'sk_test_51MkrgDSEJKAQ1ZUPYt1TtU75zyAODRkI7DMcgHyA6rSUxqqWjWlLZN8QCXS9SAXm1XLnNwnK7lD4OLWGhXWmCy4i00DP31GbYb'
 
 
 class SlotView(APIView):
@@ -466,3 +466,4 @@ class ConsultationRemarksView(APIView):
             "message": "Remarks Updated"
         }
         return Response(response, status=status.HTTP_202_ACCEPTED)
+

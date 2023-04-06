@@ -10,6 +10,7 @@ class SpecializationModel(models.Model):
 
 class DoctorModel(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    isAvailable = models.BooleanField(default=False)
     verified = models.BooleanField(default=False)
 
 class DoctorProfileModel(models.Model):

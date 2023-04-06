@@ -81,7 +81,7 @@ class DoctorSearchView(APIView):
                     "name": q.name,
                     "photo": q.photo,
                     "city": q.city,
-                    "specialization": q.specialization,
+                    "specialization": q.specialization.name,
                     "qualification": q.qualification
                 }
                 response.append(res)
