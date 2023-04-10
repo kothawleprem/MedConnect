@@ -60,7 +60,7 @@ const Verify = () => {
 
         axios
           .post(
-            "http://127.0.0.1:8000/api/patients/verify_email/",
+            "http://127.0.0.1:8000/api/doctors/verify_email/",
             data,
             config
           )

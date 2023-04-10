@@ -53,7 +53,7 @@ const Email = () => {
         };
 
         axios
-          .post("http://127.0.0.1:8000/api/patients/email/", data, config)
+          .post("http://127.0.0.1:8000/api/doctors/email/", data, config)
           .then((response) => {
             console.log(response.data);
             navigate("/otp", {

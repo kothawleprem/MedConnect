@@ -467,3 +467,6 @@ class ConsultationRemarksView(APIView):
         }
         return Response(response, status=status.HTTP_202_ACCEPTED)
 
+# class InstantDoctorView(APIView):
+#
+#     def

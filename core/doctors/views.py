@@ -104,12 +104,9 @@ class DoctorProfileView(APIView):
 
         profile = DoctorProfileModel.objects.get(doctor=doctor)
         print("date", request.data.get("dob"))
-        if request.data.get("first_name") is not None:
-            first_name = request.data.get("first_name")
-            profile.first_name = first_name
-        if request.data.get("last_name") is not None:
-            last_name = request.data.get("last_name")
-            profile.last_name = last_name
+        if request.data.get("name") is not None:
+            name = request.data.get("name")
+            profile.name = name
         if request.data.get("video") is not None:
             video = request.data.get("video")
             profile.video = video
@@ -176,8 +173,7 @@ class DoctorProfileView(APIView):
             return Response("Doctor Not Found", status=status.HTTP_404_NOT_FOUND)
 
         response = {
-            'first_name': doctor_profile.first_name,
-            'last_name': doctor_profile.last_name,
+            'name': doctor_profile.name,
             'description': doctor_profile.description,
             'city': doctor_profile.city,
             'title': doctor_profile.title,
@@ -186,7 +182,7 @@ class DoctorProfileView(APIView):
             'state': doctor_profile.state,
             'files': doctor_profile.files,
             'video': doctor_profile.video,
-            'specialization': doctor_profile.specialization,
+            'specialization': doctor_profile.specialization.name,
             'qualification': doctor_profile.qualification,
             'dob': doctor_profile.dob,
             'gender': doctor_profile.gender,
