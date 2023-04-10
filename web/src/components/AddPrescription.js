@@ -171,7 +171,7 @@ export default function AddPrescription() {
                   placeholder="Enter Last Name"
                 />
                 </Col>
-
+             
                <Form.Label>
                Remarks:
                 </Form.Label>
@@ -182,6 +182,7 @@ export default function AddPrescription() {
                   onChange={handleRemarksChange}
                   placeholder="Enter Last Name"
                 />
+               
                </Row>
               </Form.Group>
               <br/>
@@ -231,6 +232,8 @@ export default function AddPrescription() {
           {medicine.remarks && <div>Remarks: {medicine.remarks}</div>}
         </li>
       ))}
+
+      <h5> Next Investigation / Other Remarks: {addremarks}</h5>
     </ul>
     </Col>
     </Row>
