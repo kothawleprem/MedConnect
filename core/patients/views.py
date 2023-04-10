@@ -110,5 +110,5 @@ class DoctorsBySpecializationView(APIView):
                 response.append(res)
             return Response(response, status=status.HTTP_200_OK)
         else:
-            return Response("No Result", status=status.HTTP_200_OK)
+            return Response(response, status=status.HTTP_200_OK)
 
