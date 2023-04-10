@@ -17,6 +17,8 @@ import EditSlotRemarks from "./Pages/Consultation/EditSlotRemarks";
 import Payments from "./Pages/Payments/Payments";
 import CapturePayments from "./Pages/Payments/CapturePayments";
 import ViewAppointment from "./Pages/Consultation/ViewAppointment";
+import AddPrescription from "./components/AddPrescription";
+import Mc from "./components/Mc";
 
 
 function App() {
@@ -38,6 +40,8 @@ function App() {
         <Route path="/payments" element={<Payments />} />
         <Route path="/capturePayments" element={<CapturePayments />} />
         <Route path="/viewappointments" element={<ViewAppointment />} />
+        <Route path="/addprescription" element={<Mc/>} />
+
 
 
         

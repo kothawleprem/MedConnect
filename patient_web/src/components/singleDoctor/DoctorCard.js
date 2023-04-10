@@ -6,7 +6,7 @@ import './DoctorCard.css';
 
 
 
-export default function DoctorCard() {
+export default function DoctorCard(data) {
   return (
     <div>
 
@@ -16,26 +16,25 @@ export default function DoctorCard() {
   <Col> 
   <Card >  
 
-  <img  className='dcimg'  src='https://assets.mfine.co/api/contentservice/attachments/downloadFromDb?fileName=Dr.-Neeraj%20(1).jpg/w_229,h_310'/>
+  <img  className='dcimg'  src={data.photo}/>
    </Card>
 
   </Col>
   <Col>
-  <Card.Title className='dctititle'>Dr. Prem kotawale</Card.Title>
-        <Card.Subtitle className="mb-2 text-muted">MBBS,MD</Card.Subtitle>
-        <p>Psychiatrist</p>
+  <Card.Title className='dctitle'>data.name</Card.Title>
+        <Card.Subtitle className="mb-2 text-muted">data.qualification</Card.Subtitle>
+        <p>data.specialization</p>
         <p style={{fontWeight:'700'}}>₹500</p>
-        <Button className='exp'>11 years exp</Button>
 
   </Col>
 
   <Row>
+  
     <Col>
-
-    <Button className='button' >Know more</Button>
-    </Col>
-    <Col>
+    <center> 
     <Button className='button'>Consult now</Button>
+
+    </center>
 
     </Col>
   </Row>
