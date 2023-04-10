@@ -4,6 +4,8 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 import '../Dcform.css'
 
@@ -16,6 +18,9 @@ export default function Mc() {
     const [power, setPower] = useState('');
     const [frequency, setFrequency] = useState('');
     const [remarks, setRemarks] = useState('');
+    const [addremarks, setAddremarks] = useState('');
+    const navigate = useNavigate();
+
   
     const handleAddButton = () => {
       setShowForm(true);
@@ -52,21 +57,72 @@ export default function Mc() {
     const handleRemarksChange = (event) => {
       setRemarks(event.target.value);
     }
+
+    const handleAddemarksChange = (event) => {
+      setAddremarks(event.target.value);
+    }
+    
+
+    const handleSubmit = async (e) => {
+      e.preventDefault()
+      const data = {
+        medicine: medicine,
+        addremarks: addremarks,
+       
+      };
+      console.log(medicine,"medicine");
+      const token = localStorage.getItem("token")
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Token ${token}`
+        },
+      };
+
+      axios
+        .post("http://127.0.0.1:8000/api/doctors/", data, config)
+        .then((response) => {
+          console.log(response.data);
+          if (response.status === 201) {
+            navigate("/status", {
+              
+            });
+          }
+        })
+        .catch((error) => console.log(error));
+
+    };
   
   return (
     <div class="container">
       <Row> 
       <Col>  
       <br/>
-    <Button  className="main-btn" onClick={handleAddButton}>Add Medicine</Button>
-
+ 
+          <Row className="align-items-center">
+            <Col>
+              <h5>Add Medicine</h5> 
+            
+            </Col>
+            <Col>
+              <Button className="add-button" onClick={handleAddButton}>
+                <span className="add-icon">+</span>
+              </Button>
+            </Col>
+          </Row>
+  
     <br/> 
     <br/> 
 
     {showForm && (
-      <Form onSubmit={handleFormSubmit}>
-
-        <Form.Group  controlId="formGridPassword">
+      
+      <Form  onSubmit={handleFormSubmit}>
+      
+    
+        <Form.Group >
+          
+        <Row>  
+              <Col> 
                 <Form.Label>
                 Type:<span style={{ color: "red" }}> *</span>
                 </Form.Label>
@@ -78,7 +134,7 @@ export default function Mc() {
                    onChange={handleTypeChange}
                   placeholder="Enter Last Name"
                 /> 
-
+         
                 <Form.Label>
                 Medicine<span style={{ color: "red" }}> *</span>
                 </Form.Label>
@@ -89,7 +145,10 @@ export default function Mc() {
                   onChange={handleMedicineChange}
                   placeholder="Enter Last Name"
                 />
-
+                 </Col>
+                
+             
+                 <Col>  
                 <Form.Label>
                 Power<span style={{ color: "red" }}> *</span>
                 </Form.Label>
@@ -111,9 +170,10 @@ export default function Mc() {
                   onChange={handleFrequencyChange}
                   placeholder="Enter Last Name"
                 />
+                </Col>
 
                <Form.Label>
-               Remarks<span style={{ color: "red" }}> *</span>
+               Remarks:
                 </Form.Label>
                 <Form.Control
                   type="text"
@@ -122,19 +182,46 @@ export default function Mc() {
                   onChange={handleRemarksChange}
                   placeholder="Enter Last Name"
                 />
-              
+               </Row>
               </Form.Group>
               <br/>
               <center>   
               <Button className="main-btn" type="submit">Add</Button>
               </center>
-
+             
       </Form>
+      
 
     )}
+
+<Form onSubmit={handleSubmit}>
+
+
+
+      <Form.Group className="mb-3" >
+              <Form.Label>
+              Next Investigation / Other Remarks:
+              </Form.Label>
+              <Form.Control
+                name="desc"
+                value={addremarks}
+                onChange={handleAddemarksChange}
+                as="textarea"
+                type="text"
+                placeholder="Enter Description"
+              />
+            </Form.Group>
+      <br/>
+      <center>   
+      <Button className="main-btn" type="submit">Submit</Button>
+      </center>
+
+</Form>
     </Col>
 <Col>  
     <ul>
+      <br/>
+      <p> Medicines</p>
       {medicines.map((medicine, index) => (
         <li key={index}>
           <div>Type: {medicine.type}</div>
