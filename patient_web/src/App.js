@@ -13,6 +13,7 @@ import Consultation from "./Pages/Consultation/Consultation";
 
 import SearchDoctors from "./Pages/Search/SearchDoctors";
 import DoctorsBySpecialization from "./Pages/Search/DoctorsBySpecialization";
+import DoctorProfile from "./Pages/Consultation/DoctorProfile";
 
 
 
@@ -30,8 +31,9 @@ function App() {
           <Route path="/bySpecialization" element={<DoctorsBySpecialization/>} />
           <Route path="/email" element={<Email />} />
           <Route path="/consultation" element={<Consultation />} />
+          <Route path="/doctorProfile" element={<DoctorProfile/>}/>
 
-          {/* <Route path="/dashboard" element={<Dashboard />} /> */}
+          <Route path="/dashboard" element={<Dashboard />} />
 
 
         </Routes>
