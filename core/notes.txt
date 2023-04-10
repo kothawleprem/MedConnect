@@ -1,0 +1,8 @@
+instant conditions on doctors
+- cannot set availability to true if has a slot within 1 hour
+- will not get instant consultation altough availability is true if has a slot within one hour
+
+first and last name to full name
+refresh scheduling slot sidebar automatically
+
+if doctor available today
