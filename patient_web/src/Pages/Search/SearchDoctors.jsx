@@ -9,7 +9,6 @@ import { Container, Form, Button, Row, Col } from 'react-bootstrap'
 import axios from 'axios'
 
 import SearchBox from '../../components/Items/SearchBox'
-import DoctorCard from "../../components/singleDoctor/DoctorCard";
 
 const SearchDoctors = (props) => {
   const [results, setResults] = useState([]);
