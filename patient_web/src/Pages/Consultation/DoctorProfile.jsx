@@ -1,17 +1,36 @@
 import React from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+
 import { Row, Col, Card, Button } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
 import { MdEmail, MdLocationPin } from "react-icons/md";
 import { AiFillPhone } from "react-icons/ai";
 import { FaStar, FaStarHalf } from "react-icons/fa";
+import { useEffect, useState } from "react";
 
-const Specialization = [
-  { id: 1, name: "Paediatric" },
-  { id: 2, name: "Periodontology" },
-  { id: 3, name: "Surgeon" },
-];
-
+import axios from "axios";
 const DoctorProfile = () => {
+  const [doctor, setDoctor] = useState([]);
+  const [todaySlots, setTodaySlots] = useState()
+  const [tomorrowSlots, setTomorrowSlots] = useState();
+    const { state } = useLocation();
+    console.log("id", state.doctor_id)
+
+  const handleClick = (id) => {
+    console.log("slot_id")
+  }
+
+    useEffect(() => {
+      axios
+        .get(`http://127.0.0.1:8000/api/patients/doctor_profile?doctor_id=${state.doctor_id}`)
+        .then((response) => {
+          const data = response.data;
+          setDoctor(data);
+          setTodaySlots(data.slots[0])
+          setTomorrowSlots(data.slots[1])
+        });
+    },[])
+
   return (
     <Container fluid="md">
       <br />
@@ -28,7 +47,7 @@ const DoctorProfile = () => {
                 <Card.Img
                   variant="top"
                   className="rounded-circle"
-                  src="https://img.freepik.com/free-photo/smiling-doctor-with-strethoscope-isolated-grey_651396-974.jpg"
+                  src={doctor.photo}
                   style={{
                     width: "200px",
                     height: "180px",
@@ -44,29 +63,16 @@ const DoctorProfile = () => {
                       color: "black",
                     }}
                   >
-                    Dr Prem Khothawle
+                    Dr {doctor.name}
                   </Card.Title>
                   <Card.Title style={{ fontSize: "15px" }}>
-                    Paediatric Surgeon
+                    {doctor.specialization}
                   </Card.Title>
-
-                  <Col style={{ marginBottom: "3px" }}>
-                    {/* <Card.Title style={{fontSize:'15px'}}>4.4</Card.Title> */}
-                    4.5 <FaStar size={20} color="#6970f1" />{" "}
-                    <FaStar size={20} color="#6970f1" />{" "}
-                    <FaStar size={20} color="#6970f1" />{" "}
-                    <FaStarHalf size={20} color="#6970f1" />{" "}
-                  </Col>
 
                   <Card.Title style={{ fontSize: "15px", color: "black" }}>
                     About
                   </Card.Title>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                    ullamco laboris nisi ut aliquip ex ea commodo consequat.{" "}
-                  </p>
+                  <p>{doctor.description}</p>
                 </Col>
               </Row>
             </Card.Body>
@@ -76,12 +82,7 @@ const DoctorProfile = () => {
           {/* <Card.Title style={{ fontSize: '30px', fontWeight: 600, color: '#4365CD' }}>VIDEO</Card.Title> */}
 
           <video width="500" height="300" controls>
-            <source
-              src={
-                "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
-              }
-              type="video/mp4"
-            />
+            <source src={doctor.video} type="video/mp4" />
           </video>
         </Col>
       </Row>
@@ -96,9 +97,7 @@ const DoctorProfile = () => {
                   </Card.Text>
                 </Col>
                 <Col sm="8">
-                  <Card.Text className="text-muted">
-                    example@examplecom
-                  </Card.Text>
+                  <Card.Text className="text-muted">{doctor.email}</Card.Text>
                 </Col>
               </Row>
               <hr />
@@ -110,7 +109,7 @@ const DoctorProfile = () => {
                   </Card.Text>
                 </Col>
                 <Col sm="8">
-                  <Card.Text className="text-muted">(097) 234-5678</Card.Text>
+                  <Card.Text className="text-muted">{doctor.phone}</Card.Text>
                 </Col>
               </Row>
               <hr />
@@ -121,20 +120,12 @@ const DoctorProfile = () => {
                   </Card.Text>
                 </Col>
                 <Col sm="8">
-                  <Card.Text className="text-muted">panvel</Card.Text>
-                </Col>
-              </Row>
-              <hr />
-              <Row>
-                <Col sm="1">
-                  <MdLocationPin size={25} color="#6970f1" />
-                </Col>
-                <Col sm="8">
                   <Card.Text className="text-muted">
-                    Bay Area, San Francisco, CA
+                    {doctor.city}, {doctor.state}
                   </Card.Text>
                 </Col>
               </Row>
+              <hr />
             </Card.Body>
           </Card>
         </Col>
@@ -180,25 +171,23 @@ const DoctorProfile = () => {
 
             <Container>
               <Row style={{ margin: "10px" }}>
-                {/* {slots !== undefined &&
-                  slots.map((slot) => {
+                {todaySlots !== undefined &&
+                  todaySlots.map((slot) => {
                     console.log("logging");
                     return (
                       <>
                         <Col xl={4} lg={4} md={4} sm={12}>
-                          <Button className="st-butt rounded-pill">
+                          <Button
+                            className="st-butt rounded-pill"
+                            onClick={handleClick(1)}
+                          >
                             {slot.start_time} to {slot.end_time}
-                            <img
-                              alt=""
-                              src="/Assets/add-selection.png"
-                              className="st-butticon"
-                            />
                           </Button>
                           <br />
                         </Col>
                       </>
                     );
-                  })} */}
+                  })}
               </Row>
             </Container>
           </Card>
@@ -210,25 +199,21 @@ const DoctorProfile = () => {
 
             <Container>
               <Row style={{ margin: "10px" }}>
-                {/* {slots !== undefined &&
-                  slots.map((slot) => {
-                    console.log("logging");
+                {tomorrowSlots !== undefined &&
+                  tomorrowSlots.map((slot) => {
+                    {/* console.log("logging"); */}
                     return (
                       <>
                         <Col xl={4} lg={4} md={4} sm={12}>
-                          <Button className="st-butt rounded-pill">
+                          <Button className="st-butt rounded-pill" onClick={handleClick()}>
                             {slot.start_time} to {slot.end_time}
-                            <img
-                              alt=""
-                              src="/Assets/add-selection.png"
-                              className="st-butticon"
-                            />
+                            
                           </Button>
                           <br />
                         </Col>
                       </>
                     );
-                  })} */}
+                  })}
               </Row>
             </Container>
           </Card>
