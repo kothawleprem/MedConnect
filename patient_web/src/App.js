@@ -13,6 +13,7 @@ import Consultation from "./Pages/Consultation/Consultation";
 
 import SearchDoctors from "./Pages/Search/SearchDoctors";
 import DoctorsBySpecialization from "./Pages/Search/DoctorsBySpecialization";
+import Instant from "./Pages/Instant/Instant";
 
 
 
@@ -30,6 +31,9 @@ function App() {
           <Route path="/bySpecialization" element={<DoctorsBySpecialization/>} />
           <Route path="/email" element={<Email />} />
           <Route path="/consultation" element={<Consultation />} />
+          <Route path="/instant" element={<Instant />} />
+
+
 
           {/* <Route path="/dashboard" element={<Dashboard />} /> */}
 
