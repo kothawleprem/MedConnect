@@ -15,7 +15,6 @@ const SearchDoctors = (props) => {
   const location = useLocation();
 
 
-
   const handleSearch = (data) => {
     setResults(data);
     console.log("result..",data)

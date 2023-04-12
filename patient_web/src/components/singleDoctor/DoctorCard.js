@@ -1,11 +1,22 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { Row, Col } from "react-bootstrap";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import "./DoctorCard.css";
 
 export default function DoctorCard(props) {
+    const navigate = useNavigate();
   const data = props.result
+
+  const handleClick = () => {
+    console.log(data.doctor_id)
+    navigate("/doctorProfile",{
+      state:{
+        doctor_id:data.doctor_id
+      }
+    })
+  }
   return (
     <div>
       <br />
@@ -27,7 +38,7 @@ export default function DoctorCard(props) {
               </Card.Subtitle>
               <p>{data.specialization}</p>
               <p>{data.city}</p>
-              <Button className="button">Know more</Button>
+              <Button className="button" onClick={handleClick}>Know more</Button>
             </Col>
           </Row>
         </Card.Body>

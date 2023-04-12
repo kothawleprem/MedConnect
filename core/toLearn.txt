@@ -1,0 +1,7 @@
+PHP 7.4
+LARAVEL 8
+Docker
+Redis
+ELastic Search
+Cassandra
+Swagger

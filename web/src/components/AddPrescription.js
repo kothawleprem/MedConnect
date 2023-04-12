@@ -67,7 +67,7 @@ export default function AddPrescription() {
     const handleSubmit = async (e) => {
       e.preventDefault()
       const data = {
-        medicine: medicine,
+        medicines: medicines,
         addremarks: addremarks,
        
       };
@@ -80,17 +80,17 @@ export default function AddPrescription() {
         },
       };
 
-      axios
-        .post("http://127.0.0.1:8000/api/doctors/", data, config)
-        .then((response) => {
-          console.log(response.data);
-          if (response.status === 201) {
-            navigate("/status", {
+      // axios
+      //   .post("http://127.0.0.1:8000/api/doctors/", data, config)
+      //   .then((response) => {
+      //     console.log(response.data);
+      //     if (response.status === 201) {
+      //       navigate("/status", {
               
-            });
-          }
-        })
-        .catch((error) => console.log(error));
+      //       });
+      //     }
+      //   })
+      //   .catch((error) => console.log(error));
 
     };
   
