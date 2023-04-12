@@ -6,6 +6,7 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Table from 'react-bootstrap/Table';
 
 import '../Dcform.css'
 
@@ -70,7 +71,7 @@ export default function AddPrescription() {
         addremarks: addremarks,
        
       };
-      console.log(data,);
+      console.log(medicines,"medicine");
       const token = localStorage.getItem("token")
       const config = {
         headers: {
@@ -222,16 +223,31 @@ export default function AddPrescription() {
 <Col>  
     <ul>
       <br/>
-      <p> Medicines</p>
-      {medicines.map((medicine, index) => (
-        <li key={index}>
-          <div>Type: {medicine.type}</div>
-          <div>Medicine: {medicine.medicine}</div>
-          <div>Power: {medicine.power}</div>
-          <div>Frequency: {medicine.frequency}</div>
-          {medicine.remarks && <div>Remarks: {medicine.remarks}</div>}
-        </li>
-      ))}
+      <h5> Medicines</h5>
+      <Table striped bordered hover>
+
+        <thead>
+          <tr>
+            <th>Type</th>
+            <th>Medicine</th>
+            <th>Power</th>
+            <th>Frequency</th>
+            <th>Remarks</th>
+          </tr>
+        </thead>
+        <tbody>
+          {medicines.map((medicine, index) => (
+            <tr key={index}>
+              <td>{medicine.type}</td>
+              <td>{medicine.medicine}</td>
+              <td>{medicine.power}</td>
+              <td>{medicine.frequency}</td>
+              <td>{medicine.remarks}</td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+    
 
       <h5> Next Investigation / Other Remarks: {addremarks}</h5>
     </ul>
