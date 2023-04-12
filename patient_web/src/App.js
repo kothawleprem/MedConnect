@@ -13,7 +13,9 @@ import Consultation from "./Pages/Consultation/Consultation";
 
 import SearchDoctors from "./Pages/Search/SearchDoctors";
 import DoctorsBySpecialization from "./Pages/Search/DoctorsBySpecialization";
-import Instant from "./Pages/Instant/Instant";
+import DoctorProfile from "./Pages/Consultation/DoctorProfile";
+
+import BookSlot from "./Pages/Consultation/BookSlot";
 
 
 
@@ -35,7 +37,8 @@ function App() {
 
 
 
-          {/* <Route path="/dashboard" element={<Dashboard />} /> */}
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/bookSlot" element={<BookSlot/>} />
 
 
         </Routes>

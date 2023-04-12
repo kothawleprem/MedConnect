@@ -449,6 +449,7 @@ class ConsultiationView(APIView):
             'amount': amount,
             'previous_consultations': previous_consultations
         }
+        print("res",response)
         return Response(response, status=status.HTTP_200_OK)
 
 class ConsultationRemarksView(APIView):

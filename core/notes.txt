@@ -5,4 +5,5 @@ instant conditions on doctors
 first and last name to full name
 refresh scheduling slot sidebar automatically
 
-if doctor available today
+know doctor, free slots for today and tommorow -> select slot -> booking menu
+search -> display doctors availability with free slots

@@ -13,7 +13,6 @@ export default function Instant() {
       <Hero/>
       <Specialization/>
         <DoctorsBySpecialization/>
-        <SearchDoctors/>    
         </div>
        </div>
   )

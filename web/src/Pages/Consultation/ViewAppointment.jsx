@@ -12,6 +12,7 @@ export default function ViewAppointment() {
   const { consultation_id } = state;
   const [data, setData] = useState()
   const [remarks, setRemarks] = useState();
+  console.log(consultation_id)
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -24,7 +25,7 @@ export default function ViewAppointment() {
     axios.get(
       `http://127.0.0.1:8000/api/consultation/view?access=1&consultation_id=${consultation_id}`
     ).then( function(response) {
-      console.log(response.data.previous_consultations[0].consultation_id)
+      console.log("response", response)
       setData(response.data)
     })
   },[])

@@ -20,6 +20,7 @@ class ConsultationModel(models.Model):
     remarks = models.TextField(null=True)
     amount = models.IntegerField(default=0)
     completed = models.BooleanField(default=False)
+    payment_completed = models.BooleanField(default=False)
 
 class PaymentModel(models.Model):
     consultation = models.ForeignKey(ConsultationModel, models.CASCADE)
