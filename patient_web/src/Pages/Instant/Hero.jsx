@@ -1,10 +1,11 @@
 import React from 'react'
+import DoctorsBySpecialization from '../Search/DoctorsBySpecialization'
 
 export default function Hero() {
   return (
     <div>
 
-<section id="team" class="team-area pt-40 pb-50 mt-50">
+<section id="team" class="team-area pt-40 pb-100 mt-10">
         <div class="container">
           <div class="row justify-content-center">
             <div class="col-lg-6">
@@ -13,8 +14,15 @@ export default function Hero() {
                 Instantly connect with trusted healthcare professionals.
                 </h3>
                 <p>
-                Doctor consultations made convenient and accessible on-demand healthcare, just a click away.
+                Doctor consultations made convenient and accessible, just a click away.
                 </p>
+             
+                <DoctorsBySpecialization/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
               </div>
             </div>
           </div>

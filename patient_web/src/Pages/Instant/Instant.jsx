@@ -11,8 +11,8 @@ export default function Instant() {
        <Header/>
         <div>
       <Hero/>
-      <Specialization/>
-        <DoctorsBySpecialization/>
+      {/* <Specialization/> */}
+       
         </div>
        </div>
   )

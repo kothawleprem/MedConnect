@@ -1,5 +1,4 @@
 import React from 'react'
-import SpecialCard from './SpecialCard'
 import { Col, Row } from 'react-bootstrap'
 import Specialists from '../LandingPage/Specialists'
 

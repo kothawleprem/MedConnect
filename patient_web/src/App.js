@@ -16,6 +16,8 @@ import DoctorsBySpecialization from "./Pages/Search/DoctorsBySpecialization";
 import DoctorProfile from "./Pages/Consultation/DoctorProfile";
 
 import BookSlot from "./Pages/Consultation/BookSlot";
+import Instant from "./Pages/Instant/Instant";
+import ManageAppointment from "./Pages/ManageAppointment/ManageAppointment";
 
 
 
@@ -34,6 +36,8 @@ function App() {
           <Route path="/email" element={<Email />} />
           <Route path="/consultation" element={<Consultation />} />
           <Route path="/instant" element={<Instant />} />
+          <Route path="/manageappointment" element={<ManageAppointment />} />
+
 
 
 
