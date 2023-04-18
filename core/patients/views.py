@@ -10,6 +10,9 @@ import random
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
+
 from consultation.models import SlotModel, ConsultationModel
 from doctors.models import DoctorProfileModel, SpecializationModel, DoctorModel
 from .models import PatientModel, PatientProfileModel
@@ -26,7 +29,7 @@ class EmailView(APIView):
         if not isRegistered:
             user = User.objects.create_user(username=email, email=email, password=password_)
             auth = authenticate(username=email, password=password_)
-            print("auth",auth)
+            print("auth", auth)
             user.save()
             patient = PatientModel.objects.create(user=user)
             PatientProfileModel.objects.create(patient=patient)
@@ -40,6 +43,7 @@ class EmailView(APIView):
             "message": "OTP Sent Successfully"
         }
         return Response(response, status=status.HTTP_200_OK)
+
 
 class VerifyEmailView(APIView):
 
@@ -70,13 +74,14 @@ class VerifyEmailView(APIView):
         }
         return Response(response, status=status.HTTP_200_OK)
 
+
 class DoctorSearchView(APIView):
 
     def get(self, request):
         query = request.GET["query"]
         queryset = DoctorProfileModel.objects.filter(name__icontains=query)
         response = []
-        if(queryset):
+        if (queryset):
             for q in queryset:
                 print(q.name, q.photo, q.city, q.specialization, q.qualification)
                 res = {
@@ -91,6 +96,7 @@ class DoctorSearchView(APIView):
             return Response(response, status=status.HTTP_200_OK)
         else:
             return Response(response, status=status.HTTP_200_OK)
+
 
 class DoctorsBySpecializationView(APIView):
 
@@ -115,6 +121,7 @@ class DoctorsBySpecializationView(APIView):
         else:
             return Response(response, status=status.HTTP_200_OK)
 
+
 class DoctorProfileView(APIView):
 
     def get(self, request):
@@ -128,11 +135,11 @@ class DoctorProfileView(APIView):
         today = datetime.date.today()
         tomorrow = today + datetime.timedelta(days=1)
         today_slots = SlotModel.objects.filter(doctor__id=doctor_id, date=today).values('id', 'start_time',
-                                                                                 'end_time', 'status').order_by(
+                                                                                        'end_time', 'status').order_by(
             'start_time')
         tomorrow_slots = SlotModel.objects.filter(doctor__id=doctor_id, date=tomorrow).values('id', 'start_time',
-                                                                                       'end_time',
-                                                                                       'status').order_by(
+                                                                                              'end_time',
+                                                                                              'status').order_by(
             'start_time')
         slots = []
         today_response = []
@@ -179,10 +186,57 @@ class DoctorProfileView(APIView):
         print(doctor_profile)
         return Response(response, status=status.HTTP_200_OK)
 
-class DoctorSlotView(APIView):
+
+class PatientSlotView(APIView):
+
+    #bookSlot
+    def get(self, request):
+        slot_id = request.GET["slot_id"]
+        try:
+            slot = SlotModel.objects.get(id=slot_id)
+            doctor_profile = DoctorProfileModel.objects.get(doctor__id=slot.doctor.id)
+        except:
+            return Response("not ok", status=status.HTTP_404_NOT_FOUND)
+        response = {
+            "date": slot.date,
+            "start_time": str(slot.start_time)[:-3],
+            "end_time": str(slot.end_time)[:-3],
+            "remarks": slot.remarks,
+            "name": doctor_profile.name,
+            "email": slot.doctor.user.email,
+            "specialization": doctor_profile.specialization.name,
+            "phone": doctor_profile.phone,
+            "city": doctor_profile.city,
+            "state": doctor_profile.state,
+            "fees": slot.amount
+        }
+        return Response(response, status=status.HTTP_200_OK)
+
+class ManageConsultationsView(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
 
     def get(self, request):
-
-
-        return Response(response)
-
+        #ui -> date, st and end time, dr name, specialization, payment status, view complete
+        user = request.user
+        patient = PatientModel.objects.get(user=user)
+        consultations = ConsultationModel.objects.filter(patient=patient).order_by('-slot__date')
+        response = []
+        for consultation in consultations:
+            doctor_profile = DoctorProfileModel.objects.get(doctor=consultation.slot.doctor)
+            status_ = "PAYMENT_PENDING"
+            if(consultation.completed):
+                status_ = "COMPLETED"
+            elif(consultation.payment_completed):
+                status_ = "PAYMENT_COMPLETED"
+            res = {
+                "date": consultation.slot.date,
+                "start_time": consultation.slot.start_time,
+                "end_time": consultation.slot.end_time,
+                "doctor_name": doctor_profile.name,
+                "specialization": doctor_profile.specialization.name,
+                "status": status_
+            }
+            response.append(res)
+        print(response)
+        return Response(response, status=status.HTTP_200_OK)

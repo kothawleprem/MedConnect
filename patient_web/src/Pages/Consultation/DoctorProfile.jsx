@@ -13,11 +13,17 @@ const DoctorProfile = () => {
   const [doctor, setDoctor] = useState([]);
   const [todaySlots, setTodaySlots] = useState()
   const [tomorrowSlots, setTomorrowSlots] = useState();
+  const navigate = useNavigate();
     const { state } = useLocation();
     console.log("id", state.doctor_id)
 
   const handleClick = (id) => {
-    console.log("slot_id")
+    console.log("slot_id", id)
+    navigate("/bookSlot", {
+      state: {
+        slot_id: id,
+      },
+    });
   }
 
     useEffect(() => {
@@ -179,7 +185,7 @@ const DoctorProfile = () => {
                         <Col xl={4} lg={4} md={4} sm={12}>
                           <Button
                             className="st-butt rounded-pill"
-                            onClick={handleClick(1)}
+                            onClick={() => handleClick(slot.slot_id)}
                           >
                             {slot.start_time} to {slot.end_time}
                           </Button>
