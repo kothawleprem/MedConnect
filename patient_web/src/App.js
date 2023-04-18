@@ -16,8 +16,13 @@ import DoctorsBySpecialization from "./Pages/Search/DoctorsBySpecialization";
 import DoctorProfile from "./Pages/Consultation/DoctorProfile";
 
 import BookSlot from "./Pages/Consultation/BookSlot";
+
+import Instant from "./Pages/Instant/Instant";
+import ManageAppointment from "./Pages/ManageAppointment/ManageAppointment";
+
 import Payments from "./Pages/Payments/Payments";
 import CapturePayments from "./Pages/Payments/CapturePayments"
+
 
 
 
@@ -38,9 +43,17 @@ function App() {
           />
           <Route path="/email" element={<Email />} />
           <Route path="/consultation" element={<Consultation />} />
+
+          <Route path="/instant" element={<Instant />} />
+          <Route path="/manageappointment" element={<ManageAppointment />} />
+
+
+
+
           <Route path="/doctorProfile" element={<DoctorProfile />} />
           <Route path="/payments" element={<Payments />} />
           <Route path="/capturePayments" element={<CapturePayments />} />
+
 
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/bookSlot" element={<BookSlot />} />
