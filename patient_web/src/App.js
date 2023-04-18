@@ -16,6 +16,8 @@ import DoctorsBySpecialization from "./Pages/Search/DoctorsBySpecialization";
 import DoctorProfile from "./Pages/Consultation/DoctorProfile";
 
 import BookSlot from "./Pages/Consultation/BookSlot";
+import Payments from "./Pages/Payments/Payments";
+import CapturePayments from "./Pages/Payments/CapturePayments"
 
 
 
@@ -29,16 +31,19 @@ function App() {
       <Route path="/video" element={<Video />}/> 
       <Route path="/bookapointment" element={<Book />}/> */}
           <Route path="/verify" element={<Verify />} />
-          <Route path="/search" element={<SearchDoctors/>} /> 
-          <Route path="/bySpecialization" element={<DoctorsBySpecialization/>} />
+          <Route path="/search" element={<SearchDoctors />} />
+          <Route
+            path="/bySpecialization"
+            element={<DoctorsBySpecialization />}
+          />
           <Route path="/email" element={<Email />} />
           <Route path="/consultation" element={<Consultation />} />
-          <Route path="/doctorProfile" element={<DoctorProfile/>}/>
+          <Route path="/doctorProfile" element={<DoctorProfile />} />
+          <Route path="/payments" element={<Payments />} />
+          <Route path="/capturePayments" element={<CapturePayments />} />
 
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/bookSlot" element={<BookSlot/>} />
-
-
+          <Route path="/bookSlot" element={<BookSlot />} />
         </Routes>
       </Router>
     </>

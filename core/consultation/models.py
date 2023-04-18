@@ -10,6 +10,7 @@ class SlotModel(models.Model):
     end_time = models.TimeField()
     status = models.BooleanField(default=False)
     remarks = models.TextField()
+    amount = models.IntegerField(default=0)
 
 class ConsultationModel(models.Model):
     slot = models.ForeignKey(SlotModel, models.CASCADE)
@@ -19,6 +20,7 @@ class ConsultationModel(models.Model):
     room_id = models.CharField(max_length=255, null=True)
     remarks = models.TextField(null=True)
     amount = models.IntegerField(default=0)
+    canceled = models.BooleanField(default=False)
     completed = models.BooleanField(default=False)
     payment_completed = models.BooleanField(default=False)
 

@@ -18,7 +18,7 @@ import os
 import stripe
 
 # This is your test secret API key.
-# stripe.api_key = 'sk_test_51MkrgDSEJKAQ1ZUPYt1TtU75zyAODRkI7DMcgHyA6rSUxqqWjWlLZN8QCXS9SAXm1XLnNwnK7lD4OLWGhXWmCy4i00DP31GbYb'
+stripe.api_key = os.getenv('STRIPE_KEY')
 
 
 class SlotView(APIView):
@@ -251,17 +251,22 @@ class SlotListView(APIView):
 
 
 class PatienBookSlotView(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
 
     def post(self, request):
-        # TODO: PATIENT VERIFICATION
-        # TODO: FIRST PAYMENT THEN BOOK
+        try:
+            user = request.user
+            patient = PatientModel.objects.get(user=user)
+            # patient_profile = PatientProfileModel.objects.get(patient=patient)
+        except:
+            return Response("Patient Not Found", status=status.HTTP_404_NOT_FOUND)
         slot_id = request.data.get("slot_id")
-        patient_id = request.data.get("patient_id")
-        patient = PatientModel.objects.get(id=patient_id)
         slot = SlotModel.objects.get(id=slot_id)
         slot.status = True
         slot.save()
         consultation = ConsultationModel.objects.create(slot=slot, doctor=slot.doctor, patient=patient)
+        consultation.amount = slot.amount
         consultation.save()
         # TODO: EMAIL CONFIRMATION
         response = {
@@ -339,6 +344,7 @@ class PaymentView(APIView):
     def post(self, request):
         try:
             amount = request.data.get("amount")
+            print(amount)
             # Create a PaymentIntent with the order amount and currency
             intent = stripe.PaymentIntent.create(
                 amount=amount,
@@ -367,6 +373,23 @@ class ManagePaymentView(APIView):
                                               status=status)
         return Response("Payment Created with ID: ", payment.id)
 
+class ConfirmPaymentView(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        slot_id = request.data.get("slot_id")
+        stripe_id = request.data.get("stripe_id")
+        consultation = ConsultationModel.objects.get(slot__id=slot_id)
+        consultation.payment = True
+        consultation.save()
+        amount = consultation.amount
+        status_ = True
+        payment = PaymentModel.objects.create(consultation=consultation, amount=amount, status=status_, stripe_id=stripe_id)
+        response = {
+            "payment_id": payment.id
+        }
+        return Response(response, status=status.HTTP_201_CREATED)
 
 class DoctorPatientView(APIView):
     # all patients associated with that doctor
