@@ -79,7 +79,7 @@ export default function Specialists() {
                       Diabetology
                     </Link>
                   </h4>
-                  <span>for common helth concerns</span>
+                  <span>for treatment of all types of diabetes</span>
                   <ul class="social mt-15">
                     <Link
                       style={{ textDecoration: "none" }}

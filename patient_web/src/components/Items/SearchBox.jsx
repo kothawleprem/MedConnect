@@ -34,7 +34,7 @@ const SearchBox = (props) => {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
-          <Button variant="outline-success" onClick={handleClick} >
+          <Button  className='main-btn' onClick={handleClick} >
             Search
           </Button>
         </Form>

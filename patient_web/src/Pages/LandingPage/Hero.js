@@ -30,7 +30,7 @@ export default function Hero() {
                                 <div className="slider-product-content">
                                     <h1 className="slider-title mb-10" data-animation="fadeInUp" data-delay="0.3s"><span>Consult</span> <span> Doctor</span>  Online</h1>
                                     <p className="mb-25" data-animation="fadeInUp" data-delay="0.9s">Schedule an appointment today start getting  medical care and advice you need.<br/>Whether you need to discuss a minor ailment or have questions about a chronic condition, we are here to help.</p>
-                                    <Link  style={{ textDecoration: 'none' }}  className="main-btn" to="/" data-animation="fadeInUp" data-delay="1.5s">Explore More  <i className="lni-chevron-right"></i></Link>
+                                    <Link  style={{ textDecoration: 'none' }}  className="main-btn" to="/email" data-animation="fadeInUp" data-delay="1.5s">Explore More  <i className="lni-chevron-right"></i></Link>
                                 </div> 
                             </div>
                         </div> 

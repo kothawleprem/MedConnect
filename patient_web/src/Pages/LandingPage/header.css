@@ -100,11 +100,11 @@
         transition: all 0.4s ease-out 0s; }
       .header-area .navbar .navbar-nav .nav-item.active a, .header-area .navbar .navbar-nav .nav-item:hover a {
         color: #fe7865; }
-.logo{
-  height:60px;
-}
+/* .logo{
+  height:50px;
+} */
 .side{
-  margin-left:-505px;
+  margin-left:500px;
 }
 
 .btn-lg{
@@ -113,6 +113,5 @@
   /* border-radius: 5%; */
   height: 45px;
   width: 110px;
-
   
 }
