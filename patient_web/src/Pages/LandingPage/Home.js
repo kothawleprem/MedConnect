@@ -8,6 +8,7 @@ import Specialists from './Specialists.js'
 import Footer from './Footer.js'
 import Labtestpackage from './Labtestpackage.js'
 import SearchBox from '../../components/Items/SearchBox.jsx'
+import Navbarhead from './Navbarhead.jsx';
 
 
 
@@ -20,7 +21,8 @@ export default function Home() {
 
   return (
     <div>
-      <Header />
+      {/* <Header /> */}
+      <Navbarhead/>
       <Hero />
       <SearchBox onSearch={handleSearch} sid="1"/>
       <Category />
