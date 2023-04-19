@@ -81,7 +81,7 @@ const AllSlots = () => {
         )
         .then((response) => {
           const data = response.data;
-          console.log(response);
+          console.log(response ,"tdyahj");
           setTodaySlots(data[0]);
           setTommorowSlots(data[1]);
         });
@@ -106,16 +106,25 @@ const AllSlots = () => {
             {todaySlots.length > 0 ? (
               <>
                 {todaySlots.map((slot) => (
-                    <Card style={{ width: "18rem" }} key={slot.slot_id}>
-                      <ListGroup.Item>
+                    <Card style={{ width: "18rem" }} className='bg-light' key={slot.slot_id}>
+                      <ListGroup.Item className='bg-light'>
                         {" "}
-                        {slot.start_time} {slot.end_time} <br />
-                        <Button onClick={() => handleEditClick(slot.slot_id)}>
+                        <Card.Title> Slot ID: {slot.slot_id}</Card.Title>
+
+                        <Card.Title> Time: {slot.start_time}  {slot.end_time} </Card.Title>
+                        
+                         <Card.Link onClick={() => handleEditClick(slot.slot_id)} ><FaEdit className="mr-2" size={25} color='gray' /></Card.Link>
+                        <Card.Link onClick={() => handleDeleteClick(slot.slot_id)} ><AiFillDelete className="mr-2" size={25} color='red' /></Card.Link>
+
+
+                        {/* <Button onClick={() => handleEditClick(slot.slot_id)}>
                           <FaEdit className="mr-2" />
                         </Button>
+                        <br/>
+                        <br/>
                         <Button onClick={() => handleDeleteClick(slot.slot_id)}>
                           <AiFillDelete className="mr-2" />
-                        </Button>
+                        </Button> */}
                         {slot.status === true ? (
                           <Button>
                             <GrView className="mr-2" />
@@ -144,16 +153,28 @@ const AllSlots = () => {
             )}
           </ListGroup>
         </Tab>
-        <Tab eventKey="tommorow" title="Tommorow">
+        <Tab eventKey="tommorow" title="Tommorow" className="mb-3">
+        <ListGroup variant="flush"> 
+
           {tommorowSlots.length > 0 ? (
             <>
               {tommorowSlots.map((slot) => (
                 <>
-                  <Card style={{ width: "18rem" }}>
-                    <button key={slot.slot_id}>
+                  <Card style={{ width: "18rem" }}  key={slot.slot_id}>
+                  <ListGroup.Item className='bg-light'>
+
+                  <Card.Title> Slot ID: {slot.slot_id}</Card.Title>
+
+<Card.Title> Time: {slot.start_time}  {slot.end_time} </Card.Title>
+
+ <Card.Link onClick={() => handleEditClick(slot.slot_id)} ><FaEdit className="mr-2" size={25} color='gray' /></Card.Link>
+<Card.Link onClick={() => handleDeleteClick(slot.slot_id)} ><AiFillDelete className="mr-2" size={25} color='red' /></Card.Link>
+                    
+                    {/* <button key={slot.slot_id}>
                       {slot.start_time} {slot.end_time}
-                    </button>
+                    </button> */}
                     <br />
+                    </ListGroup.Item>
                   </Card>
                 </>
               ))}
@@ -161,6 +182,7 @@ const AllSlots = () => {
           ) : (
             <>No Slots created for this day!!!</>
           )}
+           </ListGroup>
         </Tab>
       </Tabs>
 
