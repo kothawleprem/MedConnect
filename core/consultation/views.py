@@ -170,17 +170,19 @@ class SlotListView(APIView):
         if status == "True":
             count_t = 0
             count_to = 0
-            print("in true")
+            print("in true", today_slots)
             for t in today_slots:
                 if count_t < limit and t['status'] is True:
+                    # slot = SlotModel.objects.get(id=t['id'])
+                    # print(t['id'])
                     consultation = ConsultationModel.objects.get(slot__id=t['id'])
                     patient = consultation.patient
                     patient_profile = PatientProfileModel.objects.get(patient=patient)
                     res = {
                         'consultation_id': consultation.id,
                         "patient_name": patient_profile.first_name + " " + patient_profile.last_name,
-                        'start_time': t['start_time'],
-                        'end_time': t['end_time'],
+                        'start_time': str(t['start_time'])[:-3],
+                        'end_time': str(t['end_time'])[:-3],
                         'status': t['status']
                     }
                     today_response.append(res)
@@ -447,14 +449,15 @@ class ConsultiationView(APIView):
             for con in past_consultations:
                 if con.id == consultation.id:
                     continue
-                prescription = PrescriptionModel.objects.get(consultation=con)
-                res = {
-                    "consultation_id": con.id,
-                    "date": con.slot.date,
-                    "prescription_file": str(prescription.prescription_file),
-                    "remarks": con.remarks
-                }
-                previous_consultations.append(res)
+                prescription = PrescriptionModel.objects.filter(consultation=con)
+                if(prescription.exists()):
+                    res = {
+                        "consultation_id": con.id,
+                        "date": con.slot.date,
+                        "prescription_file": str(prescription.prescription_file),
+                        "remarks": con.remarks
+                    }
+                    previous_consultations.append(res)
         print("past", previous_consultations)
 
         response = {

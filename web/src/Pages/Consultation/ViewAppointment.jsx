@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Container, Col, Row, Button, Card } from "react-bootstrap";
 import Alert from "react-bootstrap/Alert";
 import Form from "react-bootstrap/Form";
@@ -13,6 +13,8 @@ export default function ViewAppointment() {
   const [data, setData] = useState()
   const [remarks, setRemarks] = useState();
   console.log(consultation_id)
+
+  const navigate = useNavigate()
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -29,6 +31,15 @@ export default function ViewAppointment() {
       setData(response.data)
     })
   },[])
+
+  const handleClick = () => {
+    navigate("/video", {
+      state:{
+        "consultation_id": 11
+      }
+    }
+    )
+  }
 
   const handleChange = (e) => {
     const remarks = e.target.value.trim();
@@ -90,7 +101,7 @@ export default function ViewAppointment() {
           <div className="consultation-main-info">
             <Row>
               <Col xl={3} md={3} xs={12}>
-                <Button>Join Meeting</Button>
+                <Button onClick={handleClick}>Join Meeting</Button>
               </Col>
               <Col xl={3} md={3} xs={12}>
                 <Button>Generate Prescription</Button>
