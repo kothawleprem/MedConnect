@@ -27,6 +27,8 @@ const Email = () => {
 
     const handleSubmit = (e) => {
     
+     
+
       e.preventDefault();
       if (email.length === 0) {
           toast.warn("Please enter an Email Address", {

@@ -1,5 +1,5 @@
 import React, { useState ,useEffect} from "react";
-import { Card, Button ,Modal } from "react-bootstrap";
+import { Card, Button ,Modal,Row,Col } from "react-bootstrap";
 import axios from "axios";
 
 
@@ -53,22 +53,55 @@ const CardList = ({ data }) => {
             <Card.Title>{item.name}</Card.Title>
             <Card.Text>Email: {item.email}</Card.Text>
             <Card.Text>ID: {item.id}</Card.Text>
+            <Button  style={{height:'45px' }}  className="main-btn" onClick={() => handleCardClick(item)}>View profile  </Button>
            
           </Card.Body>
         </Card>
       ))}
-      <Modal show={selectedCard !== null} onHide={handleCloseModal}>
+      <Modal show={selectedCard !== null} onHide={handleCloseModal} size="lg"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered>
         <Modal.Header closeButton>
           <Modal.Title>Details</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body >
           {selectedCard && (
             <>
-              <p>Name: {selectedCard.name}</p>
+             <Row>  
+              <Col>  
+
+                
+              <p>First Name: {selectedCard.name}</p>
+              <p>Last Name: {selectedCard.last_name}</p>
+              <p>Gender: {selectedCard.gender}</p>
+              <p>DOB: {selectedCard.dob}</p>
               <p>Email: {selectedCard.email}</p>
-              <p>ID: {selectedCard.id}</p>
               <p>Phone: {selectedCard.phone}</p>
-              <Button variant="success" className="mr-2" onClick={() => handleAccept(selectedCard)}>
+
+              
+              </Col>
+
+              <Col> 
+              <p>Address: {selectedCard.address}</p>
+              <p>City: {selectedCard.city}</p>
+              <p>State: {selectedCard.state}</p>
+              <p>Pincode: {selectedCard.pincode}</p>
+              <p>Reg_no: {selectedCard.reg_no}</p>
+            
+              <p>Title: {selectedCard.title}</p>
+              <p>Qualification: {selectedCard.qualification}</p>
+              <p>Specialization: {selectedCard.specialization}</p>
+              </Col>
+              <Col>  
+              <p>Description: {selectedCard.description}</p>
+              <p>Uploaded Document: {selectedCard.files}</p>
+              <p>Sign Document: {selectedCard.signature}</p>
+              <p>Uploaded Video: {selectedCard.video}</p>
+              </Col>
+              </Row>
+
+
+              <Button variant="success" className="mr-10" onClick={() => handleAccept(selectedCard)}>
               Accept
             </Button>
             <br/>
