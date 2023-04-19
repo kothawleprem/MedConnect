@@ -13,7 +13,7 @@ from django.contrib.auth import authenticate
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
-from consultation.models import SlotModel, ConsultationModel
+from consultation.models import SlotModel, ConsultationModel, PrescriptionModel
 from doctors.models import DoctorProfileModel, SpecializationModel, DoctorModel
 from .models import PatientModel, PatientProfileModel
 
@@ -230,6 +230,7 @@ class ManageConsultationsView(APIView):
             elif(consultation.payment_completed):
                 status_ = "PAYMENT_COMPLETED"
             res = {
+                "consultation_id": consultation.id,
                 "date": consultation.slot.date,
                 "start_time": consultation.slot.start_time,
                 "end_time": consultation.slot.end_time,
@@ -240,3 +241,47 @@ class ManageConsultationsView(APIView):
             response.append(res)
         print(response)
         return Response(response, status=status.HTTP_200_OK)
+
+class ConsultationView(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        consultation_id = request.GET["consultation_id"]
+        consultation = ConsultationModel.objects.get(id=consultation_id)
+        slot = consultation.slot
+        doctor = consultation.slot.doctor
+        doctor_profile = DoctorProfileModel.objects.get(doctor=doctor)
+        status_ = "PAYMENT_PENDING"
+        if (consultation.completed):
+            status_ = "COMPLETED"
+        elif (consultation.payment_completed):
+            status_ = "PAYMENT_COMPLETED"
+        if(consultation.completed):
+            presc = PrescriptionModel.objects.get(consultation=consultation)
+            prescription = str(presc.prescription_file)
+        else:
+            prescription = "NOT_GENERATED"
+        if(len(str(consultation.patient_file))):
+            patient_file = str(consultation.patient_file)
+        else:
+            patient_file = "NOT_UPLOADED"
+        # print(len(str(consultation.patient_file)))
+        response = {
+            "date": slot.date,
+            "start_time": str(slot.start_time)[:-3],
+            "end_time": str(slot.end_time)[:-3],
+            "doctor_name": doctor_profile.name,
+            "email": slot.doctor.user.email,
+            "specialization": doctor_profile.specialization.name,
+            "phone": doctor_profile.phone,
+            "city": doctor_profile.city,
+            "state": doctor_profile.state,
+            "patient_file": patient_file,
+            "room_id": consultation.room_id,
+            "dr_consultation_remarks": consultation.remarks,
+            "prescription_file": prescription,
+            "status": status_
+        }
+        return Response(response, status=status.HTTP_200_OK)
+
