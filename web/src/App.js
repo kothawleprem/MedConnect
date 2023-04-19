@@ -18,6 +18,8 @@ import Payments from "./Pages/Payments/Payments";
 import CapturePayments from "./Pages/Payments/CapturePayments";
 import ViewAppointment from "./Pages/Consultation/ViewAppointment";
 import AddPrescription from "./components/AddPrescription";
+import AdminLogin from "./Pages/Admin/AdminLogin";
+import AdminPanel from "./Pages/Admin/AdminPanel";
 
 
 function App() {
@@ -40,6 +42,10 @@ function App() {
         <Route path="/capturePayments" element={<CapturePayments />} />
         <Route path="/viewappointments" element={<ViewAppointment />} />
         <Route path="/addprescription" element={<AddPrescription/>} />
+        <Route path="/admin" element={<AdminLogin/>} />
+        <Route path="/adminpanel" element={<AdminPanel/>} />
+
+
 
 
 
