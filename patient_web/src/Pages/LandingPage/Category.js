@@ -15,7 +15,7 @@ export default function Category() {
                         </div> 
                         <div className="product-content">
                             <h4 className="content-title mb-15">Instant Doctor <br/> Consultation</h4>
-                            <Link style={{ textDecoration: 'none' }}  to="/">Connect now <i className="lni-chevron-right"></i></Link>
+                            <Link style={{ textDecoration: 'none' }}  to="/instant">Connect now <i className="lni-chevron-right"></i></Link>
                         </div> 
                     </div> 
                 </div>
@@ -26,7 +26,7 @@ export default function Category() {
                         </div> 
                         <div className="product-content">
                             <h4 className="content-title mb-15">Lab Testing<br/>Sample pickup<br/> at your home</h4>
-                            <Link style={{ textDecoration: 'none' }} to="#">Book appointment <i className="lni-chevron-right"></i></Link>
+                            <Link style={{ textDecoration: 'none' }} to="/team">Book appointment <i className="lni-chevron-right"></i></Link>
                         </div> 
                     </div> 
                 </div>

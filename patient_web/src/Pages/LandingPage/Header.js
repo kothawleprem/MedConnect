@@ -13,16 +13,19 @@ export default function Header() {
             <div className="row">
                 <div className="col-lg-12">
                     <nav className="navbar navbar-expand-lg">
-                        <a className="navbar-brand" href="index.html">
-                            <img className="logo" src="https://images1-fabric.practo.com/practices/1240571/terna-speciality-hospital-research-centre-navi-mumbai-5c51a98214e65.jpg" alt="Logo"/>
-                        </a> 
-                        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <div className="navbar-brand">
+                            <img className="logo" src="Assets/MedConnect.png" 
+                            width="150"
+                            height="25" 
+                            alt="img"/>
+                        </div> 
+                        {/* <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <span className="bar-icon"></span>
                             <span className="bar-icon"></span>
                             <span className="bar-icon"></span>
                             <span className="bar-icon"></span>
 
-                        </button>
+                        </button> */}
 
                         <div className="collapse navbar-collapse side" id="navbarSupportedContent">
                             <ul id="nav" className="navbar-nav ml-auto">
@@ -42,14 +45,9 @@ export default function Header() {
                                     <Link style={{ textDecoration: 'none' }}  to="/team">Lab Test</Link>
                                 </li>
                                 
-                                <li className="nav-item">
-                                    <Link  style={{ textDecoration: 'none' }} to="/contact">Contact</Link>
-                                </li>
-                                
-                               
                            
                             </ul> 
-                          <Link style={{ textDecoration: 'none' }} to="/login" >   <p className="main-btn btn-lg">Login</p>  </Link> 
+                          <Link style={{ textDecoration: 'none' }} to="/email" >   <p className="main-btn btn-lg">Login</p>  </Link> 
                         </div>
                     </nav> 
                 </div>

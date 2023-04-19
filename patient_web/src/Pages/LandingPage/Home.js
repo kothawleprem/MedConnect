@@ -8,6 +8,7 @@ import Specialists from './Specialists.js'
 import Footer from './Footer.js'
 import Labtestpackage from './Labtestpackage.js'
 import SearchBox from '../../components/Items/SearchBox.jsx'
+import SearchHeading from './SearchHeading.jsx';
 
 
 
@@ -22,7 +23,10 @@ export default function Home() {
     <div>
       <Header />
       <Hero />
+      <SearchHeading/>
+      <center> 
       <SearchBox onSearch={handleSearch} sid="1"/>
+      </center>
       <Category />
       <Specialists />
       <Labtestpackage />
