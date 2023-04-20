@@ -55,7 +55,7 @@ const Dcform = () => {
         },
       }
        axios
-         .get(`http://127.0.0.1:8000/api/doctors/profile/`, config)
+         .get(`http://${process.env.REACT_APP_API_URL}/api/doctors/profile/`, config)
          .then(function (response) {
            console.log(response);
            const data = response.data;
@@ -213,10 +213,7 @@ const Dcform = () => {
           <div class="section-title">
             <h2>Fill The Form</h2>
             <p>
-              Magnam dolores commodi suscipit. Necessitatibus eius consequatur
-              ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam
-              quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea.
-              Quia fugiat sit in iste officiis commodi quidem hic quas.
+              
             </p>
           </div>
 
@@ -540,6 +537,7 @@ const Dcform = () => {
           </Form>
         </div>
       </section>
+      
     </div>
   );
 

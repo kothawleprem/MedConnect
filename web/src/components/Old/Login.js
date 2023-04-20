@@ -30,7 +30,7 @@ function Login() {
 
   const sendOtp = () => {
     axios
-      .post("http://localhost:8000/api/doctors/email/", {
+      .post(`http://${process.env.REACT_APP_API_URL}/api/doctors/email/`, {
         email: email,
       })
       .then(function (response) {

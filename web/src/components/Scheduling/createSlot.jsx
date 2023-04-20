@@ -65,7 +65,7 @@ const CreateSlot = () => {
     console.log(req)
     
 
-    fetch(`http://127.0.0.1:8000/api/consultation/slot/`, {
+    fetch(`http://${process.env.REACT_APP_API_URL}/api/consultation/slot/`, {
       method: "POST",
       headers: {
         Accept: "application/json",

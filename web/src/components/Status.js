@@ -27,7 +27,7 @@ export default function Status() {
         },
       };
       axios
-      .get(`http://127.0.0.1:8000/api/doctors/request_verification/`, config)
+      .get(`http://${process.env.REACT_APP_API_URL}/api/doctors/request_verification/`, config)
       .then(function (response) {
         console.log(response ,"RESPONSE");
         if (response.data.status === "Approved") {

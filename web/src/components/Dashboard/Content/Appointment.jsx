@@ -20,7 +20,7 @@ const Appointment = () => {
     };
     axios
       .get(
-        "http://127.0.0.1:8000/api/consultation/slot_list/?status=True",
+        `http://${process.env.REACT_APP_API_URL}/api/consultation/slot_list/?status=True`,
         config
       )
       .then(function (response) {

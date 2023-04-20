@@ -54,7 +54,7 @@ const AdminLogin = () => {
         };
 
         axios
-          .post("http://127.0.0.1:8000/api/", data, config)
+          .post(`http://${process.env.REACT_APP_API_URL}/api/`, data, config)
           .then((response) => {
             console.log(response.data);
             navigate("/adminpanel", {

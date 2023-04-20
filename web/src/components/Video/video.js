@@ -57,7 +57,7 @@ const Video = () => {
         room_id: id,
       };
 
-      fetch(`http://127.0.0.1:8000/api/consultation/room/`, {
+      fetch(`http://${process.env.REACT_APP_API_URL}/api/consultation/room/`, {
         method: "POST",
         headers: {
           Accept: "application/json",

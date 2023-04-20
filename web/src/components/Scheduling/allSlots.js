@@ -44,7 +44,7 @@ const AllSlots = () => {
         slot_id: slot_id,
       }),
     };
-    fetch("http://127.0.0.1:8000/api/consultation/slot/", requestOptions)
+    fetch(`http://${process.env.REACT_APP_API_URL}/api/consultation/slot/`, requestOptions)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");

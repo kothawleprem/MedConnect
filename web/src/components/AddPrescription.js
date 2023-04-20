@@ -81,7 +81,7 @@ export default function AddPrescription() {
       };
 
       // axios
-      //   .post("http://127.0.0.1:8000/api/doctors/", data, config)
+      //   .post(`http://${process.env.REACT_APP_API_URL}/api/doctors/`, data, config)
       //   .then((response) => {
       //     console.log(response.data);
       //     if (response.status === 201) {

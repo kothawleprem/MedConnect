@@ -26,7 +26,7 @@ const EditSlotRemarks = () => {
     };
     axios
       .get(
-        `http://127.0.0.1:8000/api/consultation/slot/?slot_id=${slot_id}`,
+        `http://${process.env.REACT_APP_API_URL}/api/consultation/slot/?slot_id=${slot_id}`,
         config
       )
       .then((response) => {
