@@ -23,6 +23,9 @@ const Email = () => {
     });
   };
 
+  
+  console.log(process.env.REACT_APP_API_URL);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (email.length === 0) {
@@ -50,8 +53,14 @@ const Email = () => {
 
       console.log(data,config)
 
+      console.log(process.env.REACT_APP_API_URL);
+
       axios
-        .post("http://127.0.0.1:8000/api/patients/email/", data, config)
+        .post(
+          `http://${process.env.REACT_APP_API_URL}/api/patients/email/`,
+          data,
+          config
+        )
         .then((response) => {
           console.log(response.data);
           navigate("/verify", {

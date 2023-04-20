@@ -15,11 +15,14 @@ const BookSlot = () => {
   console.log(slot_id)
 
   useEffect(() => {
-    axios.get(`http://127.0.0.1:8000/api/patients/slot?slot_id=${slot_id}`)
-    .then(function(response){
-      console.log(response.data)
-      setSlot(response.data)
-    })
+    axios
+      .get(
+        `http://${process.env.REACT_APP_API_URL}/api/patients/slot?slot_id=${slot_id}`
+      )
+      .then(function (response) {
+        console.log(response.data);
+        setSlot(response.data);
+      });
   },[])
 
   const handleClick = () => {
@@ -34,19 +37,24 @@ const BookSlot = () => {
       "slot_id": slot_id,
 
     }
-    axios.post(`http://127.0.0.1:8000/api/consultation/book_slot/`, data, config)
-    .then(function(response) {
-      console.log(response.data.consultation_id);
-      setConsultationId(response.data.consultation_id)
-    })
-    .then(
-      navigate("/payments", {
-        state:{
-          "amount": slot.fees,
-          "slot_id": slot_id
-        }
+    axios
+      .post(
+        `http://${process.env.REACT_APP_API_URL}/api/consultation/book_slot/`,
+        data,
+        config
+      )
+      .then(function (response) {
+        console.log(response.data.consultation_id);
+        setConsultationId(response.data.consultation_id);
       })
-    )
+      .then(
+        navigate("/payments", {
+          state: {
+            amount: slot.fees,
+            slot_id: slot_id,
+          },
+        })
+      );
     console.log('clicked')
   }
   

@@ -61,7 +61,7 @@ const Email = () => {
       //   })
       //   .catch((error) => console.log(error));
 
-      fetch("http://192.168.252.88:8000/api/doctors/email/", {
+      fetch(`http://${process.env.REACT_APP_API_URL}/api/doctors/email/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

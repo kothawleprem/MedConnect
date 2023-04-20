@@ -59,12 +59,16 @@ const Verify = () => {
       };
 
       axios
-        .post("http://127.0.0.1:8000/api/patients/verify_email/", data, config)
+        .post(
+          `http://${process.env.REACT_APP_API_URL}/api/patients/verify_email/`,
+          data,
+          config
+        )
         .then((response) => {
           const data = response.data;
           // console.log(response.data);
           status = response.status;
-          console.log(status)
+          console.log(status);
           if (status === 200) {
             var token = data["token"];
             localStorage.setItem("token", token);

@@ -19,7 +19,7 @@ const DoctorsBySpecialization = () => {
       // Make API request with selected item ID
       axios
         .get(
-          `http://127.0.0.1:8000/api/patients/by_specialization?specialization=${selected}`
+          `http://${process.env.REACT_APP_API_URL}/api/patients/by_specialization?specialization=${selected}`
         )
         .then((response) => {
           const data = response.data;
@@ -39,7 +39,7 @@ const DoctorsBySpecialization = () => {
       }
       axios
         .get(
-          `http://127.0.0.1:8000/api/patients/by_specialization?specialization=${query}`
+          `http://${process.env.REACT_APP_API_URL}/api/patients/by_specialization?specialization=${query}`
         )
         .then(function (response) {
           const data = response.data;

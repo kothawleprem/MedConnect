@@ -16,7 +16,7 @@ const DashFreeSlots = () => {
     };
     axios
       .get(
-        "http://127.0.0.1:8000/api/consultation/slot_list/?status=False",
+        `http://${process.env.REACT_APP_API_URL}/api/consultation/slot_list/?status=False`,
         config
       )
       .then(function (response) {

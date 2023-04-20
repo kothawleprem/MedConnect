@@ -27,7 +27,8 @@ export default function Consultation() {
       };
       axios
         .get(
-          `http://127.0.0.1:8000/api/patients/consultation?consultation_id=${consultation_id}`, config
+          `http://${process.env.REACT_APP_API_URL}/api/patients/consultation?consultation_id=${consultation_id}`,
+          config
         )
         .then(function (response) {
           console.log("response", response);

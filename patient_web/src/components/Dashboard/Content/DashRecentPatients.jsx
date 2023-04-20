@@ -15,7 +15,7 @@ const DashRecentPatients = () => {
         Authorization: `Token ${token}`,
       },
     };
-    axios.get("http://127.0.0.1:8000/api/consultation/patients/?limit=3", config)
+    axios.get("http://${process.env.REACT_APP_API_URL}/api/consultation/patients/?limit=3", config)
     .then(function(response) {
       const data = response.data
       setPatients(data)

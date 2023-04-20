@@ -28,12 +28,14 @@ const DoctorProfile = () => {
 
     useEffect(() => {
       axios
-        .get(`http://127.0.0.1:8000/api/patients/doctor_profile?doctor_id=${state.doctor_id}`)
+        .get(
+          `http://${process.env.REACT_APP_API_URL}/api/patients/doctor_profile?doctor_id=${state.doctor_id}`
+        )
         .then((response) => {
           const data = response.data;
           setDoctor(data);
-          setTodaySlots(data.slots[0])
-          setTomorrowSlots(data.slots[1])
+          setTodaySlots(data.slots[0]);
+          setTomorrowSlots(data.slots[1]);
         });
     },[])
 

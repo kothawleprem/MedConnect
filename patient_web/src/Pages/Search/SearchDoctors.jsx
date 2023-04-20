@@ -24,12 +24,15 @@ const SearchDoctors = (props) => {
         const query = new URLSearchParams(location.search).get("query");
         console.log("q", query);
         if (query != null){
-        axios.get(`http://127.0.0.1:8000/api/patients/search/?query=${query}`)
-        .then(function (response) {
-            const data = response.data
-            setResults(data)
-            console.log(data)
-        })
+        axios
+          .get(
+            `http://${process.env.REACT_APP_API_URL}/api/patients/search/?query=${query}`
+          )
+          .then(function (response) {
+            const data = response.data;
+            setResults(data);
+            console.log(data);
+          });
   }
     },[])
 

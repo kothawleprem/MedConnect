@@ -26,11 +26,16 @@ const CapturePayments = () => {
       stripe_id: payment_intent
     };
 
-    axios.post("http://127.0.0.1:8000/api/consultation/confirm_payment/", data, config)
-    .then(function(response) {
-      setPaymentId(response.data.payment_id)
-      console.log(response.data.payment_id)
-    })
+    axios
+      .post(
+        `http://${process.env.REACT_APP_API_URL}/api/consultation/confirm_payment/`,
+        data,
+        config
+      )
+      .then(function (response) {
+        setPaymentId(response.data.payment_id);
+        console.log(response.data.payment_id);
+      });
     
   },[])
     

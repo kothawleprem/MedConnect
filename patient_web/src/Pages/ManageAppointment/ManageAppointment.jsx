@@ -21,7 +21,10 @@ export default function ManageAppointment() {
       },
     };
     axios
-      .get("http://127.0.0.1:8000/api/patients/manage_consultations", config)
+      .get(
+        `http://${process.env.REACT_APP_API_URL}/api/patients/manage_consultations`,
+        config
+      )
       .then(function (response) {
         const data = response.data;
         setSlots(data);

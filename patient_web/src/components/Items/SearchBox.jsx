@@ -12,11 +12,13 @@ const SearchBox = (props) => {
     const handleClick = () => {
       // make API request with the query data
       axios
-        .get(`http://127.0.0.1:8000/api/patients/search/?query=${query}`)
+        .get(
+          `http://${process.env.REACT_APP_API_URL}/api/patients/search/?query=${query}`
+        )
         .then(function (response) {
           const data = response.data;
           props.onSearch(data);
-        //   console.log(data);
+          //   console.log(data);
         });
     navigate(`/search?query=${query}`);
     
