@@ -21,7 +21,7 @@ import AddPrescription from "./components/AddPrescription";
 import AdminLogin from "./Pages/Admin/AdminLogin";
 import AdminPanel from "./Pages/Admin/AdminPanel";
 
-import Video from "./components/Video/video";
+// import Video from "./components/Video/video";
 
 
 function App() {
@@ -47,7 +47,7 @@ function App() {
         <Route path="/admin" element={<AdminLogin/>} />
         <Route path="/adminpanel" element={<AdminPanel/>} />
 
-        <Route path="/video" element={<Video/>}/>
+        {/* <Route path="/video" element={<Video/>}/> */}
 
 
 

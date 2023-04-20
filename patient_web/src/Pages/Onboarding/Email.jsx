@@ -48,6 +48,8 @@ const Email = () => {
         },
       };
 
+      console.log(data,config)
+
       axios
         .post("http://127.0.0.1:8000/api/patients/email/", data, config)
         .then((response) => {
@@ -63,7 +65,6 @@ const Email = () => {
   };
   return (
     <>
-   
       {/* <center> */}
       <Container>
         <br />
@@ -89,7 +90,7 @@ const Email = () => {
                 </Form.Text>
               </Form.Group>
               <Link
-                style={{ textDecoration: "none" }}
+                style={{ textDecoration: "none", cursor: "pointer" }}
                 onClick={handleSubmit}
                 to="/Formview"
               >

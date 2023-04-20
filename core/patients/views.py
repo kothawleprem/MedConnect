@@ -17,6 +17,8 @@ from consultation.models import SlotModel, ConsultationModel, PrescriptionModel
 from doctors.models import DoctorProfileModel, SpecializationModel, DoctorModel
 from .models import PatientModel, PatientProfileModel
 
+from core.emails import sendOTP
+
 
 class EmailView(APIView):
 
@@ -38,6 +40,7 @@ class EmailView(APIView):
             print("updating password", user)
             user.set_password(password_)
             user.save()
+        sendOTP(email, otp)
         print("otp", password_)
         response = {
             "message": "OTP Sent Successfully"

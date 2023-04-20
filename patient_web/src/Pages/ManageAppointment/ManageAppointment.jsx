@@ -33,7 +33,7 @@ export default function ManageAppointment() {
 
   const handleSubmit = (consultation_id) => {
     console.log(consultation_id);
-    navigate("/viewappointments", {
+    navigate("/consultation", {
       state: {
         consultation_id: consultation_id,
       },

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Container, Col, Row, Button, Card } from "react-bootstrap";
 import Alert from "react-bootstrap/Alert";
 import Form from "react-bootstrap/Form";
@@ -11,10 +11,11 @@ import { FaUpload } from "react-icons/fa";
 
 export default function Consultation() {
     const { state } = useLocation();
-    // const { consultation_id } = state;
+    const { consultation_id } = state;
     const [data, setData] = useState();
     // console.log(consultation_id);
-    const consultation_id = 11
+    // const consultation_id = 11
+    const navigate = useNavigate()
 
     useEffect(() => {
       const token = localStorage.getItem("token");
@@ -57,7 +58,7 @@ export default function Consultation() {
           <div className="consultation-main-info">
             <Row>
               <Col xl={3} md={3} xs={12}>
-                <Button>Join Meeting</Button>
+                <Button onClick={() => navigate("/prevideo")}>Join Meeting</Button>
               </Col>
             </Row>
             <br />

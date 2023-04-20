@@ -18,7 +18,7 @@ import io from "socket.io-client";
 import { Grid } from "@mui/material";
 
 import "./video.css";
-const socket = io.connect("http://localhost:5000");
+const socket = io.connect("http://192.168.252.88:5000");
 
 const Video = () => {
   useEffect(() => {
@@ -188,7 +188,7 @@ const Video = () => {
               <center>
                 <video
                   playsInline
-                  ref={myVideo}
+                  ref={userVideo}
                   autoPlay
                   className="videoElementOut"
                 /> 

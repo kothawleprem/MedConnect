@@ -67,8 +67,9 @@ export default function AddPrescription() {
     const handleSubmit = async (e) => {
       e.preventDefault()
       const data = {
-        medicines: medicines,
-        addremarks: addremarks,
+        medicine_list: medicines,
+        remarks: addremarks,
+        consultation_id: 11
        
       };
       console.log(medicines,"medicine");
@@ -80,17 +81,19 @@ export default function AddPrescription() {
         },
       };
 
-      // axios
-      //   .post("http://127.0.0.1:8000/api/doctors/", data, config)
-      //   .then((response) => {
-      //     console.log(response.data);
-      //     if (response.status === 201) {
-      //       navigate("/status", {
-              
-      //       });
-      //     }
-      //   })
-      //   .catch((error) => console.log(error));
+      axios
+        .post(
+          "http://127.0.0.1:8000/api/consultation/prescription/",
+          data,
+          config
+        )
+        .then((response) => {
+          console.log(response.data);
+          if (response.status === 201) {
+            navigate("/", {});
+          }
+        })
+        .catch((error) => console.log(error));
 
     };
   
@@ -133,7 +136,7 @@ export default function AddPrescription() {
                   id="type" 
                   value={type}
                    onChange={handleTypeChange}
-                  placeholder="Enter Last Name"
+                  placeholder="Enter Type"
                 /> 
          
                 <Form.Label>
@@ -144,7 +147,7 @@ export default function AddPrescription() {
                   name="lname"
                   value={medicine} 
                   onChange={handleMedicineChange}
-                  placeholder="Enter Last Name"
+                  placeholder="Enter Medicine Name"
                 />
                  </Col>
                 
@@ -158,7 +161,7 @@ export default function AddPrescription() {
                   name="lname"
                   value={power}
                   onChange={handlePowerChange} 
-                  placeholder="Enter Last Name"
+                  placeholder="Enter Power"
                 />
 
                 <Form.Label>
@@ -169,7 +172,7 @@ export default function AddPrescription() {
                   name="lname"
                   value={frequency} 
                   onChange={handleFrequencyChange}
-                  placeholder="Enter Last Name"
+                  placeholder="Enter Frequency"
                 />
                 </Col>
              
@@ -181,7 +184,7 @@ export default function AddPrescription() {
                   name="lname"
                   value={remarks} 
                   onChange={handleRemarksChange}
-                  placeholder="Enter Last Name"
+                  placeholder="Enter your Remarks"
                 />
                
                </Row>

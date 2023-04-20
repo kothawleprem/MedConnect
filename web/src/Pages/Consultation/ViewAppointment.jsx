@@ -41,6 +41,14 @@ export default function ViewAppointment() {
     )
   }
 
+  const prescriptionPageClick = () => {
+    navigate("/addprescription", {
+      state:{
+        "consultation_id":11
+      }
+    });
+  }
+
   const handleChange = (e) => {
     const remarks = e.target.value.trim();
     setRemarks(remarks);
@@ -104,7 +112,7 @@ export default function ViewAppointment() {
                 <Button onClick={handleClick}>Join Meeting</Button>
               </Col>
               <Col xl={3} md={3} xs={12}>
-                <Button>Generate Prescription</Button>
+                <Button onClick={prescriptionPageClick}>Generate Prescription</Button>
               </Col>
             </Row>
             <br />

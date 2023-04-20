@@ -308,19 +308,15 @@ class PrescriptionView(APIView):
 
     def post(self, request):
         consultation_id = request.data.get("consultation_id")
-        doctor_id = request.data.get("doctor_id")
-        patient_id = request.data.get("patient_id")
-        patient = PatientModel.objects.get(id=patient_id)
-        patient_profile = PatientProfileModel.objects.get(patient=patient)
+        consultation = ConsultationModel.objects.get(id=consultation_id)
+        patient_profile = PatientProfileModel.objects.get(patient=consultation.patient)
         patient_name = patient_profile.first_name + " " + patient_profile.last_name
         patient_location = patient_profile.city
-
-        doctor = DoctorModel.objects.get(id=doctor_id)
-        doctor_profile = DoctorProfileModel.objects.get(doctor=doctor)
-        doctor_email = doctor.email
-        doctor_name = doctor_profile.first_name + " " + doctor_profile.last_name
+        doctor_profile = DoctorProfileModel.objects.get(doctor=consultation.doctor)
+        doctor_email = consultation.doctor.user.email
+        doctor_name = doctor_profile.name
         doctor_signature = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLXx8xhe108eJolj8lt38K5qq7L2no-ienLUJgOFvF9ubXhD9SBC2DvcDJjmMWd1KpT6A&usqp=CAU"
-        medconnect_id = doctor_id
+        medconnect_id = consultation.doctor.id
         reg_no = doctor_profile.reg_no
         doctor_location = doctor_profile.city
         doctor_title = doctor_profile.title
@@ -332,9 +328,9 @@ class PrescriptionView(APIView):
         rx_path = "https://raw.githubusercontent.com/kothawleprem/MedConnect/main/templates/rx_logo.jpg"
         generate_prescription(patient_name, doctor_name, medicine_list, logo_path, rx_path, doctor_signature,
                               prescription_no,
-                              consultation_id, doctor_email, medconnect_id, reg_no, doctor_location, patient_id,
+                              consultation_id, doctor_email, medconnect_id, reg_no, doctor_location, consultation.patient.id,
                               patient_location, date, remarks, doctor_title)
-        print(consultation_id, doctor_id, patient_id, medicine_list, remarks)
+        # print(consultation_id, doctor_id, patient_id, medicine_list, remarks)
         response = {
             "message": "Generate Prescription"
         }

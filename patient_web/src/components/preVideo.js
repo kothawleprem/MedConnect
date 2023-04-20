@@ -16,7 +16,7 @@ function PreVideo() {
       let response;
       do {
         response = await fetch(
-          "http://127.0.0.1:8000/api/consultation/room/?consultation_id=2"
+          "http://127.0.0.1:8000/api/consultation/room/?consultation_id=11"
         );
         await new Promise((resolve) => setTimeout(resolve, 3000));
       } while (response.status !== 200);
