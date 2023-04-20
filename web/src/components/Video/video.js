@@ -57,7 +57,7 @@ const Video = () => {
         room_id: id,
       };
 
-      fetch(`http://127.0.0.1:8000/api/consultation/room/`, {
+      fetch(`http://${process.env.REACT_APP_API_URL}/api/consultation/room/`, {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -160,8 +160,8 @@ const Video = () => {
 
   return (
     <>
-    
-      <div className="container">
+    <div className="body-video">   
+      <div className="container ">
         <div className="header">  
       
       <Grid  item xs={30} sm={9} md={9} lg={7.8} xl={7.8} className="head" container flexWrap="nowrap" wrap="nowrap">
@@ -329,6 +329,7 @@ const Video = () => {
           ) : null}
         </Grid>
       
+      </div>
       </div>
     </>
   );

@@ -27,6 +27,8 @@ const Email = () => {
 
     const handleSubmit = (e) => {
     
+     
+
       e.preventDefault();
       if (email.length === 0) {
           toast.warn("Please enter an Email Address", {
@@ -53,7 +55,7 @@ const Email = () => {
         };
 
         axios
-          .post("http://127.0.0.1:8000/api/doctors/email/", data, config)
+          .post(`http://${process.env.REACT_APP_API_URL}/api/doctors/email/`, data, config)
           .then((response) => {
             console.log(response.data);
             navigate("/otp", {
@@ -78,7 +80,7 @@ const Email = () => {
             <Col xs={12} lg={6} md={12} >
               <Form>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
-                  <h2 style={{fontWeight:800}} >Login</h2>
+                  <h2 style={{fontWeight:800}} >Login </h2>
                   <br/>
                   <Form.Label>Email address</Form.Label>
                   <Form.Control

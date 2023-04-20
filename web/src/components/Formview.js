@@ -55,7 +55,7 @@ const Formview = () => {
       };
         axios
           .get(
-            `http://127.0.0.1:8000/api/doctors/profile/`, config
+            `http://${process.env.REACT_APP_API_URL}/api/doctors/profile/`, config
           )
           .then(function (response) {
             console.log(response);

@@ -14,7 +14,7 @@ export default function Payments() {
 
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads
-    fetch("http://127.0.0.1:8000/api/consultation/payments/", {
+    fetch(`http://${process.env.REACT_APP_API_URL}/api/consultation/payments/`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ amount: 120 }),
