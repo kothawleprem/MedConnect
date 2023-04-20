@@ -9,6 +9,7 @@ const io = require("socket.io")(server, {
       "http://localhost:3001",
       "http://192.168.0.88:3000",
       "http://192.168.0.88:3001",
+      "http://192.168.252.88:3001",
     ],
     methods: ["GET", "POST"],
   },

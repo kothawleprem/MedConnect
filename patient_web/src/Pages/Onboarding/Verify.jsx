@@ -1,5 +1,5 @@
 import React from 'react'
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import { useState } from "react";
 
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
@@ -108,9 +108,10 @@ const Verify = () => {
             <Form>
               <MuiOtpInput value={OTP} onChange={handleChange} />
               <br></br>
-              <button style={{ border: "none" }} onClick={handleSubmit}>
+              <button style={{ border: "none" ,backgroundColor:'white' }} onClick={handleSubmit}>
                 <p className="main-btn">Submit</p>
               </button>
+
             </Form>
           </Col>
           <Col xs={12} lg={5} md={6}>

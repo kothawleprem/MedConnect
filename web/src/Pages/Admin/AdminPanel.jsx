@@ -8,27 +8,27 @@ import CardList from "./CardList";
 
 import axios from 'axios';
 
-// const data = [
-//   { id: 1, name: "John Doe", email: "johndoe@example.com", phone: "555-1234" },
-//   { id: 2, name: "Jane Smith", email: "janesmith@example.com", phone: "555-5678" },
-//   { id: 3, name: "Bob Johnson", email: "bobjohnson@example.com", phone: "555-9012" },
-// ];
+const data = [
+  { id: 1, name: "John Doe", email: "johndoe@example.com", phone: "555-1234" },
+  { id: 2, name: "Jane Smith", email: "janesmith@example.com", phone: "555-5678" },
+  { id: 3, name: "Bob Johnson", email: "bobjohnson@example.com", phone: "555-9012" },
+];
 
 
 
 function AdminPanel() {
-  const [data, setData] = useState([]);
+  // const [data, setData] = useState([]);
 
 
   useEffect(() => {
-    axios
-      .get("https://jsonplaceholder.typicode.com/users")
-      .then((response) => {
-        setData(response.data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    // axios
+    //   .get("https://jsonplaceholder.typicode.com/users")
+    //   .then((response) => {
+    //     setData(response.data);
+    //   })
+    //   .catch((error) => {
+    //     console.error(error);
+    //   });
   }, []);
 
   return (

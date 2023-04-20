@@ -19,7 +19,7 @@ function Otp() {
 
   const submitOtp = () => {
     axios
-      .post("http://127.0.0.1:8000/api/doctors/verify_email/", {
+      .post(`http://${process.env.REACT_APP_API_URL}/api/doctors/verify_email/`, {
         email: OTP,
       })
       .then(function (response) {

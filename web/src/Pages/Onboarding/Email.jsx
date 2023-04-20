@@ -42,12 +42,33 @@ const Email = () => {
       const data = {
         email: email["email"],
       };
+    }
 
       const config = {
         headers: {
           "Content-Type": "application/json",
         },
       };
+
+
+      e.preventDefault();
+      if (email.length === 0) {
+          toast.warn("Please enter an Email Address", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+          navigate("/");
+      } 
+      else {
+        const data = {
+          email: email["email"],
+        };
 
       // axios
       //   .post("http://127.0.0.1:8000/api/doctors/email/", data, config)
@@ -92,24 +113,28 @@ const Email = () => {
     <>
       <Bar />
       {/* <center> */}
-      <Container>
-        <br />
-        <br />
-        <Row className=" d-flex align-items-center justify-content-center">
-          <Col xs={12} lg={6} md={12}>
-            <Form>
-              <Form.Group className="mb-3" controlId="formBasicEmail">
-                <h2 style={{ fontWeight: 800 }}>Login</h2>
-                <br />
-                <Form.Label>Email address</Form.Label>
-                <Form.Control
-                  type="email"
-                  placeholder="Enter email"
-                  name="email"
-                  onChange={handleChange}
-                  style={{ width: 330 }}
-                />
-                {/* <TextField type="email" id="standard-basic" label="Enter your email id" variant="standard"  style={{width:330}}/> */}
+        <Container>
+          
+        <br/>
+        <br/>
+          <Row className=" d-flex align-items-center justify-content-center">
+           
+            <Col xs={12} lg={6} md={12} >
+              <Form>
+                <Form.Group className="mb-3" controlId="formBasicEmail">
+                  <h2 style={{fontWeight:800}} >Login </h2>
+                  <br/>
+                  <Form.Label>Email address</Form.Label>
+                  <Form.Control
+                    type="email"
+                    placeholder="Enter email"
+                    name="email"
+                    onChange={handleChange}
+                   
+                   style={{width:330}}
+                    
+                  />
+                  {/* <TextField type="email" id="standard-basic" label="Enter your email id" variant="standard"  style={{width:330}}/> */}
 
                 <Form.Text className="text-muted">
                   We'll never share your email with anyone else.

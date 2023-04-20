@@ -83,7 +83,7 @@ export default function AddPrescription() {
 
       axios
         .post(
-          "http://127.0.0.1:8000/api/consultation/prescription/",
+          `http://${process.env.REACT_APP_API_URL}/api/consultation/prescription/`,
           data,
           config
         )

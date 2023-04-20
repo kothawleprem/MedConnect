@@ -65,7 +65,7 @@ const CreateSlot = () => {
     console.log(req)
     
 
-    fetch(`http://127.0.0.1:8000/api/consultation/slot/`, {
+    fetch(`http://${process.env.REACT_APP_API_URL}/api/consultation/slot/`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -120,11 +120,10 @@ const CreateSlot = () => {
           <Tab eventKey="today" title={today}>
             {/* <img src="assets/sch.png" style={{height:'250px,width:200px'}} /> */}
 
-            <Card body className="shadow-sm" style={{ width: "27rem" }}>
-              <Row>
-                <Col xs={4}>
+            <Card body className="shadow-sm" style={{ width: "30rem" }}>
+              <Row style={{margin:'10px'}}>
+                <Col md={6}  >
                   <p>Enter Start time</p>
-
                   <input
                     type="time"
                     name="start_time"
@@ -132,9 +131,10 @@ const CreateSlot = () => {
                     onChange={handleChangeStart}
                     required
                   />
-                </Col>
 
-                <Col xs={4}>
+                </Col>
+             
+                <Col md={6} >
                   <p>Enter End time</p>
                   <input
                     type="time"
@@ -144,19 +144,23 @@ const CreateSlot = () => {
                     required
                   />
                 </Col>
+
               </Row>
               <br />
+              <center> 
               <Button
                 onClick={() => handleSubmit(today)}
-                variant="primary"
-                style={{
-                  backgroundColor: "#FF7600",
-                  borderColor: "#FF7600",
-                  fontWeight: "bold",
-                }}
+                className='main-btn'
+                // variant="primary"
+                // style={{
+                //   backgroundColor: "#FF7600",
+                //   borderColor: "#FF7600",
+                //   fontWeight: "bold",
+                // }}
               >
                 Add Slot
               </Button>
+              </center>
               {/* <button >Add Slot</button> */}
             </Card>
           </Tab>
@@ -166,23 +170,24 @@ const CreateSlot = () => {
           />
 
           <Tab eventKey="tomorrow" title={tomorrow}>
-            <Card body style={{ width: "28rem" }}>
-              <Row>
-                <Col xs={4}>
+            <Card body style={{ width: "30rem" }}>
+              <Row style={{margin:'10px'}}>
+                <Col md={6}>
                   <p>Enter Start time</p>
                   <input
-                    type="text"
+                    type="time"
                     name="start_time"
                     placeholder="Start_time"
                     onChange={handleChangeStart}
                     required
                   />
+                  
                   {/* <TimePicker /> */}
                 </Col>
-                <Col xs={4}>
+                <Col md={6}>
                   <p>Enter End time</p>
                   <input
-                    type="text"
+                    type="time"
                     name="end_time"
                     placeholder="End_time"
                     onChange={handleChangeEnd}
@@ -190,18 +195,17 @@ const CreateSlot = () => {
                   />
                 </Col>
               </Row>
-              <br></br>
+              <br/>
+              <center>  
               <Button
                 onClick={() => handleSubmit(tomorrow)}
-                variant="primary"
-                style={{
-                  backgroundColor: "#FF7600",
-                  borderColor: "#FF7600",
-                  fontWeight: "bold",
-                }}
+                className='main-btn'
               >
                 Add Slot
               </Button>
+            </center>
+        
+
             </Card>
             <br />
           </Tab>

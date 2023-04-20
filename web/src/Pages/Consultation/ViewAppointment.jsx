@@ -25,7 +25,7 @@ export default function ViewAppointment() {
       },
     };
     axios.get(
-      `http://127.0.0.1:8000/api/consultation/view?access=1&consultation_id=${consultation_id}`
+      `http://${process.env.REACT_APP_API_URL}/api/consultation/view?access=1&consultation_id=${consultation_id}`
     ).then( function(response) {
       console.log("response", response)
       setData(response.data)
