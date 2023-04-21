@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 import axios from 'axios';
+import Header from '../../components/Header/header';
 
 const BookSlot = () => {
   const [slot,setSlot] = useState();
@@ -62,6 +63,7 @@ const BookSlot = () => {
     <>
       {slot != undefined && (
         <>
+        <Header/>
           <Container>
             <br />
             <div className="doctor-info">
@@ -172,7 +174,7 @@ const BookSlot = () => {
             </div>
           </Container>
         </>
-      )}
+       )} 
     </>
   );
 }

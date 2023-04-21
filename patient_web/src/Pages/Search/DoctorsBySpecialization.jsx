@@ -7,6 +7,7 @@ import { Dropdown, Container, Row, Col } from 'react-bootstrap';
 
 import DoctorCard from '../../components/singleDoctor/DoctorCard';
 import { setSelectionRange } from '@testing-library/user-event/dist/utils';
+import Header from '../../components/Header/header';
 
 const DoctorsBySpecialization = () => {
     const [doctors, setDoctors] = useState([]);
@@ -49,6 +50,7 @@ const DoctorsBySpecialization = () => {
     },[]);
   return (
     <>
+    <Header/>
       <Container>
         <br />
         <Dropdown className="d-inline ml-auto">
