@@ -9,6 +9,7 @@ import { Container, Form, Button, Row, Col } from 'react-bootstrap'
 import axios from 'axios'
 
 import SearchBox from '../../components/Items/SearchBox'
+import Header from '../../components/Header/header';
 
 const SearchDoctors = (props) => {
   const [results, setResults] = useState([]);
@@ -72,9 +73,14 @@ const SearchDoctors = (props) => {
     ];
 
   return (
-    <>
-      <SearchBox onSearch={handleSearch} />
+    <>  
+    <Header/>
       <Container>
+        <center>
+        <SearchBox onSearch={handleSearch} />
+
+        </center>
+
         <Row>
           {results.length > 0 &&
             results.map((result, index) => (
