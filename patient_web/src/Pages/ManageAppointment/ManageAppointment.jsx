@@ -5,6 +5,7 @@ import Col from "react-bootstrap/Col";
 import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Header from "../../components/Header/header";
 
 
 // import Header from "../../components/Header/header";
@@ -46,7 +47,7 @@ export default function ManageAppointment() {
 
   return (
     <>
-      {/* <Header /> */}
+    <Header/>
       <Card>
         <Card.Body style={{ padding: "10px" }}>
           <p className="appoint-title">Appointments</p>

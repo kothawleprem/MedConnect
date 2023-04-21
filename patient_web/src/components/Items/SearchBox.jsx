@@ -27,7 +27,7 @@ const SearchBox = (props) => {
     <>
       <Container>
         <br />
-        <Form className="d-flex">
+        <Form className="d-flex " >
           <Form.Control
             type="search"
             placeholder="Search"
@@ -35,6 +35,7 @@ const SearchBox = (props) => {
             aria-label="Search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
+            style={{width:'1050px'}}
           />
           <Button  className='main-btn' onClick={handleClick} >
             Search
