@@ -6,6 +6,8 @@ from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib.enums import TA_JUSTIFY
 
 
+
+
 def generate_prescription(patient_name, doctor_name, medicine_list, logo_path, rx_path, signature_path, prescription_no,
                           consultation_no, doctor_email, medconnect_id, reg_no, doctor_location, patient_id,
                           patient_location, date, remarks, doctor_title):
@@ -13,8 +15,9 @@ def generate_prescription(patient_name, doctor_name, medicine_list, logo_path, r
     print(patient_name, doctor_name, medicine_list, logo_path, rx_path, signature_path, prescription_no,
           consultation_no, doctor_email, medconnect_id, reg_no, doctor_location, patient_id,
           patient_location, date, remarks, doctor_title)
-    filename = f"{patient_name}_prescription.pdf"
-    c = canvas.Canvas(filename, pagesize=A4, bottomup=1)
+    filename = f"{consultation_no}_prescription.pdf"
+
+    c = canvas.Canvas(f"media/{filename}", pagesize=A4, bottomup=1)
 
     # MedConnect Logo
     c.setFillColor(colors.white)
@@ -110,8 +113,9 @@ def generate_prescription(patient_name, doctor_name, medicine_list, logo_path, r
     c.setFont("Courier", 10)
     c.drawString(12, 5, "Thank you for choosing MedConnect. Have a Healthy Day!")
 
-    # Save the PDF
     c.save()
+
+    return filename
 
 # medicine_list = [
 #     ("Tablet", "Paracetamol", "500 mg", "1-0-1", "-"),

@@ -21,7 +21,9 @@ import AddPrescription from "./components/AddPrescription";
 import AdminLogin from "./Pages/Admin/AdminLogin";
 import AdminPanel from "./Pages/Admin/AdminPanel";
 
-import Video from "./components/Video/video";
+// import Video from "./components/Video/video";
+
+import Home from "./LandingPage/Home"
 
 
 function App() {
@@ -30,7 +32,8 @@ function App() {
       {/* <Navbar /> */}
       <Routes>
         {/* <Route path="/login" element={<Login />} /> */}
-        <Route path="/" element={<Email />} />
+        <Route path="" element={<Home/>} />
+        <Route path="/email" element={<Email />} />
         {/* <Route path="/otp" element={<Otp />} /> */}
         <Route path="/otp" element={<Verify />} />
         <Route path="/scheduling" element={<Scheduling />} />
@@ -47,7 +50,7 @@ function App() {
         <Route path="/admin" element={<AdminLogin/>} />
         <Route path="/adminpanel" element={<AdminPanel/>} />
 
-        <Route path="/video" element={<Video/>}/>
+        {/* <Route path="/video" element={<Video/>}/> */}
 
 
 

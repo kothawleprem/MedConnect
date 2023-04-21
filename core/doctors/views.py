@@ -39,7 +39,7 @@ class EmailView(APIView):
             user.set_password(password_)
             user.save()
         print("otp", password_)
-        # sendOTP(email,otp)
+        sendOTP(email,otp)
         response = {
             "message": "OTP Sent Successfully",
 

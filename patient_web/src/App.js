@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-import Video from "./components/video";
+// import Video from "./components/video";
 import Home from "./Pages/LandingPage/Home"
 
 import PreVideo from "./components/preVideo";
@@ -32,8 +32,8 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/preVideo" element={<PreVideo />} />
-      <Route path="/video" element={<Video />}/> 
+          {/* <Route path="/preVideo" element={<PreVideo />} /> */}
+      {/* <Route path="/video" element={<Video />}/>  */}
       {/* <Route path="/bookapointment" element={<Book />}/> */}
           <Route path="/verify" element={<Verify />} />
           <Route path="/search" element={<SearchDoctors />} />

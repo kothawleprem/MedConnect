@@ -6,8 +6,9 @@ from datetime import time
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
+from core.emails import email_prescription
 from patients.models import PatientModel, PatientProfileModel
-from .models import ConsultationModel, SlotModel, PaymentModel, PrescriptionModel
+from .models import ConsultationModel, SlotModel, PaymentModel, PrescriptionModel, MedicineModel
 from doctors.models import DoctorModel, DoctorProfileModel
 
 from .prescription import generate_prescription
@@ -315,24 +316,37 @@ class PrescriptionView(APIView):
         doctor_profile = DoctorProfileModel.objects.get(doctor=consultation.doctor)
         doctor_email = consultation.doctor.user.email
         doctor_name = doctor_profile.name
-        doctor_signature = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLXx8xhe108eJolj8lt38K5qq7L2no-ienLUJgOFvF9ubXhD9SBC2DvcDJjmMWd1KpT6A&usqp=CAU"
+        doctor_signature = doctor_profile.signature
         medconnect_id = consultation.doctor.id
         reg_no = doctor_profile.reg_no
         doctor_location = doctor_profile.city
         doctor_title = doctor_profile.title
         medicine_list = request.data.get("medicine_list")
+        print(medicine_list)
         remarks = request.data.get("remarks")
-        prescription_no = "123"
-        date = "1st Jan 2023"
+        prescription = PrescriptionModel.objects.create(consultation=consultation)
+        prescription_no = prescription.id
+        for medicine in medicine_list:
+            new_medicine = MedicineModel.objects.create(prescription=prescription, type=medicine['type'],
+                                                        medicine=medicine['medicine'], power=medicine['power'],
+                                                        frequency=medicine['frequency'], remarks=medicine['remarks'])
+
+        date = prescription.consultation.slot.date
         logo_path = "https://raw.githubusercontent.com/kothawleprem/MedConnect/main/templates/medconnect_logo.jpg"
         rx_path = "https://raw.githubusercontent.com/kothawleprem/MedConnect/main/templates/rx_logo.jpg"
-        generate_prescription(patient_name, doctor_name, medicine_list, logo_path, rx_path, doctor_signature,
-                              prescription_no,
-                              consultation_id, doctor_email, medconnect_id, reg_no, doctor_location, consultation.patient.id,
-                              patient_location, date, remarks, doctor_title)
+
+        filename = generate_prescription(patient_name, doctor_name, medicine_list, logo_path, rx_path, doctor_signature,
+                                         prescription_no,
+                                         consultation_id, doctor_email, medconnect_id, reg_no, doctor_location,
+                                         consultation.patient.id,
+                                         patient_location, date, remarks, doctor_title)
+        # print(filename)
+        email_prescription(patient_profile.patient.user.email, patient_profile.first_name, doctor_profile.name,
+                           "http://127.0.0.1:8000/media/" + filename)
         # print(consultation_id, doctor_id, patient_id, medicine_list, remarks)
+
         response = {
-            "message": "Generate Prescription"
+            "message": "Generated Prescription"
         }
         return Response(response, status=status.HTTP_201_CREATED)
 
@@ -371,6 +385,7 @@ class ManagePaymentView(APIView):
                                               status=status)
         return Response("Payment Created with ID: ", payment.id)
 
+
 class ConfirmPaymentView(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
@@ -383,11 +398,13 @@ class ConfirmPaymentView(APIView):
         consultation.save()
         amount = consultation.amount
         status_ = True
-        payment = PaymentModel.objects.create(consultation=consultation, amount=amount, status=status_, stripe_id=stripe_id)
+        payment = PaymentModel.objects.create(consultation=consultation, amount=amount, status=status_,
+                                              stripe_id=stripe_id)
         response = {
             "payment_id": payment.id
         }
         return Response(response, status=status.HTTP_201_CREATED)
+
 
 class DoctorPatientView(APIView):
     # all patients associated with that doctor
@@ -446,7 +463,7 @@ class ConsultiationView(APIView):
                 if con.id == consultation.id:
                     continue
                 prescription = PrescriptionModel.objects.filter(consultation=con)
-                if(prescription.exists()):
+                if (prescription.exists()):
                     res = {
                         "consultation_id": con.id,
                         "date": con.slot.date,
@@ -471,8 +488,9 @@ class ConsultiationView(APIView):
             'amount': amount,
             'previous_consultations': previous_consultations
         }
-        print("res",response)
+        print("res", response)
         return Response(response, status=status.HTTP_200_OK)
+
 
 class ConsultationRemarksView(APIView):
 

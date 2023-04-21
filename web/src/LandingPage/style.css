@@ -792,7 +792,6 @@ p {
 .footer-area::before {
   position: absolute;
   content: '';
-  background-image: url(/public/assets/footer-bg.png);
   background-repeat: no-repeat;
   background-position: top center;
   width: 100%;
