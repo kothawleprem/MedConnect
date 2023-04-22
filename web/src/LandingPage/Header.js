@@ -14,7 +14,10 @@ export default function Header() {
                 <div className="col-lg-12">
                     <nav className="navbar navbar-expand-lg">
                         <a className="navbar-brand" href="index.html">
-                            <img className="logo" src="https://images1-fabric.practo.com/practices/1240571/terna-speciality-hospital-research-centre-navi-mumbai-5c51a98214e65.jpg" alt="Logo"/>
+                        <img className="logo" src="Assets/MedConnect.png" 
+                            width="200"
+                            height="10" 
+                            alt="img"/>
                         </a> 
 
                         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,21 +35,17 @@ export default function Header() {
                                 </li>
 
                                 <li className="nav-item">
-                                    <Link  style={{ textDecoration: 'none' }} to="/finddoctor">Services</Link>
+                                    <Link  style={{ textDecoration: 'none' }} to="/email">Services</Link>
                                 </li>
                                 <li className="nav-item">
                                     < Link  style={{ textDecoration: 'none' }} to="/service">About</Link>
                                 </li>
                 
-                                <li  className="nav-item">
-                                    <Link style={{ textDecoration: 'none' }}  to="/team">FAQ'S</Link>
-                                </li>
+                               
                                 
-                                <li className="nav-item">
-                                    <Link  style={{ textDecoration: 'none' }} to="/contact">Contact</Link>
-                                </li>
+                            
                             </ul>    
-                          <Link style={{ textDecoration: 'none' }} to="/login" >   <p className="main-btn btn-lg">Login</p>  </Link> 
+                          <Link style={{ textDecoration: 'none' }} to="/email" >   <p className="main-btn btn-lg">Login</p>  </Link> 
                         
                         </div>
 
