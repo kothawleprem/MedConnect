@@ -1,0 +1,213 @@
+import React from 'react'
+import { Container, Row, Col, Form, Button } from "react-bootstrap";
+
+import { MuiOtpInput } from "mui-one-time-password-input";
+import { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import { Link } from 'react-router-dom';
+import "./Email.css"
+
+import axios from 'axios';
+import Header from "../../components/Header/header";
+
+
+const Verify = () => {
+    const { state } = useLocation();
+    const { email } = state;
+    const [OTP, setOTP] = useState("");
+    // const [incorrect, setIncorrect] = useState(false);
+    const navigate = useNavigate();
+    var status
+
+    function handleChange(OTP) {
+      setOTP(OTP);
+      console.log(OTP)
+    }
+    const handleSubmit = (e) => {
+      
+      e.preventDefault();
+      console.log("clicked");
+      if (OTP.length === 0) {
+        toast.warn("Please enter Valid OTP", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        navigate("/otp", {
+            state: {
+              email: email,
+            },
+          });
+      } 
+      else {
+        const data = {
+          email: email,
+          otp: OTP
+        };
+
+        const config = {
+          headers: {
+            'Content-Type': 'application/json',
+          }
+        };
+
+        axios
+          .post(
+            `http://${process.env.REACT_APP_API_URL}/api/doctors/verify_email/`,
+            data,
+            config
+          )
+          .then((response) => {
+            const data = response.data;
+            console.log(response.data);
+            status = response.status;
+            if (status === 200) {
+              var token = data["token"];
+              localStorage.setItem("token", token);
+              var verified = data["verified"];
+              var hasReq = data["hasReq"];
+              if (verified === false) {
+                if (hasReq === 0) {
+                  navigate("/form", {
+                    state: {
+                      email: email,
+                    },
+                  });
+                } else {
+                  navigate("/status", {
+                    state: {
+                      email: email,
+                    },
+                  });
+                }
+              } else {
+                navigate("/dashboard", {
+                  state: {
+                    email: email,
+                  },
+                });
+              }
+            } else {
+              console.log("incorrect otp");
+              toast.warn("Incorrect OTP!", {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+              });
+              navigate("/verify", {
+                state: {
+                  email: email,
+                },
+              });
+            }
+          })
+          .catch((error) => console.log(error));
+
+
+      }
+
+        //  fetch(`http://127.0.0.1:8000/api/doctors/verify_email/`, {
+        //    method: "POST",
+        //    headers: {
+        //      Accept: "application/json",
+        //      "Content-Type": "application/json",
+        //    },
+        //    body: JSON.stringify(res),
+        //  }).then(async (response) => {
+        //    const res = await response.json();
+        //    status = response.status;
+        //    console.log("status", status);
+        //    if (status === 200) {
+        //      var token = res["token"];
+        //      // console.log(token)
+        //      localStorage.setItem("email", email);
+        //      localStorage.setItem("token", token);
+        //      var verified = res["verified"]
+        //      var hasReq = res["hasReq"]
+        //     if (verified === false){
+        //       if( hasReq === 0){
+        //         navigate("/dcform", {
+        //           state: {
+        //             email: email,
+        //           },
+        //         });
+        //       }
+        //       else{
+        //         navigate("/status", {
+        //           state: {
+        //             email: email,
+        //           },
+        //         });
+        //       }
+        //     }
+        //     else{
+        //       navigate("/scheduling", {
+        //         state: {
+        //           email: email,
+        //         },
+        //       });
+        //     }
+        //    } else {
+        //      console.log("incorrect otp");
+        //      toast.warn("Incorrect OTP!", {
+        //        position: "top-right",
+        //        autoClose: 5000,
+        //        hideProgressBar: false,
+        //        closeOnClick: true,
+        //        pauseOnHover: true,
+        //        draggable: true,
+        //        progress: undefined,
+        //        theme: "dark",
+        //      });
+        //      navigate("/verify", {
+        //        state: {
+        //          email: email,
+        //        },
+        //      });
+        //    }
+        //  });
+         
+     };
+  return (
+    <>
+           <Header />
+      <Container>
+      <br/>
+        <Row className="d-flex align-items-center justify-content-center">
+          <Col xs={12} lg={3} md={6}>
+          <h2 style={{fontWeight:750}} >Verify OTP </h2>
+          <br/>
+
+            <Form>
+              <MuiOtpInput value={OTP} onChange={handleChange} />
+              <br></br>
+
+              {/* <Button variant="primary" type="submit" onClick={handleSubmit}>
+                Submit
+              </Button> */}
+              <Link style={{ textDecoration: 'none' }} onClick={handleSubmit}> <p className="main-btn">Submit</p> </Link> 
+
+            </Form>
+          </Col>
+          <Col xs={12} lg={5} md={6}>
+
+          </Col>
+        </Row>
+      </Container>
+      <ToastContainer />
+    </>
+  );
+}
+
+export default Verify

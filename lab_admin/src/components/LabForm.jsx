@@ -6,10 +6,11 @@ import Row from 'react-bootstrap/Row';
 
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { create as ipfsHttpClient } from "ipfs-http-client";
+// import { create as ipfsHttpClient } from "ipfs-http-client";
 import { useNavigate } from "react-router-dom";
+import Header from "./Header/header";
 
-import './Dcform.css'
+import './form.css'
 
 const initialFormData = Object.freeze({
   fname: undefined,
@@ -23,20 +24,17 @@ const initialFormData = Object.freeze({
   pincode: undefined,
   Reg_no: undefined,
   title: undefined,
-  qualification: undefined,
-  specialization: undefined,
   desc: undefined,
   imp_doc: undefined,
-  v_clip: undefined,
-  photo_doc: undefined,
-  sign_doc: undefined,
+
+ 
 });
 
 const projectId = '2KdPPLUQPwqlijfPMWKTqydNvXa';
 const projectSecretKey = 'a4f67328e14c5df9dbd1a894311b8d1e';
 const authorization = "Basic " + btoa(projectId + ":" + projectSecretKey);
 
-const Dcform = () => {
+const LabForm = () => {
     const [formData, updateFormData] = React.useState(initialFormData);
     const [checkboxState, setCheckboxState] = useState({});
     const navigate = useNavigate();
@@ -73,17 +71,7 @@ const Dcform = () => {
              bullet2: fv || false,
              bullet3: ov || false,
            });
-          //  if (data.gender === "Male"){
-          //   m_value.current =true
-          //  }
-          //  else if (data.gender === "Female"){
-          //   f_value.current = true;
-          //  }
-          //  else if (data.gender === "Other") {
-          //    console.log("other....");
-          //    o_value.current = true;
-          //  }
-          //  console.log(m_value.current, f_value, o_value)
+    
              updateFormData({
                ...formData,
                fname: data.first_name,
@@ -97,23 +85,13 @@ const Dcform = () => {
                pincode: data.pincode,
                Reg_no: data.reg_no,
                title: data.title,
-               qualification: data.qualification,
-               specialization: data.specialization,
                desc: data.description,
                imp_doc: data.files,
-               v_clip: data.video,
-               photo_doc: data.photo,
-               sign_doc: data.signature,
+              
              });
          });
      }, []);
- 
-    const ipfs = ipfsHttpClient({
-      url: "https://ipfs.infura.io:5001/api/v0",
-      headers: {
-        authorization,
-      },
-    });
+
 
     const handleCheckboxChange = (event) => {
       const { id, checked } = event.target;
@@ -131,30 +109,9 @@ const Dcform = () => {
       });
     };
 
-    const fileSelectedHandlerDoc = async (event) => {
-      const result = await ipfs.add(event.target.files[0]);
-      updateFormData({
-        ...formData,
-        imp_doc: "https://infura-ipfs.io/ipfs/" + result.path,
-      });
-      // console.log("result", result);
-    };
+ 
 
-    const fileSelectedHandlerPhoto = async (event) => {
-      const result = await ipfs.add(event.target.files[0]);
-      updateFormData({
-        ...formData,
-        photo_doc: "https://infura-ipfs.io/ipfs/" + result.path,
-      });
-    };
-  
-    const fileSelectedHandlerSign = async (event) => {
-      const result = await ipfs.add(event.target.files[0]);
-      updateFormData({
-        ...formData,
-        sign_doc: "https://infura-ipfs.io/ipfs/" + result.path,
-      });
-    };
+
 
     const handleSubmit = async (e) => {
       e.preventDefault()
@@ -171,13 +128,9 @@ const Dcform = () => {
         pincode: formData.pincode,
         reg_no: formData.Reg_no,
         title: formData.title,
-        qualification: formData.qualification,
-        specialization: formData.specialization,
         description: formData.desc,
         files: formData.imp_doc,
-        video: formData.v_clip,
-        photo: formData.photo_doc,
-        signature: formData.sign_doc,
+        
       };
 
       const token = localStorage.getItem("token")
@@ -206,6 +159,7 @@ const Dcform = () => {
 
   return (
     <div>
+      <Header/>
       <br></br>
       <br></br>
       <section id="appointment" class="appointment section-bg">
@@ -395,39 +349,12 @@ const Dcform = () => {
                   value={formData.title}
                   onChange={handleChange}
                   type="text"
-                  placeholder="Ex. MBBS, MD,.."
+                  // placeholder="Ex. MBBS, MD,.."
                 />
               </Form.Group>
             </Row>
 
-            {/* Qualification and specialization */}
-            <Row className="mb-3">
-              <Form.Group as={Col} controlId="formGridEmail">
-                <Form.Label>
-                  Qualification<span style={{ color: "red" }}> *</span>
-                </Form.Label>
-                <Form.Control
-                  name="qualification"
-                  value={formData.qualification}
-                  onChange={handleChange}
-                  type="text"
-                  placeholder="Enter Qualification"
-                />
-              </Form.Group>
-
-              <Form.Group as={Col} controlId="formGridPassword">
-                <Form.Label>
-                  Specialization<span style={{ color: "red" }}> *</span>
-                </Form.Label>
-                <Form.Control
-                  name="specialization"
-                  value={formData.specialization}
-                  onChange={handleChange}
-                  type="text"
-                  placeholder="Enter Specialization"
-                />
-              </Form.Group>
-            </Row>
+          
 
             {/* Description */}
             <Form.Group className="mb-3" controlId="formGridAddress1">
@@ -452,7 +379,7 @@ const Dcform = () => {
                 </Form.Label>
                 <Form.Control
                   name="imp_doc"
-                  onChange={fileSelectedHandlerDoc}
+                  // onChange={fileSelectedHandlerDoc}
                   type="file"
                 />
                 {formData.imp_doc !== undefined ? (
@@ -467,63 +394,10 @@ const Dcform = () => {
                 )}
               </Form.Group>
 
-              <Form.Group as={Col} controlId="formFileMultiple">
-                <Form.Label>
-                  Video Link<span style={{ color: "red" }}> *</span>
-                </Form.Label>
-                <Form.Control
-                  value={formData.v_clip}
-                  name="v_clip"
-                  onChange={handleChange}
-                  type="text"
-                />
-              </Form.Group>
+              
             </Row>
 
-            {/* Photo and Sign */}
-            <Row className="mb-3">
-              <Form.Group as={Col} controlId="formFileMultiple">
-                <Form.Label>
-                  Photo<span style={{ color: "red" }}> *</span>
-                </Form.Label>
-                <Form.Control
-                  name="photo_doc"
-                  onChange={fileSelectedHandlerPhoto}
-                  type="file"
-                />
-                {formData.imp_doc !== undefined ? (
-                  <>
-                    Your Previous Photo: &nbsp;
-                    <a href={formData.photo_doc} target="_blank">
-                      Click Here
-                    </a>
-                  </>
-                ) : (
-                  <></>
-                )}
-              </Form.Group>
-
-              <Form.Group as={Col} controlId="formFileMultiple">
-                <Form.Label>
-                  Signature<span style={{ color: "red" }}> *</span>
-                </Form.Label>
-                <Form.Control
-                  name="sign_doc"
-                  onChange={fileSelectedHandlerSign}
-                  type="file"
-                />
-                {formData.sign_doc !== undefined ? (
-                  <>
-                    Your Previous Signature: &nbsp;
-                    <a href={formData.imp_doc} target="_blank">
-                      Click Here
-                    </a>
-                  </>
-                ) : (
-                  <></>
-                )}
-              </Form.Group>
-            </Row>
+         
             <center>
               <Button
                 variant="primary"
@@ -543,4 +417,4 @@ const Dcform = () => {
 
 }
 
-export default Dcform
+export default LabForm
