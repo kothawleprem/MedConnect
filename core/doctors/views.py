@@ -12,8 +12,9 @@ from cryptography.fernet import Fernet
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
-
-from .models import DoctorModel, DoctorProfileModel, DoctorVerificationModel, SpecializationModel
+from consultation.models import ConsultationModel
+from .models import DoctorModel, DoctorProfileModel, DoctorVerificationModel, SpecializationModel, \
+    VerificationStatusModel, DoctorPaymentDetailsModel
 
 from core.emails import sendOTP
 
@@ -53,6 +54,7 @@ class VerifyEmailView(APIView):
         email = request.data.get("email")
         otp = request.data.get("otp")
         user = User.objects.get(email=email)
+        print(user)
         doctor = DoctorModel.objects.get(user=user)
         try:
             doctor_verificaion = DoctorVerificationModel.objects.get(doctor=doctor)
@@ -216,7 +218,8 @@ class DoctorRequestVerificationView(APIView):
             pass
 
         # create request for verification
-        request_verification = DoctorVerificationModel.objects.create(doctor=doctor)
+        verificationStatus = VerificationStatusModel.objects.get(status="PENDING")
+        request_verification = DoctorVerificationModel.objects.create(doctor=doctor,status=verificationStatus)
 
         return Response("Requested for Verification", status=status.HTTP_200_OK)
 
@@ -274,4 +277,39 @@ class DoctorSetAvailabilityView(APIView):
         doctor.isAvailable = available
         doctor.save()
         return Response("Availability Set", status=status.HTTP_202_ACCEPTED)
+
+class DoctorVPAView(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+        doctor_vpa = DoctorPaymentDetailsModel.objects.get(doctor__user=user)
+        vpa = doctor_vpa.upiId
+        return Response({"upiId":vpa}, status=status.HTTP_200_OK)
+
+    def post(self, request):
+        upiId = request.data.get("upiId")
+        user = request.user
+        doctor_vpa = DoctorPaymentDetailsModel.objects.get(doctor__user=user)
+        doctor_vpa.upiId = upiId
+        doctor_vpa.save()
+        return Response("ok", status=status.HTTP_201_CREATED)
+
+class DoctorReceivedPaymentsView(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+        consultation = ConsultationModel.objects.filter(doctor__user=user, completed=True)
+        response = []
+        for con in consultation:
+            res = {
+                "consultation_id": con.id,
+                "date": con.slot.date,
+                "fees": con.amount,
+            }
+            response.append(res)
+        return Response(response, status=status.HTTP_200_OK)
 

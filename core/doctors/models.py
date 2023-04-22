@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+
 # Create your models here.
 class SpecializationModel(models.Model):
     name = models.CharField(max_length=100)
@@ -8,10 +9,12 @@ class SpecializationModel(models.Model):
     def __str__(self):
         return self.name
 
+
 class DoctorModel(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     isAvailable = models.BooleanField(default=False)
     verified = models.BooleanField(default=False)
+
 
 class DoctorProfileModel(models.Model):
     doctor = models.ForeignKey(DoctorModel, models.CASCADE)
@@ -34,12 +37,22 @@ class DoctorProfileModel(models.Model):
     pincode = models.CharField(max_length=20, null=True)
 
 
+class VerificationStatusModel(models.Model):
+    status = models.CharField(max_length=255, default='PENDING')
+
+
 class DoctorVerificationModel(models.Model):
     doctor = models.ForeignKey(DoctorModel, models.CASCADE)
-    status = models.CharField(max_length=20, default="Pending")
+    status = models.ForeignKey(VerificationStatusModel, models.CASCADE)
     remarks = models.CharField(max_length=255, default="Your request has not been reviewed yet!")
 
+class DoctorPaymentDetailsModel(models.Model):
+    doctor = models.ForeignKey(DoctorModel, models.CASCADE)
+    upiId = models.CharField(max_length=255)
 
-
-
-
+class DoctorPayoutModel(models.Model):
+    doctor = models.ForeignKey(DoctorModel, models.CASCADE)
+    amount = models.IntegerField()
+    date_last_accessed = models.DateField(auto_now=True)
+    transaction_id = models.CharField(max_length=255, null=True)
+    paid = models.BooleanField(default=False)

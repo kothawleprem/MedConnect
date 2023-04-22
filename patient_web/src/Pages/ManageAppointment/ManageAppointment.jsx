@@ -3,14 +3,16 @@ import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { Button } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Header from "../../components/Header/header";
+
+import withAuth from "../../withAuth";
 
 
 // import Header from "../../components/Header/header";
 
-export default function ManageAppointment() {
+const ManageAppointment = () => {
   const [slots, setSlots] = useState();
 
   useEffect(() => {
@@ -107,3 +109,5 @@ export default function ManageAppointment() {
     </>
   );
 }
+
+export default ManageAppointment;
