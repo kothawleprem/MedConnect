@@ -10,6 +10,7 @@ import { create as ipfsHttpClient } from "ipfs-http-client";
 import { useNavigate } from "react-router-dom";
 
 import './Dcform.css'
+import Header from './components/Navbar/header';
 
 const initialFormData = Object.freeze({
   fname: undefined,
@@ -206,18 +207,17 @@ const Dcform = () => {
 
   return (
     <div>
-      <br></br>
-      <br></br>
+      <Header/>
+      
+      
       <section id="appointment" class="appointment section-bg">
-        <div class="container" data-aos="fade-up">
+        <div class="container" >
           <div class="section-title">
             <h2>Fill The Form</h2>
-            <p>
-              
-            </p>
+            
           </div>
 
-          <Form>
+          <Form style={{marginLeft:'300px',width:'700px'}}>
             {/* First_name and Last_name */}
             <Row className="mb-3">
               <Form.Group as={Col} controlId="formGridEmail">

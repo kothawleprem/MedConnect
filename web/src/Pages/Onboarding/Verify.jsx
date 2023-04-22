@@ -11,6 +11,7 @@ import "./Email.css"
 import Bar from "../../components/Navbar/Navbar";
 
 import axios from 'axios';
+import Header from '../../components/Navbar/header';
 
 
 const Verify = () => {
@@ -182,7 +183,8 @@ const Verify = () => {
      };
   return (
     <>
-      <Bar/>
+      {/* <Bar/> */}
+      <Header/>
       <Container>
       <br/>
         <Row className="d-flex align-items-center justify-content-center">

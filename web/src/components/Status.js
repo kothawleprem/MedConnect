@@ -5,6 +5,7 @@ import '../Dcform.css'
 import { Link } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 import axios from "axios";
+import Header from './Navbar/header';
 
 
 
@@ -61,7 +62,7 @@ export default function Status() {
 
   return (
     <>
-    <Bar/>
+    <Header/>
     <br></br><br></br>
 <div className='container'>  
     <div class="section-title">
