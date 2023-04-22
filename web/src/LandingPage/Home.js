@@ -17,10 +17,12 @@ export default function Home() {
         <Hero/>
         <Category/>
         <br></br><br></br><br></br>
+
         <Blog></Blog>
+        
         <Specialists/>
         <br/><br/><br/>
-        <Faq></Faq>
+        {/* <Faq></Faq> */}
         {/* <Labtestpackage/> */}
         <Footer/>
     </div>

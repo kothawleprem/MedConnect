@@ -28,9 +28,9 @@ export default function Hero() {
                             </div>
                             <div className="col-lg-8 col-md-7">
                                 <div className="slider-product-content">
-                                    <h1 className="slider-title mb-10" data-animation="fadeInUp" data-delay="0.3s"><span>Gift</span>   <span>A</span>    <span>Smile</span></h1>
-                                    <p className="mb-25" data-animation="fadeInUp" data-delay="0.9s">The opportunity to care for your patients is your greatest honour and previlege.<br/>It is your responsibility to not only treat your patients, provide them care, but also <br></br>embrace them.<br></br>The dynamic process of improving patient care should always be on the thoughts of healthcare professionals. Quality must be taken into account in all areas of patient care, including non-medical ones.</p>
-                                    <p  className="main-btn1" data-animation="fadeInUp" data-delay="1.5s" style={{fontSize: '25px',}}><span style={{fontFamily:'Elephant',fontSize:"50px"}}>"</span>Our Patients are our best Teachers<span style={{fontFamily:'Elephant',fontSize:"50px"}}>"</span><i className="lni-chevron-right"></i></p>
+                                    <h1 className="slider-title mb-10" data-animation="fadeInUp" data-delay="0.3s"> Expand Your Reach      Connect with Patients Worldwide</h1>
+                                    <p className="mb-25" >Welcome to MedConnect, the online healthcare platform that's changing the way patients and doctors connect. We're excited to invite you to join our community of healthcare professionals and help us provide high-quality, accessible healthcare <br/>to patients around the world.</p>
+                                    <p  className="main-btn1" style={{fontSize: '25px',}}><span style={{fontFamily:'Elephant',fontSize:"25px"}}></span>Create your Profile<span style={{fontFamily:'Elephant',fontSize:"25px"}}></span><i className="lni-chevron-right"></i></p>
                                 </div> 
                             </div>
                         </div> 
