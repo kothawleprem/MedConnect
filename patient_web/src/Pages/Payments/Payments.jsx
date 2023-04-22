@@ -16,7 +16,7 @@ export default function Payments() {
   const { state } = useLocation()
   const amount = state.amount
   const slot_id = state.slot_id
-  // console.log(amount, state)
+  console.log(amount, state)
 
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads

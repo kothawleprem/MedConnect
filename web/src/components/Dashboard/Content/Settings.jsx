@@ -1,8 +1,16 @@
 import React from 'react'
 
+import Availability from './Availability'
+import InstantAppointments from './InstantAppointments'
+
 const Settings = () => {
   return (
-    <div>Settings</div>
+    <>
+      <Availability/>
+      <br />
+      <InstantAppointments/>
+    </>
+    
   )
 }
 

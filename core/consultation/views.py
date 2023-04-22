@@ -9,7 +9,7 @@ from rest_framework.permissions import IsAuthenticated
 from core.emails import email_prescription
 from patients.models import PatientModel, PatientProfileModel
 from .models import ConsultationModel, SlotModel, PaymentModel, PrescriptionModel, MedicineModel
-from doctors.models import DoctorModel, DoctorProfileModel
+from doctors.models import DoctorModel, DoctorProfileModel, SpecializationModel
 
 from .prescription import generate_prescription
 import datetime
@@ -508,6 +508,67 @@ class ConsultationRemarksView(APIView):
         }
         return Response(response, status=status.HTTP_202_ACCEPTED)
 
-# class InstantDoctorView(APIView):
-#
-#     def
+class InstantDoctorView(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        specialization_name = request.GET["specialization"]
+        specialization = SpecializationModel.objects.get(name=specialization_name)
+        all_doctors = DoctorProfileModel.objects.filter(specialization=specialization, doctor__isAvailable=True).order_by("-id")
+        response = []
+        q = all_doctors[0]
+        if (all_doctors):
+            res = {
+                "doctor_id": q.doctor.id,
+                "name": q.name,
+                "photo": q.photo,
+                "city": q.city,
+                "specialization": q.specialization.name,
+                "qualification": q.qualification
+            }
+            return Response(res, status=status.HTTP_200_OK)
+        return Response(response, status=status.HTTP_200_OK)
+
+class InstantSlotView(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        doctor_id = request.GET["doctor_id"]
+        doctor_profile = DoctorProfileModel.objects.get(doctor__id=doctor_id)
+        response = {
+            'doctor_id': doctor_id,
+            "name": doctor_profile.name,
+            "email": doctor_profile.doctor.user.email,
+            "specialization": doctor_profile.specialization.name,
+            "phone": doctor_profile.phone,
+            "city": doctor_profile.city,
+            "state": doctor_profile.state,
+            "fees": doctor_profile.doctor.instantFees
+        }
+        return Response(response, status=status.HTTP_200_OK)
+
+    def post(self, request):
+        user = request.user
+        patient = PatientModel.objects.get(user=user)
+        doctor_id = request.data.get("doctor_id")
+        print(doctor_id)
+        doctor = DoctorModel.objects.get(id=int(doctor_id))
+        doctor.isavailable = False
+        doctor.save()
+
+        today = datetime.date.today()
+        start_time = (datetime.datetime.now() + datetime.timedelta(minutes=15)).time()
+        end_time = (datetime.datetime.now() + datetime.timedelta(minutes=45)).time()
+        print(today)
+        slot = SlotModel.objects.create(doctor=doctor, date=today,start_time=start_time,end_time=end_time,status=True,amount=doctor.instantFees)
+        consultation = ConsultationModel.objects.create(slot=slot, doctor=doctor, patient=patient)
+        consultation.amount = slot.amount
+        consultation.save()
+        # TODO: EMAIL CONFIRMATION
+        response = {
+            "slot_id": slot.id,
+            "consultation_id": consultation.id,
+        }
+        return Response(response, status=status.HTTP_201_CREATED)

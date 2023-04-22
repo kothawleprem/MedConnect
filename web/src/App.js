@@ -20,6 +20,8 @@ import ViewAppointment from "./Pages/Consultation/ViewAppointment";
 import AddPrescription from "./components/AddPrescription";
 import AdminLogin from "./Pages/Admin/AdminLogin";
 import AdminPanel from "./Pages/Admin/AdminPanel";
+import PayoutList from "./Pages/Admin/PayoutList";
+import QRPayments from "./Pages/Admin/QRPayments";
 
 // import Video from "./components/Video/video";
 
@@ -49,6 +51,8 @@ function App() {
         <Route path="/addprescription" element={<AddPrescription/>} />
         <Route path="/admin" element={<AdminLogin/>} />
         <Route path="/adminpanel" element={<AdminPanel/>} />
+        <Route path='/payout' element={<PayoutList/>} />
+        <Route path='/qrpayments' element={<QRPayments/>}/>
 
         {/* <Route path="/video" element={<Video/>}/> */}
 

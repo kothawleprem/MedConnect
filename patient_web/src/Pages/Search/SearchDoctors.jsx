@@ -2,9 +2,11 @@ import React from 'react'
 import { useState,useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 import DoctorCard from '../../components/singleDoctor/DoctorCard';
+import { Container, Row, Col} from "react-bootstrap"
 
 
-import { Container, Form, Button, Row, Col } from 'react-bootstrap'
+
+
 
 import axios from 'axios'
 

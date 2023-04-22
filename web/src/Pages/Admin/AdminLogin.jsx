@@ -10,14 +10,21 @@ import axios from 'axios';
 
 
 const AdminLogin = () => {
-    const [email, setEmail] = useState("");
+    const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
     const navigate = useNavigate();
  
     const handleChange = (e) => {
-      setEmail({
-        ...email,
+      setUsername({
+        ...username,
+        [e.target.name]: e.target.value.trim(),
+      });
+    };
+
+    const handlePasswordChange = (e) => {
+      setPassword({
+        ...password,
         [e.target.name]: e.target.value.trim(),
       });
     };
@@ -27,7 +34,7 @@ const AdminLogin = () => {
     const handleSubmit = (e) => {
     
       e.preventDefault();
-      if (email.length === 0) {
+      if (username.length === 0) {
           toast.warn("Please enter an Email Address", {
             position: "top-right",
             autoClose: 5000,
@@ -42,7 +49,7 @@ const AdminLogin = () => {
       } 
       else {
         const data = {
-          email: email["email"],
+          username: username["username"],
           password: password["password"],
 
         };
@@ -52,65 +59,65 @@ const AdminLogin = () => {
             'Content-Type': 'application/json',
           }
         };
+        console.log(data)
 
         axios
-          .post(`http://${process.env.REACT_APP_API_URL}/api/`, data, config)
+          .post(
+            `http://${process.env.REACT_APP_API_URL}/api/official/login/`,
+            data,
+            config
+          )
           .then((response) => {
             console.log(response.data);
-            navigate("/adminpanel", {
-              state: {
-                email: email["email"],
-              },
-            });
+            var token = response.data["token"];
+            localStorage.setItem("admin_token", token);
+            navigate("/adminpanel");
           })
           .catch((error) => console.log(error));
       };
   }
   return (
     <>
-    <Bar/>
+      {/* <Bar /> */}
       <center>
         <Container>
-          
-        <br/>
-        <br/>
+          <br />
+          <br />
           <Row className=" d-flex align-items-center justify-content-center">
-           
-            <Col xs={12} lg={6} md={12} >
+            <Col xs={12} lg={6} md={12}>
               <Form>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
-                  <h2 style={{fontWeight:800}} >Admin Login</h2>
-                  <br/>
-                  <Form.Label>Email address </Form.Label>
+                  <h2 style={{ fontWeight: 800 }}>Admin Login</h2>
+                  <br />
+                  <Form.Label>Username </Form.Label>
                   <Form.Control
-                    type="email"
-                    placeholder="Enter email"
-                    name="email"
+                    type="text"
+                    placeholder="Enter Username"
+                    name="username"
                     onChange={handleChange}
-                   style={{width:330}}
-                    
+                    style={{ width: 330 }}
                   />
-                   <Form.Control
+                  <Form.Control
                     type="password"
                     placeholder="Enter password"
                     name="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}                   
-                    style={{width:330,marginTop:10}}
-                    
+                    onChange={handlePasswordChange}
+                    style={{ width: 330, marginTop: 10 }}
                   />
-
-                  
                 </Form.Group>
-                <Link style={{ textDecoration: 'none' }} onClick={handleSubmit} to="/Formview"> <p className="main-btn-email">Submit</p> </Link> 
-
+                <Link
+                  style={{ textDecoration: "none" }}
+                  onClick={handleSubmit}
+                  to="/Formview"
+                >
+                  {" "}
+                  <p className="main-btn-email">Submit</p>{" "}
+                </Link>
               </Form>
             </Col>
-           
-       
           </Row>
         </Container>
-        </center>
+      </center>
       <ToastContainer />
     </>
   );
