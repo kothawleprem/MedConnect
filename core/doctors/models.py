@@ -13,6 +13,7 @@ class SpecializationModel(models.Model):
 class DoctorModel(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     isAvailable = models.BooleanField(default=False)
+    instantFees = models.IntegerField(null=True)
     verified = models.BooleanField(default=False)
 
 

@@ -52,7 +52,6 @@ const DoctorsBySpecialization = () => {
     <>
     <Header/>
       <Container>
-        <br />
         <Dropdown className="d-inline ml-auto">
           <Dropdown.Toggle id="dropdown-autoclose-true">
             {specialization}

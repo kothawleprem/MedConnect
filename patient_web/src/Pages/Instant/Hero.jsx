@@ -5,7 +5,7 @@ export default function Hero() {
   return (
     <div>
 
-<section id="team" class="team-area pt-40 pb-100 mt-10">
+<section id="team">
         <div class="container">
           <div class="row justify-content-center">
             <div class="col-lg-6">
@@ -17,12 +17,8 @@ export default function Hero() {
                 Doctor consultations made convenient and accessible, just a click away.
                 </p>
              
-                <DoctorsBySpecialization/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
+                {/* <DoctorsBySpecialization/> */}
+                
               </div>
             </div>
           </div>

@@ -25,6 +25,8 @@ import DoctorProfile from "./Pages/Consultation/DoctorProfile";
 import BookSlot from "./Pages/Consultation/BookSlot";
 
 import Instant from "./Pages/Instant/Instant";
+import BookInstant from "./Pages/Instant/BookInstant";
+
 import ManageAppointment from "./Pages/ManageAppointment/ManageAppointment";
 
 import Payments from "./Pages/Payments/Payments";
@@ -62,6 +64,9 @@ function App() {
           <Route path="/consultation" element={<Consultation />} />
 
           <Route path="/instant" element={<Instant />} />
+          <Route path="/bookinstant" element={<BookInstant/>}/>
+
+
           <Route path="/manageappointment" element={<ManageAppointment />} />
 
           <Route path="/doctorProfile" element={<DoctorProfile />} />
