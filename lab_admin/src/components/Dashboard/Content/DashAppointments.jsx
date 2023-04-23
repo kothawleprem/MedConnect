@@ -14,8 +14,8 @@ const DashAppointments = () => {
   const [formData, updateFormData] = React.useState();
 
 
-  const projectId = '2KdPPLUQPwqlijfPMWKTqydNvXa';
-const projectSecretKey = 'a4f67328e14c5df9dbd1a894311b8d1e';
+  const projectId = process.env.REACT_APP_PROJECTID;
+const projectSecretKey = process.env.REACT_APP_PROJECTSECRETKEY;
 const authorization = "Basic " + btoa(projectId + ":" + projectSecretKey);
 
   const ipfs = ipfsHttpClient({
