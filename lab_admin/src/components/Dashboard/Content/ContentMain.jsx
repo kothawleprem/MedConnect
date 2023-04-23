@@ -3,10 +3,7 @@ import { Row, Col, Card } from "react-bootstrap";
 
 import Stats from './Stats';
 import DashAppointments from './DashAppointments';
-import DashFreeSlots from './DashFreeSlots';
-import DashRecentPatients from './DashRecentPatients';
 import './Content.css'
-import DashCallender from './DashCallender';
 
 
 const ContentMain = () => {
