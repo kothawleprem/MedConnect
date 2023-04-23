@@ -1,7 +1,8 @@
 .statscard{
-   margin: 10px;
+   margin: 15px;
   flex-direction: column;
-  background:linear-gradient(135deg, #fad961 0%,#f78b30 100%);
+  background: linear-gradient(90deg, rgba(255,255,251,1) 63%, rgba(238,238,238,1) 100%);
+
   /* background:linear-gradient(135deg, #ffffff 0%,#86979f 100%); */
 }
 

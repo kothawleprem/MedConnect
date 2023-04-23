@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { Form, Button, Container,Row } from 'react-bootstrap';
 import axios from 'axios';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 const AddPackage = () => {
   const [formData, setFormData] = useState({
@@ -11,10 +14,35 @@ const AddPackage = () => {
   });
 
   const handleSubmit = async (event) => {
+    
     event.preventDefault();
     try {
       const response = await axios.post('/api/', formData);
       console.log(response.data);
+      if (response.status === 201) {
+        toast.success("Package Created,please refresh", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      } else {
+        toast.warn("please retry", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      }
+
     } catch (error) {
       console.error(error);
     }
@@ -30,7 +58,9 @@ const AddPackage = () => {
 
   return (
     <Container>  
-        <Row >  
+      <p style={{fontWeight:'600',fontSize:'25px'}}>Add Package</p>
+      <br/>
+        <Row  >  
     <Form onSubmit={handleSubmit}>
       <Form.Group controlId="name">
         <Form.Label>Name</Form.Label>
@@ -76,7 +106,11 @@ const AddPackage = () => {
       </Button>
     </Form>
     </Row>
+
+    <ToastContainer />
+
     </Container>
+    
     
   );
 };

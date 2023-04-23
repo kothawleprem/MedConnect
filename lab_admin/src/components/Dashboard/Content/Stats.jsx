@@ -1,12 +1,40 @@
-import React from 'react'
+import React,{useState,useEffect} from 'react'
 import { Row, Col, Card } from "react-bootstrap";
 import { FaBeer } from "react-icons/fa";
 import { Link } from 'react-router-dom';
+import axios from "axios";
 
 
 
 
 const Stats = () => {
+  // const [data, setData] = useState("")
+
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
+  //   const config = {
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Authorization: `Token ${token}`,
+  //     },
+  //   };
+  //   axios
+  //   .get(`http://${process.env.REACT_APP_API_URL}/api/`, config)
+  //   .then(function (response) {
+  //     console.log(response ,"RESPONSE");
+  //     setData(response);
+
+      
+     
+  //   })
+  //   .catch(function (error) {
+  //     console.log(error);
+  //   });
+
+  // }, [])
+  
+
+
   const data = [
     { name: 'Full body checkup', description: 'This is item 1', test:'2', imageUrl: 'https://example.com/item1.jpg',price:1500 },
     { name: 'CBC', description: 'This is item 2', test:'2', imageUrl: 'https://example.com/item2.jpg',price:1500 },
@@ -17,6 +45,7 @@ const Stats = () => {
     { name: 'Diabetes', description: 'This is item 2',  test:'2',imageUrl: 'https://example.com/item2.jpg' ,price:1500},
 
   ];
+
 
   return (
     <div>
@@ -29,9 +58,10 @@ const Stats = () => {
            <Col xl={3} lg={3} md={6} sm={12}>
 
           <Card className='statscard'  key={index}> 
-        
-          <Card.Subtitle className="stats-title">{item.name}</Card.Subtitle>
-          <Card.Title className='stats-total'>{item.test}</Card.Title>
+          <br/>
+          <Card.Title className='stats-total'> {item.name}</Card.Title>
+
+          <Card.Subtitle className="stats-title"> status: live </Card.Subtitle>
 
           {/* <FaBeer size={30} className='stats-icon' /> */}
 
@@ -40,9 +70,7 @@ const Stats = () => {
           <div className='stats-links'> 
          
           <p className='stats-green'> Price:{item.price}</p>
-          <Link to='/'>  
-            <p className='stats-link'>View Report</p>
-            </Link>
+         
           </div>
           </Card>
           </Col>
