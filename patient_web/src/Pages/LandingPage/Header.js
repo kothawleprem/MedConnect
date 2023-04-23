@@ -42,12 +42,12 @@ export default function Header() {
                                 </li>
                 
                                 <li  className="nav-item">
-                                    <Link style={{ textDecoration: 'none' }}  to="/team">Lab Test</Link>
+                                    <Link style={{ textDecoration: 'none' }}  to="/lab">Lab Test</Link>
                                 </li>
                                 
                            
                             </ul> 
-                          {/* <Link style={{ textDecoration: 'none' }} to="/email" >   <p className="main-btn btn-lg">Login</p>  </Link>  */}
+                          <Link style={{ textDecoration: 'none' }} to="/email" >   <p className="main-btn btn-lg">Login</p>  </Link> 
                         </div>
                     </nav> 
                 </div>

@@ -31,6 +31,8 @@ import ManageAppointment from "./Pages/ManageAppointment/ManageAppointment";
 
 import Payments from "./Pages/Payments/Payments";
 import CapturePayments from "./Pages/Payments/CapturePayments";
+import Lab from "./Pages/Lab_Test/Lab";
+import Packageview from "./Pages/Lab_Test/Packageview";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -75,6 +77,10 @@ function App() {
 
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/bookSlot" element={<BookSlot />} />
+          <Route path="/lab" element={<Lab />} />
+          <Route path="/packageview" element={<Packageview />} />
+
+
         </Routes>
       </Router>
     </>
