@@ -44,7 +44,7 @@ class VerificationStatusModel(models.Model):
 
 class DoctorVerificationModel(models.Model):
     doctor = models.ForeignKey(DoctorModel, models.CASCADE)
-    status = models.ForeignKey(VerificationStatusModel, models.CASCADE)
+    status = models.CharField(max_length=255, default='PENDING')
     remarks = models.CharField(max_length=255, default="Your request has not been reviewed yet!")
 
 class DoctorPaymentDetailsModel(models.Model):

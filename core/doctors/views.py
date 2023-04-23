@@ -108,6 +108,7 @@ class DoctorProfileView(APIView):
         print("date", request.data.get("dob"))
         if request.data.get("name") is not None:
             name = request.data.get("name")
+            print(name)
             profile.name = name
         if request.data.get("video") is not None:
             video = request.data.get("video")
@@ -178,7 +179,6 @@ class DoctorProfileView(APIView):
             'name': doctor_profile.name,
             'description': doctor_profile.description,
             'city': doctor_profile.city,
-            'title': doctor_profile.title,
             'reg_no': doctor_profile.reg_no,
             'signature': doctor_profile.signature,
             'state': doctor_profile.state,

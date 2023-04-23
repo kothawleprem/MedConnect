@@ -99,16 +99,9 @@ const Formview = () => {
                 <Row className="mb-3">
                   <Form.Group as={Col} controlId="formGridEmail">
                     <Form.Label>
-                      First Name<span style={{ color: "red" }}> </span> :
+                      Name<span style={{ color: "red" }}> </span> :
                     </Form.Label>{" "}
-                    {formData.fname}
-                  </Form.Group>
-
-                  <Form.Group as={Col} controlId="formGridPassword">
-                    <Form.Label>
-                      Last Name<span style={{ color: "red" }}> </span> :
-                    </Form.Label>{" "}
-                    {formData.lname}
+                    {formData.name}
                   </Form.Group>
                 </Row>
 
@@ -126,12 +119,14 @@ const Formview = () => {
                     <Form.Label>
                       Birth Date<span style={{ color: "red" }}> </span>:
                     </Form.Label>
+                    {formData.dob}
                   </Form.Group>
 
                   <Form.Group as={Col} controlId="formGridPassword">
                     <Form.Label>
                       Mobile No<span style={{ color: "red" }}> </span>:
                     </Form.Label>
+                    {formData.mob_no}
                   </Form.Group>
                 </Row>
 
@@ -141,6 +136,7 @@ const Formview = () => {
                   <Form.Label>
                     Address<span style={{ color: "red" }}> </span>
                   </Form.Label>
+                  {formData.address}
                 </Form.Group>
 
                 <Row className="mb-3">
@@ -148,18 +144,21 @@ const Formview = () => {
                     <Form.Label>
                       City<span style={{ color: "red" }}> </span>:
                     </Form.Label>
+                    {formData.city}
                   </Form.Group>
 
                   <Form.Group as={Col} controlId="formGridState">
                     <Form.Label>
                       State<span style={{ color: "red" }}> </span>:
                     </Form.Label>
+                    {formData.state}
                   </Form.Group>
 
                   <Form.Group as={Col} controlId="formGridZip">
                     <Form.Label>
                       Pincode<span style={{ color: "red" }}> </span>:
                     </Form.Label>
+                    {formData.pincode}
                   </Form.Group>
                 </Row>
 
@@ -169,12 +168,7 @@ const Formview = () => {
                     <Form.Label>
                       Registration No<span style={{ color: "red" }}> </span>:
                     </Form.Label>
-                  </Form.Group>
-
-                  <Form.Group as={Col} controlId="formGridPassword">
-                    <Form.Label>
-                      Title<span style={{ color: "red" }}> </span>:
-                    </Form.Label>
+                    {formData.Reg_no}
                   </Form.Group>
                 </Row>
 
@@ -184,12 +178,14 @@ const Formview = () => {
                     <Form.Label>
                       Qualification<span style={{ color: "red" }}> </span>:
                     </Form.Label>
+                    {formData.qualification}
                   </Form.Group>
 
                   <Form.Group as={Col} controlId="formGridPassword">
                     <Form.Label>
                       Specialization<span style={{ color: "red" }}> </span>:
                     </Form.Label>
+                    {formData.specialization}
                   </Form.Group>
                 </Row>
 
@@ -198,6 +194,7 @@ const Formview = () => {
                   <Form.Label>
                     Description<span style={{ color: "red" }}> </span>:
                   </Form.Label>
+                  {formData.desc}
                 </Form.Group>
 
                 {/* Documents and video */}
@@ -206,12 +203,14 @@ const Formview = () => {
                     <Form.Label>
                       Upload Document<span style={{ color: "red" }}> </span>:
                     </Form.Label>
+                    {formData.imp_doc}
                   </Form.Group>
 
                   <Form.Group as={Col} controlId="formFileMultiple">
                     <Form.Label>
                       Upload Video<span style={{ color: "red" }}> </span>:
                     </Form.Label>
+                    {formData.v_clip}
                   </Form.Group>
                 </Row>
 
@@ -221,12 +220,14 @@ const Formview = () => {
                     <Form.Label>
                       Photo<span style={{ color: "red" }}> </span>:
                     </Form.Label>
+                    {formData.photo_doc}
                   </Form.Group>
 
                   <Form.Group as={Col} controlId="formFileMultiple">
                     <Form.Label>
                       Signature<span style={{ color: "red" }}> </span>:
                     </Form.Label>
+                    {formData.sign_doc}
                   </Form.Group>
                 </Row>
                 <center>
