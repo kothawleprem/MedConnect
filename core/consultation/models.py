@@ -33,7 +33,7 @@ class PaymentModel(models.Model):
 
 class PrescriptionModel(models.Model):
     consultation = models.ForeignKey(ConsultationModel, models.CASCADE)
-    prescription_file = models.FileField(null=True)
+    prescription_file = models.URLField(null=True)
 
 class MedicineModel(models.Model):
     prescription = models.ForeignKey(PrescriptionModel, models.CASCADE)

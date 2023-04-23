@@ -68,7 +68,7 @@ class SlotView(APIView):
         print(time_l)
         if len(day_slots) == 0:
             slot = SlotModel.objects.create(doctor=doctor, date=date, start_time=req_st, end_time=req_et,
-                                            remarks=remarks)
+                                            remarks=remarks, fees=300)
             response = {
                 "message": "Slot Added!!",
                 "slot_id": slot.id
@@ -84,7 +84,7 @@ class SlotView(APIView):
                     flag = 1
         if flag == 1:
             slot = SlotModel.objects.create(doctor=doctor, date=date, start_time=req_st, end_time=req_et,
-                                            remarks=remarks)
+                                            remarks=remarks, fees=300)
             response = {
                 "message": "Slot Added!!",
                 "slot_id": slot.id
@@ -310,6 +310,8 @@ class PrescriptionView(APIView):
     def post(self, request):
         consultation_id = request.data.get("consultation_id")
         consultation = ConsultationModel.objects.get(id=consultation_id)
+        consultation.completed = True
+        consultation.save()
         patient_profile = PatientProfileModel.objects.get(patient=consultation.patient)
         patient_name = patient_profile.first_name + " " + patient_profile.last_name
         patient_location = patient_profile.city
@@ -322,20 +324,22 @@ class PrescriptionView(APIView):
         doctor_location = doctor_profile.city
         doctor_title = doctor_profile.title
         medicine_list = request.data.get("medicine_list")
-        print(medicine_list)
         remarks = request.data.get("remarks")
         prescription = PrescriptionModel.objects.create(consultation=consultation)
         prescription_no = prescription.id
+        med_list = []
         for medicine in medicine_list:
             new_medicine = MedicineModel.objects.create(prescription=prescription, type=medicine['type'],
                                                         medicine=medicine['medicine'], power=medicine['power'],
                                                         frequency=medicine['frequency'], remarks=medicine['remarks'])
+            med_list.append((medicine['type'], medicine['medicine'], medicine['power'], medicine['frequency'],
+                             medicine['remarks']))
 
         date = prescription.consultation.slot.date
         logo_path = "https://raw.githubusercontent.com/kothawleprem/MedConnect/main/templates/medconnect_logo.jpg"
         rx_path = "https://raw.githubusercontent.com/kothawleprem/MedConnect/main/templates/rx_logo.jpg"
-
-        filename = generate_prescription(patient_name, doctor_name, medicine_list, logo_path, rx_path, doctor_signature,
+        print("list",med_list)
+        filename = generate_prescription(patient_name, doctor_name, med_list, logo_path, rx_path, doctor_signature,
                                          prescription_no,
                                          consultation_id, doctor_email, medconnect_id, reg_no, doctor_location,
                                          consultation.patient.id,
@@ -343,6 +347,11 @@ class PrescriptionView(APIView):
         # print(filename)
         email_prescription(patient_profile.patient.user.email, patient_profile.first_name, doctor_profile.name,
                            "http://127.0.0.1:8000/media/" + filename)
+        rx = PrescriptionModel.objects.get(id=prescription_no)
+        rx.prescription_file = "http://0.0.0.0:8000/media/" + filename
+        rx.save()
+        consultation.completed = True
+        consultation.save()
         # print(consultation_id, doctor_id, patient_id, medicine_list, remarks)
 
         response = {
@@ -394,16 +403,17 @@ class ConfirmPaymentView(APIView):
         slot_id = request.data.get("slot_id")
         stripe_id = request.data.get("stripe_id")
         consultation = ConsultationModel.objects.get(slot__id=slot_id)
-        consultation.payment = True
+        consultation.payment_completed = True
         consultation.save()
         amount = consultation.amount
         status_ = True
-        payment = PaymentModel.objects.create(consultation=consultation, amount=amount, status=status_,
-                                              stripe_id=stripe_id)
-        response = {
-            "payment_id": payment.id
-        }
-        return Response(response, status=status.HTTP_201_CREATED)
+        if(not PaymentModel.objects.filter(consultation=consultation).exists()):
+            payment = PaymentModel.objects.create(consultation=consultation, amount=amount, status=status_, stripe_id=stripe_id)
+            response = {
+                "payment_id": payment.id
+            }
+            return Response(response, status=status.HTTP_201_CREATED)
+        return Response("Duplicate request", status=status.HTTP_400_BAD_REQUEST)
 
 
 class DoctorPatientView(APIView):
@@ -462,12 +472,13 @@ class ConsultiationView(APIView):
             for con in past_consultations:
                 if con.id == consultation.id:
                     continue
-                prescription = PrescriptionModel.objects.filter(consultation=con)
+                prescription = PrescriptionModel.objects.filter(consultation=con).order_by("id")
+                print("rx",prescription)
                 if (prescription.exists()):
                     res = {
                         "consultation_id": con.id,
                         "date": con.slot.date,
-                        "prescription_file": str(prescription.prescription_file),
+                        "prescription_file": str(prescription[0].prescription_file),
                         "remarks": con.remarks
                     }
                     previous_consultations.append(res)

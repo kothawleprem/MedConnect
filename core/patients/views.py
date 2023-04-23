@@ -227,11 +227,13 @@ class ManageConsultationsView(APIView):
         response = []
         for consultation in consultations:
             doctor_profile = DoctorProfileModel.objects.get(doctor=consultation.slot.doctor)
-            status_ = "PAYMENT_PENDING"
-            if(consultation.completed):
-                status_ = "COMPLETED"
-            elif(consultation.payment_completed):
+            if(consultation.payment_completed and not consultation.completed):
                 status_ = "PAYMENT_COMPLETED"
+            elif(consultation.completed):
+                status_ = "COMPLETED"
+            else:
+                print("pending")
+                status_ = "PAYMENT_PENDING"
             res = {
                 "consultation_id": consultation.id,
                 "date": consultation.slot.date,
