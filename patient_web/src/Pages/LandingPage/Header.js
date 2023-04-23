@@ -42,7 +42,7 @@ export default function Header() {
                                 </li>
                 
                                 <li  className="nav-item">
-                                    <Link style={{ textDecoration: 'none' }}  to="/team">Lab Test</Link>
+                                    <Link style={{ textDecoration: 'none' }}  to="/lab">Lab Test</Link>
                                 </li>
                                 
                            
