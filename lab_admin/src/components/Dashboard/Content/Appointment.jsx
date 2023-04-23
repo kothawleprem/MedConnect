@@ -44,8 +44,12 @@ const Appointments = () => {
 
   return (
     <>
+          <p style={{fontWeight:'600',fontSize:'25px'}}>All Appointments</p>
+          <br/>
+
       <Card>
-        <Card.Title style={{ margin: "10px" }}>All Appointments </Card.Title>
+
+        {/* <Card.Title style={{ margin: "10px" }}>All Appointments </Card.Title> */}
         <Table hover responsive>
           <thead>
             <tr style={{ color: "grey", fontWeight: 500 }}>
