@@ -5,9 +5,10 @@ import Col from "react-bootstrap/Col";
 import { Container, Button } from "react-bootstrap";
 import { Navigate, useNavigate } from "react-router-dom";
 import axios from "axios";
-import Header from "../LandingPage/Header";
 
 import withAuth from "../../withAuth";
+import UpdateProfile from "../../components/UpdateProfile";
+import Header from "../../components/Header/header";
 
 
 
@@ -47,14 +48,19 @@ const ManageAppointment = () => {
   };
 
 
+
+
+
   return (
     <>
       <Header />
       <br />
+      
       <br />
-      <br />
-      <br /> <br />
       <Container>
+        <UpdateProfile/>
+        <br/>
+        <br/>
         <Card>
           <Card.Body style={{ padding: "10px" }}>
             <p className="appoint-title">Appointments</p>

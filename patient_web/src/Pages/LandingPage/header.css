@@ -9,6 +9,9 @@
   background-color: #fff;
   z-index: 9;
  }
+
+
+
   .header-area.sticky {
     position: fixed;
     top: 0;
@@ -35,7 +38,7 @@
     
     }
     .header-area .navbar .navbar-toggler .bar-icon {
-      width: 30px;
+      width: 10px;
       height: 2px;
       margin: 5px 0;
       background-color: #333;
