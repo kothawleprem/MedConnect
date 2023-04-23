@@ -63,6 +63,16 @@ const DoctorReceivedPayments = () => {
         setPayments(data);
         console.log(data);
       });
+      axios
+        .get(
+          `http://${process.env.REACT_APP_API_URL}/api/doctors/doctor_payouts_list/`,
+          config
+        )
+        .then(function (response) {
+          const data = response.data;
+          setPayouts(data);
+          console.log(data);
+        });
   }, []);
 
   const renderTableRows = () => {
@@ -83,8 +93,9 @@ const DoctorReceivedPayments = () => {
       return (
         <tr key={payment.consultation_id}>
           <td>{payment.payout_id}</td>
-          <td>{payment.date}</td>
+          <td>{payment.last_payout_date}</td>
           <td>{payment.amount}</td>
+          <td>{payment.paid === true ? "Paid" : "Pending"}</td>
         </tr>
       );
     });
@@ -116,10 +127,7 @@ const DoctorReceivedPayments = () => {
             </Card>
           </Col>
           <Col>
-            Total Payment dispersed: Rs. 25000
-            <br />
-            Total Payment to be disperse: Rs. 1000
-            <br />
+          
             <Card>
               <Card.Title style={{ margin: "10px" }}>
                 Recent Payouts
@@ -130,6 +138,7 @@ const DoctorReceivedPayments = () => {
                     <th>Payout Id</th>
                     <th>Date</th>
                     <th>Amount</th>
+                    <th>Status</th>
                   </tr>
                 </thead>
                 <tbody className="ap-table">

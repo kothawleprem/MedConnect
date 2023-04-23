@@ -1,16 +1,15 @@
-import React, { useState } from 'react';
-import { Form, Button, Container,Row } from 'react-bootstrap';
-import axios from 'axios';
+import React, { useState } from "react";
+import { Form, Button, Container, Row } from "react-bootstrap";
+import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-
-const AddPackage = () => {
+const UpdatePackage = () => {
   const [formData, setFormData] = useState({
-    name: '',
-    description: '',
-    price: '',
-    no_tests: '',
+    name: "",
+    description: "",
+    price: "",
+    no_tests: "",
   });
 
   const handleSubmit = async (event) => {
@@ -20,13 +19,14 @@ const AddPackage = () => {
         "Content-Type": "application/json",
         Authorization: `Token ${token}`,
       },
-    }
+    };
     event.preventDefault();
-    console.log(formData)
+    console.log(formData);
     try {
       const response = await axios.post(
         "http://127.0.0.1:8000/api/lab/package/",
-        formData, config
+        formData,
+        config
       );
       console.log(response.data);
       if (response.status === 201) {
@@ -52,7 +52,6 @@ const AddPackage = () => {
           theme: "light",
         });
       }
-
     } catch (error) {
       console.error(error);
     }
@@ -61,11 +60,10 @@ const AddPackage = () => {
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData({
-        ...formData,
-        [name]: value,
-      });
+      ...formData,
+      [name]: value,
+    });
   };
-
   return (
     <Container>
       <p style={{ fontWeight: "600", fontSize: "25px" }}>Add Package</p>
@@ -121,4 +119,4 @@ const AddPackage = () => {
   );
 };
 
-export default AddPackage;
+export default UpdatePackage;

@@ -59,7 +59,7 @@ const Verify = () => {
 
         axios
           .post(
-            `http://${process.env.REACT_APP_API_URL}/api/doctors/verify_email/`,
+            `http://${process.env.REACT_APP_API_URL}/api/lab/verify/`,
             data,
             config
           )
@@ -68,8 +68,8 @@ const Verify = () => {
             console.log(response.data);
             status = response.status;
             if (status === 200) {
-              var token = data["token"];
-              localStorage.setItem("token", token);
+              var lab_token = data["token"];
+              localStorage.setItem("lab_token", lab_token);
               var verified = data["verified"];
               var hasReq = data["hasReq"];
               if (verified === false) {

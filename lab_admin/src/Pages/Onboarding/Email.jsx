@@ -40,6 +40,7 @@ const Email = () => {
       });
       navigate("/");
     } else {
+
       const data = {
         email: email["email"],
       };
@@ -83,7 +84,7 @@ const Email = () => {
       //   })
       //   .catch((error) => console.log(error));
 
-      fetch(`http://${process.env.REACT_APP_API_URL}/api/doctors/email/`, {
+      fetch(`http://${process.env.REACT_APP_API_URL}/api/lab/email/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -99,7 +100,7 @@ const Email = () => {
         })
         .then((data) => {
           console.log(data);
-          navigate("/otp", {
+          navigate("/verify", {
             state: {
               email: email["email"],
             },

@@ -19,7 +19,7 @@ export default function Status() {
     });
     
     useEffect(() => {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("lab_token");
       const config = {
         headers: {
           "Content-Type": "application/json",
@@ -27,10 +27,10 @@ export default function Status() {
         },
       };
       axios
-      .get(`http://${process.env.REACT_APP_API_URL}/api/doctors/request_verification/`, config)
+      .get(`http://${process.env.REACT_APP_API_URL}/api/lab/request_verification/`, config)
       .then(function (response) {
         console.log(response ,"RESPONSE");
-        if (response.data.status === "Approved") {
+        if (response.data.status === "ACCEPTED") {
           setUserRequest({
             status:"Approved" ,
             statusimg:"https://cdn4.iconfinder.com/data/icons/basicolor-arrows-checks/24/ok_check_done-512.png",

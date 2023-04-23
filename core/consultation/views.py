@@ -9,7 +9,7 @@ from rest_framework.permissions import IsAuthenticated
 from core.emails import email_prescription
 from patients.models import PatientModel, PatientProfileModel
 from .models import ConsultationModel, SlotModel, PaymentModel, PrescriptionModel, MedicineModel
-from doctors.models import DoctorModel, DoctorProfileModel, SpecializationModel
+from doctors.models import DoctorModel, DoctorProfileModel, SpecializationModel, DoctorPayoutModel
 
 from .prescription import generate_prescription
 import datetime
@@ -45,6 +45,7 @@ class SlotView(APIView):
         date = request.data.get("date")
         start_time = request.data.get("start_time")
         end_time = request.data.get("end_time")
+        slot_fees = request.data.get("slot_fees")
         remarks = request.data.get("remarks")
         print(start_time, end_time)
         req_st = time(int(start_time[0:2]), int(start_time[3:5]), 00)
@@ -68,7 +69,7 @@ class SlotView(APIView):
         print(time_l)
         if len(day_slots) == 0:
             slot = SlotModel.objects.create(doctor=doctor, date=date, start_time=req_st, end_time=req_et,
-                                            remarks=remarks, fees=300)
+                                            remarks=remarks, amount=slot_fees)
             response = {
                 "message": "Slot Added!!",
                 "slot_id": slot.id
@@ -84,7 +85,7 @@ class SlotView(APIView):
                     flag = 1
         if flag == 1:
             slot = SlotModel.objects.create(doctor=doctor, date=date, start_time=req_st, end_time=req_et,
-                                            remarks=remarks, fees=300)
+                                            remarks=remarks, amount=slot_fees)
             response = {
                 "message": "Slot Added!!",
                 "slot_id": slot.id
@@ -311,6 +312,10 @@ class PrescriptionView(APIView):
         consultation_id = request.data.get("consultation_id")
         consultation = ConsultationModel.objects.get(id=consultation_id)
         consultation.completed = True
+        payout,a = DoctorPayoutModel.objects.get_or_create(doctor=consultation.doctor, paid=False)
+        print(payout,a)
+        payout.amount = payout.amount + consultation.amount - 50
+        payout.save()
         consultation.save()
         patient_profile = PatientProfileModel.objects.get(patient=consultation.patient)
         patient_name = patient_profile.first_name + " " + patient_profile.last_name
@@ -339,17 +344,17 @@ class PrescriptionView(APIView):
         logo_path = "https://raw.githubusercontent.com/kothawleprem/MedConnect/main/templates/medconnect_logo.jpg"
         rx_path = "https://raw.githubusercontent.com/kothawleprem/MedConnect/main/templates/rx_logo.jpg"
         print("list",med_list)
-        filename = generate_prescription(patient_name, doctor_name, med_list, logo_path, rx_path, doctor_signature,
-                                         prescription_no,
-                                         consultation_id, doctor_email, medconnect_id, reg_no, doctor_location,
-                                         consultation.patient.id,
-                                         patient_location, date, remarks, doctor_title)
+        # filename = generate_prescription(patient_name, doctor_name, med_list, logo_path, rx_path, doctor_signature,
+        #                                  prescription_no,
+        #                                  consultation_id, doctor_email, medconnect_id, reg_no, doctor_location,
+        #                                  consultation.patient.id,
+        #                                  patient_location, date, remarks, doctor_title)
         # print(filename)
-        email_prescription(patient_profile.patient.user.email, patient_profile.first_name, doctor_profile.name,
-                           "http://127.0.0.1:8000/media/" + filename)
-        rx = PrescriptionModel.objects.get(id=prescription_no)
-        rx.prescription_file = "http://0.0.0.0:8000/media/" + filename
-        rx.save()
+        # email_prescription(patient_profile.patient.user.email, patient_profile.first_name, doctor_profile.name,
+        #                    "http://127.0.0.1:8000/media/" + filename)
+        # rx = PrescriptionModel.objects.get(id=prescription_no)
+        # rx.prescription_file = "http://0.0.0.0:8000/media/" + filename
+        # rx.save()
         consultation.completed = True
         consultation.save()
         # print(consultation_id, doctor_id, patient_id, medicine_list, remarks)
@@ -403,6 +408,7 @@ class ConfirmPaymentView(APIView):
         slot_id = request.data.get("slot_id")
         stripe_id = request.data.get("stripe_id")
         consultation = ConsultationModel.objects.get(slot__id=slot_id)
+        print(consultation)
         consultation.payment_completed = True
         consultation.save()
         amount = consultation.amount

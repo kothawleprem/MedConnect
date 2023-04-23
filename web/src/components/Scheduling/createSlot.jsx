@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import { Row, Col, Form } from "react-bootstrap"
 
 // import TimePicker from "react-time-picker";
 import { ToastContainer, toast } from "react-toastify";
@@ -17,6 +16,7 @@ import Tabs from "react-bootstrap/Tabs";
 const CreateSlot = () => {
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
+  const [slotFees, setSlotFees] = useState();
   const [time, setTime] = React.useState("10:00");
   const [value, setValue] = useState('10:00 AM');
 
@@ -29,6 +29,11 @@ const CreateSlot = () => {
   const today = localISOTime.substring(0, 10);
   const tomorrow = tlocalISOTime.substring(0, 10);
   console.log(today, tomorrow)
+
+  const handleChange = (e) => {
+    const slotFees = e.target.value.trim();
+    setSlotFees(slotFees);
+  }
 
   const handleChangeStart = (e) => {
     e.preventDefault();
@@ -61,6 +66,7 @@ const CreateSlot = () => {
       start_time: startTime["start_time"],
       end_time: endTime["end_time"],
       remarks: "NA",
+      slot_fees: slotFees
     };
     console.log(req)
     
@@ -121,8 +127,8 @@ const CreateSlot = () => {
             {/* <img src="assets/sch.png" style={{height:'250px,width:200px'}} /> */}
 
             <Card body className="shadow-sm" style={{ width: "30rem" }}>
-              <Row style={{margin:'10px'}}>
-                <Col md={6}  >
+              <Row style={{ margin: "10px" }}>
+                <Col md={6}>
                   <p>Enter Start time</p>
                   <input
                     type="time"
@@ -131,10 +137,9 @@ const CreateSlot = () => {
                     onChange={handleChangeStart}
                     required
                   />
-
                 </Col>
-             
-                <Col md={6} >
+
+                <Col md={6}>
                   <p>Enter End time</p>
                   <input
                     type="time"
@@ -144,23 +149,28 @@ const CreateSlot = () => {
                     required
                   />
                 </Col>
-
               </Row>
               <br />
-              <center> 
-              
-              <Button
-                onClick={() => handleSubmit(today)}
-                className='main-btn'
-                // variant="primary"
-                // style={{
-                //   backgroundColor: "#FF7600",
-                //   borderColor: "#FF7600",
-                //   fontWeight: "bold",
-                // }}
-              >
-                Add Slot
-              </Button>
+              <center>
+                <Form.Control
+                  type="text"
+                  name="name"
+                  onChange={handleChange}
+                  placeholder="Enter Slot Fees"
+                />
+                <br />
+                <Button
+                  onClick={() => handleSubmit(today)}
+                  className="main-btn"
+                  // variant="primary"
+                  // style={{
+                  //   backgroundColor: "#FF7600",
+                  //   borderColor: "#FF7600",
+                  //   fontWeight: "bold",
+                  // }}
+                >
+                  Add Slot
+                </Button>
               </center>
               {/* <button >Add Slot</button> */}
             </Card>
@@ -172,7 +182,7 @@ const CreateSlot = () => {
 
           <Tab eventKey="tomorrow" title={tomorrow}>
             <Card body style={{ width: "30rem" }}>
-              <Row style={{margin:'10px'}}>
+              <Row style={{ margin: "10px" }}>
                 <Col md={6}>
                   <p>Enter Start time</p>
                   <input
@@ -182,7 +192,7 @@ const CreateSlot = () => {
                     onChange={handleChangeStart}
                     required
                   />
-                  
+
                   {/* <TimePicker /> */}
                 </Col>
                 <Col md={6}>
@@ -196,17 +206,15 @@ const CreateSlot = () => {
                   />
                 </Col>
               </Row>
-              <br/>
-              <center>  
-              <Button
-                onClick={() => handleSubmit(tomorrow)}
-                className='main-btn'
-              >
-                Add Slot
-              </Button>
-            </center>
-        
-
+              <br />
+              <center>
+                <Button
+                  onClick={() => handleSubmit(tomorrow)}
+                  className="main-btn"
+                >
+                  Add Slot
+                </Button>
+              </center>
             </Card>
             <br />
           </Tab>

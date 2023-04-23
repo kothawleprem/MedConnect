@@ -14,7 +14,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from consultation.models import ConsultationModel
 from .models import DoctorModel, DoctorProfileModel, DoctorVerificationModel, SpecializationModel, \
-    VerificationStatusModel, DoctorPaymentDetailsModel
+    VerificationStatusModel, DoctorPaymentDetailsModel, DoctorPayoutModel
 
 from core.emails import sendOTP
 
@@ -34,6 +34,7 @@ class EmailView(APIView):
             user.save()
             doctor = DoctorModel.objects.create(user=user)
             DoctorProfileModel.objects.create(doctor=doctor)
+            DoctorPaymentDetailsModel.object.create(doctor=doctor)
         else:
             user = isRegistered[0]
             print("updating password", user)
@@ -261,8 +262,10 @@ class DoctorSetAvailabilityView(APIView):
         except:
             return Response("Doctor Not Found", status=status.HTTP_404_NOT_FOUND)
         isAvailable = doctor.isAvailable
+        instantFees = doctor.instantFees
         response = {
-            "isAvailable": isAvailable
+            "isAvailable": isAvailable,
+            "instantFees": instantFees
         }
         return Response(response, status=status.HTTP_200_OK)
 
@@ -312,4 +315,40 @@ class DoctorReceivedPaymentsView(APIView):
             }
             response.append(res)
         return Response(response, status=status.HTTP_200_OK)
+
+class DoctorIndividualPayoutListView(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        #not paid payout for doctor,
+        user = request.user
+        doctor = DoctorModel.objects.get(user=user)
+        response = []
+
+        payouts = DoctorPayoutModel.objects.filter(doctor=doctor)
+        for payout in payouts:
+            payment_details = DoctorPaymentDetailsModel.objects.get(doctor=doctor)
+            print(payment_details)
+            # print(last_payout)
+            res = {
+                "payout_id": payout.id,
+                "last_payout_date": payout.date_last_accessed,
+                "amount": payout.amount,
+                "paid": payout.paid
+            }
+            response.append(res)
+        return Response(response, status=status.HTTP_200_OK)
+
+class InstantFees(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        user = request.user
+        instantFees = request.data.get("instantFees")
+        doctor = DoctorModel.objects.get(user=user)
+        doctor.instantFees = instantFees
+        doctor.save()
+        return Response("updated", status=status.HTTP_200_OK)
 

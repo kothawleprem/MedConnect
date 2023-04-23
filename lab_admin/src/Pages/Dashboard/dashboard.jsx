@@ -10,6 +10,7 @@ import ContentMain from "../../components/Dashboard/Content/ContentMain";
 import Appointment from "../../components/Dashboard/Content/Appointment";
 import Payments from "../../components/Dashboard/Content/Payments";
 import Addpackage from "../../components/Dashboard/Content/Addpackage";
+import UpdatePackage from "../../components/Dashboard/Content/UpdatePackage";
 
 const Dashboard = () => {
   const [selectedComponent, setSelectedComponent] = useState("ContentMain");
@@ -29,6 +30,7 @@ const Dashboard = () => {
             {selectedComponent === "AddPackage" && <Addpackage />}
             {selectedComponent === "Appointments" && <Appointment />}
             {selectedComponent === "Payments" && <Payments />}
+            {selectedComponent === "UpdatePackage" && <UpdatePackage/>}
           </Col>
         </Row>
       </Container>

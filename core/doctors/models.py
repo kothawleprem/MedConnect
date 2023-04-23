@@ -53,7 +53,7 @@ class DoctorPaymentDetailsModel(models.Model):
 
 class DoctorPayoutModel(models.Model):
     doctor = models.ForeignKey(DoctorModel, models.CASCADE)
-    amount = models.IntegerField()
+    amount = models.IntegerField(default=0)
     date_last_accessed = models.DateField(auto_now=True)
     transaction_id = models.CharField(max_length=255, null=True)
     paid = models.BooleanField(default=False)

@@ -1,10 +1,13 @@
 import React from 'react'
 import { useEffect, useState } from 'react';
+import { Button } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
 import axios from 'axios';
 
 const CapturePayments = () => {
   const [paymentId, setPaymentId] = useState()
+  const navigate = useNavigate()
   useEffect(() => {
     const queryString = window.location.search;
     // console.log("all query", queryString);
@@ -40,8 +43,17 @@ const CapturePayments = () => {
   },[])
     
   return (
-    <div>CapturePayments</div>
-  )
+    <>
+    <br /><br />
+      <center>
+        <img src="https://www.ignitebh.com/wp-content/uploads/2020/04/payment_success_icon.png" width="300px"></img>
+        <br />
+        <h2>Payment Successful</h2>
+        <br />
+        <Button onClick={() => navigate("/manageappointment")}>Go to: Manage Appointments</Button>
+      </center>
+    </>
+  );
 }
 
 export default CapturePayments
