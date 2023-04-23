@@ -19,11 +19,11 @@ const BookInstant = () => {
   var sid = 0
 
     useEffect(() => {
-        const token = localStorage.getItem("token");
+        const patient_token = localStorage.getItem("patient_token");
         const config = {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Token ${token}`,
+            Authorization: `Token ${patient_token}`,
           },
         };
       axios
@@ -37,11 +37,11 @@ const BookInstant = () => {
     }, []);
 
   const handleClick = () => {
-    const token = localStorage.getItem("token");
+    const patient_token = localStorage.getItem("patient_token");
     const config = {
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Token ${token}`,
+        Authorization: `Token ${patient_token}`,
       },
     };
     const data = {

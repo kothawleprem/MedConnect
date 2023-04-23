@@ -4,11 +4,11 @@ import TextField from "@mui/material/TextField";
 // import AssignmentIcon from "@mui/icons-material/Assignment";
 import PhoneIcon from "@mui/icons-material/Phone";
 import VideocamIcon from "@mui/icons-material/Videocam";
-// import VideocamOffIcon from "@mui/icons-material/VideocamOff";
+import VideocamOffIcon from "@mui/icons-material/VideocamOff";
 import MicIcon from "@mui/icons-material/Mic";
-// import MicOffIcon from "@mui/icons-material/MicOff";
+import MicOffIcon from "@mui/icons-material/MicOff";
 import CallEndIcon from "@mui/icons-material/CallEnd";
-// import Alert from "@mui/material/Alert";
+import Alert from "@mui/material/Alert";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import Avatar from "@mui/material/Avatar";
@@ -16,11 +16,15 @@ import React, { useEffect, useRef, useState } from "react";
 import Peer from "simple-peer";
 import io from "socket.io-client";
 import { Grid } from "@mui/material";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import "./video.css";
-const socket = io.connect("http://192.168.252.88:5000");
+const socket = io.connect("http://192.168.0.103:5000");
 
 const Video = () => {
+  const { state } = useLocation();
+  const { consultation_id } = state;
+  const navigate = useNavigate()
   useEffect(() => {
     if (!localStorage.getItem("Serverreloaded")) {
       localStorage.setItem("Serverreloaded", true);
@@ -53,10 +57,10 @@ const Video = () => {
     socket.on("myId", (id) => {
       setMe(id);
       const res = {
-        consultation_id: 11,
+        consultation_id: consultation_id,
         room_id: id,
       };
-
+      console.log(res);
       fetch(`http://${process.env.REACT_APP_API_URL}/api/consultation/room/`, {
         method: "POST",
         headers: {
@@ -82,12 +86,10 @@ const Video = () => {
       console.log("received call ended");
       setCallEnded(true);
       connectionRef.current.destroy();
+      navigate("/dashboard");
       window.location.reload(true);
     });
     setName("Doctor");
-
-	
-
   }, []);
 
   const callUser = (id) => {
@@ -155,102 +157,129 @@ const Video = () => {
     setCallEnded(true);
     socket.emit("disconnectCall");
     connectionRef.current.destroy();
-    window.location.reload(true);
+    navigate("/dashboard")
+    // window.location.reload(true);
   };
 
   return (
     <>
-    <div className="body-video">   
-      <div className="container ">
-        <div className="header">  
-      
-      <Grid  item xs={30} sm={9} md={9} lg={7.8} xl={7.8} className="head" container flexWrap="nowrap" wrap="nowrap">
-              <div >
-              <img src="Assets/MedConnect.png" alt="/" className="img"/>
+      <div className="body-video">
+        <div className="container ">
+          <div className="header">
+            <Grid
+              item
+              xs={30}
+              sm={9}
+              md={9}
+              lg={7.8}
+              xl={7.8}
+              className="head"
+              container
+              flexWrap="nowrap"
+              wrap="nowrap"
+            >
+              <div>
+                <img src="Assets/MedConnect.png" alt="/" className="img" />
               </div>
-            
-              <div className="title">  
-              <p className="titlehead">
-                General Physcian Consultation Meeting
-              </p> 
-              <p className="subtitle"> Dr Prem Khotawale</p> 
+
+              <div className="title">
+                <br />
+
+                <p className="titlehead">Consultation Meeting</p>
               </div>
-             
-              
-          </Grid>
-       
+            </Grid>
           </div>
-       
-     
-        <Grid container spacing={2} className="video-container">
-          <Grid item xs={8} className="video">
-            {/* {callAccepted && !callEnded ? ( */}
+
+          <Grid container spacing={2} className="video-container">
+            <Grid item xs={8} className="video">
+              {/* {callAccepted && !callEnded ? ( */}
               <center>
                 <video
                   playsInline
                   ref={userVideo}
                   autoPlay
                   className="videoElementOut"
-                /> 
-                <div >  
-                <IconButton style={{backgroundColor:"white" , width:"50px"}} className="videoicon" onClick={stopVideo}>
+                />
+                <div>
+                  <IconButton
+                    style={{ backgroundColor: "white", width: "50px" }}
+                    className="videoicon"
+                    onClick={stopVideo}
+                  >
+                    {svideo === true ? (
+                      <VideocamOffIcon
+                        style={{ color: "grey" }}
+                        fontSize="large"
+                      />
+                    ) : (
                       <VideocamIcon
                         style={{ color: "grey" }}
                         fontSize="large"
                       />
-                    </IconButton>
-                    <IconButton style={{backgroundColor:"white" , width:"50px" ,margin:"8px"}} onClick={muteCall} className="videoicon">
-                      <MicIcon style={{ color: "green" }} fontSize="large" />
-                    </IconButton>
-                    <IconButton 
-                    style={{backgroundColor:"red" , width:"50px" }}
+                    )}
+                  </IconButton>
+                  <IconButton
+                    style={{
+                      backgroundColor: "white",
+                      width: "50px",
+                      margin: "8px",
+                    }}
+                    onClick={muteCall}
                     className="videoicon"
-                      variant="contained"
-                      color="secondary"
-                      onClick={leaveCall}
-                    >
-                      <CallEndIcon
-                        style={{ color: "white" }}
-                        fontSize="large"
-                      />
-                    </IconButton>
-                    </div>
+                  >
+                    {saudio === true ? (
+                      <MicOffIcon style={{ color: "green" }} fontSize="large" />
+                    ) : (
+                      <MicIcon style={{ color: "green" }} fontSize="large" />
+                    )}
+                    {/* <MicIcon style={{ color: "green" }} fontSize="large" /> */}
+                  </IconButton>
+                  <IconButton
+                    style={{ backgroundColor: "red", width: "50px" }}
+                    className="videoicon"
+                    variant="contained"
+                    color="secondary"
+                    onClick={leaveCall}
+                  >
+                    <CallEndIcon style={{ color: "white" }} fontSize="large" />
+                  </IconButton>
+                </div>
               </center>
-              
-             {/* ) : (
+
+              {/* ) : (
               <>
                 <center>
                   <div className="videoElementOut"></div>
                 </center>
               </>
             )}  */}
-          </Grid>
-          <Grid item xs={4} className="video">
-            <div className="div">
-              {stream && (
-                <>
-                  <video
-                    playsInline
-                    muted
-                    ref={myVideo}
-                    autoPlay
-                    className="videoElementIn"
-                  />
-                </>
-              )}
-            </div>
-            <br />
-            <div className="myId">
-              <p style={{ color: "white" }}>Your Id: {me}</p>
-              <TextField
+            </Grid>
+            <Grid item xs={4} className="video">
+              <div className="div">
+                {stream && (
+                  <>
+                    <video
+                      playsInline
+                      muted
+                      ref={myVideo}
+                      autoPlay
+                      className="videoElementIn"
+                    />
+                  </>
+                )}
+              </div>
+              <br />
+              {/* <div className="myId"> */}
+              {/* <p style={{ color: "white" }}>Your Id: {me}</p> */}
+              {/* <TextField
                 id="filled-basic"
                 label="ID to call"
                 variant="filled"
                 value={idToCall}
                 onChange={(e) => setIdToCall(e.target.value)}
-              />
-              <div className="call-button">
-                {callAccepted && !callEnded ? (
+              /> */}
+              {/* <div className="call-button"> */}
+              {/* {callAccepted && !callEnded ? (
                   <>
                     <IconButton onClick={muteCall}>
                       <MicIcon style={{ color: "white" }} fontSize="large" />
@@ -273,15 +302,7 @@ const Video = () => {
                         fontSize="large"
                       />
                     </IconButton>
-                    {/* <Button onClick={muteCall}>Mute</Button>
-                    <Button onClick={stopVideo}>Stop Video</Button>
-                    <Button
-                      variant="contained"
-                      color="secondary"
-                      onClick={leaveCall}
-                    >
-                      End Call
-                    </Button> */}
+                    
                   </>
                 ) : (
                   <>
@@ -292,44 +313,43 @@ const Video = () => {
                       <PhoneIcon style={{ color: "white" }} fontSize="large" />
                     </IconButton>
                   </>
-                )}
-              </div>
+                )} */}
+              {/* </div>
              
-            </div>
+            </div> */}
+            </Grid>
           </Grid>
-        
-        </Grid>
 
-        <Grid>
-          {receivingCall && !callAccepted ? (
-            <div>
-              <center>
-                <Card className="caller">
-                  <CardHeader
-                    avatar={<Avatar>P</Avatar>}
-                    title="Incoming Video Call:"
-                    subheader="Patient"
-                    action={
-                      <IconButton color="primary" onClick={answerCall}>
-                        <p>Accept</p> &nbsp; <PhoneIcon />
-                      </IconButton>
-                    }
-                    className="callerData"
-                  />
-                </Card>
-              </center>
+          <Grid>
+            {receivingCall && !callAccepted ? (
+              <div>
+                <center>
+                  <Card className="caller">
+                    <CardHeader
+                      avatar={<Avatar>P</Avatar>}
+                      title="Incoming Video Call:"
+                      subheader="Patient"
+                      action={
+                        <IconButton color="primary" onClick={answerCall}>
+                          <p>Accept</p> &nbsp; <PhoneIcon />
+                        </IconButton>
+                      }
+                      className="callerData"
+                    />
+                  </Card>
+                </center>
+    
 
-              {/* <Card className="caller">
+                {/* <Card className="caller">
                 Incoming Video Call: {name}
                 <IconButton color="primary" onClick={answerCall}>
                   Accept &nbsp; <PhoneIcon />
                 </IconButton>
               </Card> */}
-            </div>
-          ) : null}
-        </Grid>
-      
-      </div>
+              </div>
+            ) : null}
+          </Grid>
+        </div>
       </div>
     </>
   );

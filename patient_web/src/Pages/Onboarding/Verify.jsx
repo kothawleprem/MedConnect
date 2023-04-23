@@ -70,9 +70,9 @@ const Verify = () => {
           status = response.status;
           console.log(status);
           if (status === 200) {
-            var token = data["token"];
-            localStorage.setItem("token", token);
-            navigate("/");
+            var patient_token = data["token"];
+            localStorage.setItem("patient_token", patient_token);
+            navigate("/manageappointment");
           } else {
             console.log("incorrect otp");
             toast.warn("Incorrect OTP!", {

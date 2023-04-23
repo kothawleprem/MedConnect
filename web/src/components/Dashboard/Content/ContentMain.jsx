@@ -13,11 +13,11 @@ const ContentMain = () => {
   return (
     <div>
       <Row>
-        <Col style={{fontWeight:'500'}}>Greetings</Col>
+        <Col style={{fontWeight:'500'}}>Greetings!!</Col>
       </Row>
       <br />
       <div >
-        <Stats />
+        {/* <Stats /> */}
       </div>
       <br />
       <Row>

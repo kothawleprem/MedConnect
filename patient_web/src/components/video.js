@@ -13,7 +13,7 @@ import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import Avatar from "@mui/material/Avatar";
 import React, { useEffect, useRef, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Peer from "simple-peer";
 import io from "socket.io-client";
 
@@ -21,12 +21,13 @@ import io from "socket.io-client";
 import "./video.css";
 import { Grid } from "@mui/material";
 
-  const socket = io.connect("http://192.168.252.88:5000");
+  const socket = io.connect("http://192.168.0.103:5000");
 
 
 const Video = () => {
   const { state } = useLocation();
   const { idToCall } = state;
+  const navigate = useNavigate()
   console.log(idToCall);
 
   const [me, setMe] = useState("");
@@ -69,6 +70,7 @@ const Video = () => {
       console.log("received call ended");
       setCallEnded(true);
       connectionRef.current.destroy();
+      navigate("/manageappointment")
       window.location.reload(true);
     });
 
@@ -174,21 +176,25 @@ const Video = () => {
     console.log(stream);
     setSvideo(!svideo);
     console.log("stoped");
-    stream.getVideoTracks()[0].enabled = svideo;
+    stream.getVideogetVideoTracksTracks()[0].enabled = svideo;
   };
   const leaveCall = () => {
     setCallEnded(true);
     socket.emit("disconnectCall");
     connectionRef.current.destroy();
+    navigate("/manageappointment")
     window.location.reload(true);
   };
 
   return (
     <>
       <div className="body-video">
+        <br />
+        <br />
         <h2 style={{ textAlign: "center", color: "#fff" }}>
           MedConnect - Patient
         </h2>
+        <br/>
         <div className="main-container">
           <Grid container spacing={2} className="video-container">
             <Grid item xs={8} className="video">
@@ -225,14 +231,14 @@ const Video = () => {
               </div>
               <br />
               <div className="myId">
-                <p style={{ color: "white" }}>Your Id: {me}</p>
-                <TextField
+                {/* <p style={{ color: "white" }}>Your Id: {me}</p> */}
+                {/* <TextField
                   id="filled-basic"
                   label="ID to call"
                   variant="filled"
                   value={idToCall}
                   // onChange={(e) => setIdToCall(e.target.value)}
-                />
+                /> */}
                 <div className="call-button">
                   {callAccepted && !callEnded ? (
                     <>
@@ -269,6 +275,7 @@ const Video = () => {
                     </>
                   ) : (
                     <>
+                      Start Video Call!
                       <IconButton aria-label="call" onClick={() => callUser()}>
                         <PhoneIcon
                           style={{ color: "white" }}
@@ -311,6 +318,15 @@ const Video = () => {
             ) : null}
           </Grid>
         </div>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br /> <br />
+        <br />
+        <br /> <br />
       </div>
     </>
   );

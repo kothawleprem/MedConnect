@@ -54,17 +54,18 @@ const EditSlotRemarks = () => {
         "slot_id": slot_id,
       }),
     };
-    fetch("http://127.0.0.1:8000/api/consultation/slot/", requestOptions).then(
-      (response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        } else {
-          if (response.status === 204) {
-            navigate('/scheduling')
-          }
+    fetch(
+      `http://${process.env.REACT_APP_API_URL}/api/consultation/slot/`,
+      requestOptions
+    ).then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      } else {
+        if (response.status === 204) {
+          navigate("/scheduling");
         }
       }
-    );
+    });
   };
 
   const handleSubmit = () => {
@@ -82,12 +83,12 @@ const EditSlotRemarks = () => {
     }
     axios
       .patch(
-        `http://127.0.0.1:8000/api/consultation/slot/`,
+        `http://${process.env.REACT_APP_API_URL}/api/consultation/slot/`,
         data,
         config
       )
       .then((response) => {
-        console.log(response.status)
+        console.log(response.status);
         if (response.status === 202) {
           toast.success("Remarks updated, please refresh", {
             position: "top-right",
@@ -100,9 +101,9 @@ const EditSlotRemarks = () => {
             theme: "light",
           });
           navigate("/editslotremarks", {
-            state : {
+            state: {
               slot_id: slot_id,
-            }
+            },
           });
         }
       });

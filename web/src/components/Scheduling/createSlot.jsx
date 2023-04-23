@@ -107,7 +107,7 @@ const CreateSlot = () => {
   return (
     <>
       <br></br>
-      <h2>Schedul your appointment</h2>
+      <h2>Schedule Your Appointment Slots</h2>
       <br></br>
       <p>Select Date</p>
       <Row>
@@ -148,6 +148,7 @@ const CreateSlot = () => {
               </Row>
               <br />
               <center> 
+              
               <Button
                 onClick={() => handleSubmit(today)}
                 className='main-btn'

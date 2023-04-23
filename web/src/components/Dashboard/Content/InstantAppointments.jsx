@@ -4,7 +4,26 @@ import {Card, Table, Container, Row, Col } from "react-bootstrap"
 
 const InstantAppointments = () => {
     const [appointments,setAppointments] = useState([])
-
+    const temp_appointments = [
+      {
+        consultation_id: 1,
+        start_time: "10:00:00",
+        end_time: "10:30:00",
+        date: "2023-04-25",
+      },
+      {
+        consultation_id: 2,
+        start_time: "12:00:00",
+        end_time: "12:30:00",
+        date: "2023-04-27",
+      },
+      {
+        consultation_id: 3,
+        start_time: "14:00:00",
+        end_time: "14:30:00",
+        date: "2023-04-29",
+      },
+    ];
 
     useEffect(() => {
       const token = localStorage.getItem("token");

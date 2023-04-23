@@ -6,11 +6,11 @@ const DashAppointments = () => {
   const [slots, setSlots] = useState();
  
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const patient_token = localStorage.getItem("patient_token");
     const config = {
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Token ${token}`,
+        Authorization: `Token ${patient_token}`,
       },
     };
     axios

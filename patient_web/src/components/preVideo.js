@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import IconButton from "@mui/material/IconButton";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import UnpublishedIcon from "@mui/icons-material/Unpublished";
@@ -10,13 +10,15 @@ import Card from "@mui/material/Card";
 
 function PreVideo() {
   const [idToCall, setIdToCall] = useState("");
+  const { state } = useLocation();
+  const { consultation_id } = state;
 
   useEffect(() => {
     const fetchData = async () => {
       let response;
       do {
         response = await fetch(
-          `http://${process.env.REACT_APP_API_URL}/api/consultation/room/?consultation_id=11`
+          `http://${process.env.REACT_APP_API_URL}/api/consultation/room/?consultation_id=${consultation_id}`
         );
         await new Promise((resolve) => setTimeout(resolve, 3000));
       } while (response.status !== 200);

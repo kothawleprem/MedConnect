@@ -12,6 +12,7 @@ import Profile from "../../components/Dashboard/Content/Profile"
 import Appointment from "../../components/Dashboard/Content/Appointment";
 import Payments from "../../components/Dashboard/Content/Payments";
 import Settings from "../../components/Dashboard/Content/Settings";
+import Scheduling from "../../components/Scheduling/scheduling";
 // import Instant from "../../components/Dashboard/Content/Instant";
 
 const Dashboard = () => {
@@ -30,6 +31,7 @@ const Dashboard = () => {
           <Col xl={9} lg={9} md={10} sm={6} className="content-wrapper">
             {selectedComponent === "ContentMain" && <ContentMain />}
             {selectedComponent === "Profile" && <Profile />}
+            {selectedComponent === "Scheduling" && <Scheduling />}
             {selectedComponent === "Appointments" && <Appointment />}
             {selectedComponent === "Payments" && <Payments />}
             {selectedComponent === "Settings" && <Settings />}

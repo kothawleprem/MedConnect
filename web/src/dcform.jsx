@@ -207,7 +207,7 @@ const Dcform = () => {
       <section id="appointment" class="appointment section-bg">
         <div class="container" >
           <div class="section-title">
-            <h2>Fill The Form</h2>
+            <h2>Data Verification Form</h2>
 
           </div>
 

@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import Table from 'react-bootstrap/Table';
 
@@ -13,6 +13,8 @@ import Header from "./Navbar/header";
 
 
 export default function AddPrescription() {
+  const { state } = useLocation();
+  const { consultation_id } = state;
     const [showForm, setShowForm] = useState(false);
     const [medicines, setMedicines] = useState([]);
     const [type, setType] = useState('');
@@ -70,8 +72,7 @@ export default function AddPrescription() {
       const data = {
         medicine_list: medicines,
         remarks: addremarks,
-        consultation_id: 11
-       
+        consultation_id: consultation_id,
       };
       console.log(medicines,"medicine");
       const token = localStorage.getItem("token")

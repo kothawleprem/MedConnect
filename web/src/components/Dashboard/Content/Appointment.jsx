@@ -9,6 +9,26 @@ import axios from "axios";
 
 const Appointment = () => {
   const [slots, setSlots] = useState();
+  const temp_slots = [
+    {
+      start_time: "10:00:00",
+      end_time: "10:30:00",
+      date: "2023-04-24",
+      patient_name: "Amitabh Gupta",
+    },
+    {
+      start_time: "11:00:00",
+      end_time: "11:30:00",
+      date: "2023-04-24",
+      patient_name: "Priya Patel",
+    },
+    {
+      start_time: "12:00:00",
+      end_time: "12:30:00",
+      date: "2023-04-24",
+      patient_name: "Rahul Sharma",
+    },
+  ];
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -55,8 +75,9 @@ const Appointment = () => {
           <Card.Body>
             <Row>
               <Col>Patient Name</Col>
-              <Col>Type</Col>
-              <Col>Time</Col>
+              <Col>Date</Col>
+              <Col>Start Time</Col>
+              <Col>End Time</Col>
               <Col>View</Col>
             </Row>
           </Card.Body>
@@ -75,10 +96,13 @@ const Appointment = () => {
                     <Card.Subtitle>{slot.patient_name}</Card.Subtitle>
                   </Col>
                   <Col>
+                    <Card.Subtitle>{slot.date}</Card.Subtitle>
+                  </Col>
+                  <Col>
                     <Card.Subtitle>{slot.start_time}</Card.Subtitle>
                   </Col>
                   <Col>
-                    <Card.Subtitle>Need to Define</Card.Subtitle>
+                    <Card.Subtitle>{slot.end_time}</Card.Subtitle>
                   </Col>
                   <Col>
                     <Card.Subtitle>
