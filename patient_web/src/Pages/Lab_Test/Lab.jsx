@@ -79,7 +79,6 @@ export default function Lab() {
             <h3>Available Labs</h3>
 
             </center>
-
                               <Row className="justify-content-center">   
                                 {labs.map((user) => (
                                    
@@ -91,23 +90,12 @@ export default function Lab() {
                             <Card.Title className='stats-total'> {user.name}</Card.Title>
                   
                             <Card.Subtitle className="stats-title"> {user.description}</Card.Subtitle>
-                  
-                                  
-                        
-                           
-
-                              <Button style={{ textDecoration: 'none' }}   onClick={() => handleSubmit(user.name)} > <h6 style={{color:'white' }} >View Packages</h6> </Button>  
-
-                           
-                            
+                            <Button style={{ textDecoration: 'none' }}   onClick={() => handleSubmit(user.name)} > <h6 style={{color:'white' }} >View Packages</h6> </Button>  
                             </Card>
                             </Col>
                                    
                                   ))}
                                 </Row>
-                        
-
-
 
     </>
   )
