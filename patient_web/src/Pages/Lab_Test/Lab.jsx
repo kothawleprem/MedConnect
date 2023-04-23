@@ -42,6 +42,15 @@ export default function Lab() {
       ];
 
 
+    const labs = [
+        { id: 1, name: "Wellnes Labs",  price:1099, description:"includes 12 test", discount:"-22%" ,  },
+        { id: 2, name: "healthy Labs",  price:899,description:"includes 12 test", discount:"-25%" ,  },
+        { id: 3, name: "New Labs",  price:899,  description:"includes 12 test",discount:"-22%" , },
+
+       
+      ];
+
+
       const handleSubmit = (e) => {
               navigate("/packageview", {
                 state: {
@@ -60,26 +69,23 @@ export default function Lab() {
             <div className="row justify-content-center">
                 <div className="col-lg-6">
                     <div className="section-title text-center pb-25">
-                        <h3 className="title mb-15">Popular Health Checkup Packages</h3>
+                        <h3 className="title mb-15">Lab Test From The Comfort Of Your Home</h3>
                         <p>Your tests will be conducted in one of our partner labs to ensure highest accuracy of your reports.</p>
                     </div>
                 </div>
             </div> 
             </div> 
-       {/* <div className="col-lg-8 col-md-8 ml-200">
-       <div className="row justify-content-center">
-               
-            </div>  */}
-                    {/* <div className="tab-content" id="v-pills-tabContent">
-                        <div className="tab-pane fade show active"   aria-labelledby="v-pills-furniture-tab">
-                            <div className="product-items mt-30">
-                                <div className="row product-items-active"> */}
+            <center>
+            <h3>Available Labs</h3>
+
+            </center>
+
                               <Row className="justify-content-center">   
-                                {data.map((user) => (
+                                {labs.map((user) => (
                                    
                           
                             <Col xl={3} lg={3} md={4} sm={12}>
-
+                            
                             <Card className='statscard'> 
                             <br/>
                             <Card.Title className='stats-total'> {user.name}</Card.Title>
@@ -87,13 +93,13 @@ export default function Lab() {
                             <Card.Subtitle className="stats-title"> {user.description}</Card.Subtitle>
                   
                                   
-                            <div className='stats-links'> 
+                        
                            
-                            <p className='stats-green'> Price:{user.price}</p>
-                              <Button style={{ textDecoration: 'none' }}   onClick={() => handleSubmit(user.id)} > <h6 style={{color:'#fe7865' }} >Book now</h6> </Button>  
+
+                              <Button style={{ textDecoration: 'none' }}   onClick={() => handleSubmit(user.name)} > <h6 style={{color:'white' }} >View Packages</h6> </Button>  
 
                            
-                            </div>
+                            
                             </Card>
                             </Col>
                                    
