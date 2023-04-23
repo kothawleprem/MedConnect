@@ -1,11 +1,10 @@
 import React,{useState,useEffect} from 'react'
 import { useNavigate, useLocation } from "react-router-dom";
-import Bar from './Navbar/Navbar'
-import '../Dcform.css'
+import './form.css'
 import { Link } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 import axios from "axios";
-import Header from './Navbar/header';
+import Header from './Header/header';
 
 
 
@@ -31,7 +30,7 @@ export default function Status() {
       .get(`http://${process.env.REACT_APP_API_URL}/api/doctors/request_verification/`, config)
       .then(function (response) {
         console.log(response ,"RESPONSE");
-        if (response.data.status === "ACCEPTED") {
+        if (response.data.status === "Approved") {
           setUserRequest({
             status:"Approved" ,
             statusimg:"https://cdn4.iconfinder.com/data/icons/basicolor-arrows-checks/24/ok_check_done-512.png",
@@ -79,7 +78,6 @@ export default function Status() {
           <Card style={{ width: '30rem' }}>
       <Card.Body>
         <Card.Title>Status: {userRequest.status}</Card.Title>
-        {/* <Card.Subtitle className="mb-2 text-muted">Approve</Card.Subtitle> */}
        
     <img src={userRequest.statusimg} style={{width:"3rem"}} alt='pending'/>
     
@@ -95,11 +93,11 @@ export default function Status() {
 </div>
 <br/>
 <div>
-  { userRequest.status==="Approved" ? <Link style={{ textDecoration: 'none'  }} to="/Scheduling"> <p className="main-btn ">Continue</p> </Link> 
+  { userRequest.status==="Approved" ? <Link style={{ textDecoration: 'none'  }} to="/dashboard"> <p className="main-btn ">Continue</p> </Link> 
 : <h1> </h1> }
 &nbsp;
 
-<Link style={{ textDecoration: 'none' }} to="/Formview"> <p className="main-btn ">View response</p> </Link> 
+<Link style={{ textDecoration: 'none' }} to="/form"> <p className="main-btn ">View response</p> </Link> 
 
 
 </div>

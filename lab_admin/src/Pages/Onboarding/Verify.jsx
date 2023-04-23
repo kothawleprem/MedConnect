@@ -1,17 +1,15 @@
 import React from 'react'
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
-import Lottie from "lottie-react";
-import otpLottie from "../../lotties/otp.json";
+
 import { MuiOtpInput } from "mui-one-time-password-input";
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import { Link } from 'react-router-dom';
 import "./Email.css"
-import Bar from "../../components/Navbar/Navbar";
 
 import axios from 'axios';
-import Header from '../../components/Navbar/header';
+import Header from "../../components/Header/header";
 
 
 const Verify = () => {
@@ -76,7 +74,7 @@ const Verify = () => {
               var hasReq = data["hasReq"];
               if (verified === false) {
                 if (hasReq === 0) {
-                  navigate("/dcform", {
+                  navigate("/form", {
                     state: {
                       email: email,
                     },
@@ -89,7 +87,7 @@ const Verify = () => {
                   });
                 }
               } else {
-                navigate("/scheduling", {
+                navigate("/dashboard", {
                   state: {
                     email: email,
                   },
@@ -183,8 +181,7 @@ const Verify = () => {
      };
   return (
     <>
-      {/* <Bar/> */}
-      <Header/>
+           <Header />
       <Container>
       <br/>
         <Row className="d-flex align-items-center justify-content-center">
@@ -204,7 +201,7 @@ const Verify = () => {
             </Form>
           </Col>
           <Col xs={12} lg={5} md={6}>
-            <Lottie animationData={otpLottie}  width="50%" height="50%" />
+
           </Col>
         </Row>
       </Container>

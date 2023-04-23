@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 
 import '../Dcform.css'
 import { useEffect } from 'react';
+import Header from './Navbar/header';
 
 const initialFormData = Object.freeze({
     fname: "shubhams",
@@ -89,7 +90,7 @@ const Formview = () => {
 
     return (
       <div>
-        <Bar />
+        <Header/>
 
         <section id="appointment" class="appointment section-bg">
           <div class="container" data-aos="fade-up">

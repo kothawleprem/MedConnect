@@ -7,6 +7,7 @@ import Bar from '../../components/Navbar/Navbar';
 import { Link } from 'react-router-dom';
 
 import axios from 'axios';
+import Header from '../../components/Navbar/header';
 
 
 const AdminLogin = () => {
@@ -78,7 +79,7 @@ const AdminLogin = () => {
   }
   return (
     <>
-      {/* <Bar /> */}
+      <Header />
       <center>
         <Container>
           <br />

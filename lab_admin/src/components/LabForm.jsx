@@ -6,14 +6,15 @@ import Row from 'react-bootstrap/Row';
 
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { create as ipfsHttpClient } from "ipfs-http-client";
+// import { create as ipfsHttpClient } from "ipfs-http-client";
 import { useNavigate } from "react-router-dom";
+import Header from "./Header/header";
 
-import './Dcform.css'
-import Header from './components/Navbar/header';
+import './form.css'
 
 const initialFormData = Object.freeze({
-  name: undefined,
+  fname: undefined,
+  lname: undefined,
   gender: undefined,
   dob: undefined,
   mob_no: undefined,
@@ -22,20 +23,18 @@ const initialFormData = Object.freeze({
   state: undefined,
   pincode: undefined,
   Reg_no: undefined,
-  qualification: undefined,
-  specialization: undefined,
+  title: undefined,
   desc: undefined,
   imp_doc: undefined,
-  v_clip: undefined,
-  photo_doc: undefined,
-  sign_doc: undefined,
+
+ 
 });
 
 const projectId = '2KdPPLUQPwqlijfPMWKTqydNvXa';
 const projectSecretKey = 'a4f67328e14c5df9dbd1a894311b8d1e';
 const authorization = "Basic " + btoa(projectId + ":" + projectSecretKey);
 
-const Dcform = () => {
+const LabForm = () => {
     const [formData, updateFormData] = React.useState(initialFormData);
     const [checkboxState, setCheckboxState] = useState({});
     const navigate = useNavigate();
@@ -72,20 +71,11 @@ const Dcform = () => {
              bullet2: fv || false,
              bullet3: ov || false,
            });
-          //  if (data.gender === "Male"){
-          //   m_value.current =true
-          //  }
-          //  else if (data.gender === "Female"){
-          //   f_value.current = true;
-          //  }
-          //  else if (data.gender === "Other") {
-          //    console.log("other....");
-          //    o_value.current = true;
-          //  }
-          //  console.log(m_value.current, f_value, o_value)
+    
              updateFormData({
                ...formData,
-               name: data.name,
+               fname: data.first_name,
+               lname: data.last_name,
                gender: data.gender,
                dob: data.dob,
                mob_no: data.phone,
@@ -94,23 +84,14 @@ const Dcform = () => {
                state: data.state,
                pincode: data.pincode,
                Reg_no: data.reg_no,
-               qualification: data.qualification,
-               specialization: data.specialization,
+               title: data.title,
                desc: data.description,
                imp_doc: data.files,
-               v_clip: data.video,
-               photo_doc: data.photo,
-               sign_doc: data.signature,
+              
              });
          });
      }, []);
- 
-    const ipfs = ipfsHttpClient({
-      url: "https://ipfs.infura.io:5001/api/v0",
-      headers: {
-        authorization,
-      },
-    });
+
 
     const handleCheckboxChange = (event) => {
       const { id, checked } = event.target;
@@ -128,36 +109,16 @@ const Dcform = () => {
       });
     };
 
-    const fileSelectedHandlerDoc = async (event) => {
-      const result = await ipfs.add(event.target.files[0]);
-      updateFormData({
-        ...formData,
-        imp_doc: "https://infura-ipfs.io/ipfs/" + result.path,
-      });
-      // console.log("result", result);
-    };
+ 
 
-    const fileSelectedHandlerPhoto = async (event) => {
-      const result = await ipfs.add(event.target.files[0]);
-      updateFormData({
-        ...formData,
-        photo_doc: "https://infura-ipfs.io/ipfs/" + result.path,
-      });
-    };
-  
-    const fileSelectedHandlerSign = async (event) => {
-      const result = await ipfs.add(event.target.files[0]);
-      updateFormData({
-        ...formData,
-        sign_doc: "https://infura-ipfs.io/ipfs/" + result.path,
-      });
-    };
+
 
     const handleSubmit = async (e) => {
       e.preventDefault()
       console.log(formData);
       const data = {
-        name: formData.name,
+        first_name: formData.fname,
+        last_name: formData.lname,
         gender: formData.gender,
         dob: formData.dob,
         phone: formData.mob_no,
@@ -166,13 +127,10 @@ const Dcform = () => {
         state: formData.state,
         pincode: formData.pincode,
         reg_no: formData.Reg_no,
-        qualification: formData.qualification,
-        specialization: formData.specialization,
+        title: formData.title,
         description: formData.desc,
         files: formData.imp_doc,
-        video: formData.v_clip,
-        photo: formData.photo_doc,
-        signature: formData.sign_doc,
+        
       };
 
       const token = localStorage.getItem("token")
@@ -202,32 +160,45 @@ const Dcform = () => {
   return (
     <div>
       <Header/>
-      
-      
+      <br></br>
+      <br></br>
       <section id="appointment" class="appointment section-bg">
-        <div class="container" >
+        <div class="container" data-aos="fade-up">
           <div class="section-title">
             <h2>Fill The Form</h2>
-
+            <p>
+              
+            </p>
           </div>
 
-          <Form style={{marginLeft:'300px',width:'700px'}}>
+          <Form>
             {/* First_name and Last_name */}
             <Row className="mb-3">
               <Form.Group as={Col} controlId="formGridEmail">
                 <Form.Label>
-                   Name<span style={{ color: "red" }}> *</span>
+                  First Name<span style={{ color: "red" }}> *</span>
                 </Form.Label>
                 <Form.Control
                   type="text"
-                  name="name"
-                  value={formData.name}
+                  name="fname"
+                  value={formData.fname}
                   onChange={handleChange}
-                  placeholder="Enter Name"
+                  placeholder="Enter First Name"
                 />
               </Form.Group>
 
-            
+              <Form.Group as={Col} controlId="formGridPassword">
+                <Form.Label>
+                  Last Name<span style={{ color: "red" }}> *</span>
+                </Form.Label>
+                <Form.Control
+                  type="text"
+                  name="lname"
+                  value={formData.lname}
+                  onChange={handleChange}
+                  placeholder="Enter Last Name"
+                />
+              </Form.Group>
             </Row>
 
             {/* Gender */}
@@ -368,57 +339,22 @@ const Dcform = () => {
                   placeholder="Enter Registration No"
                 />
               </Form.Group>
-            </Row>
 
-            {/* Qualification and specialization */}
-            <Row className="mb-3">
-              <Form.Group as={Col} controlId="formGridEmail">
+              <Form.Group as={Col} controlId="formGridPassword">
                 <Form.Label>
-                  Qualification<span style={{ color: "red" }}> *</span>
+                  Title<span style={{ color: "red" }}> *</span>
                 </Form.Label>
                 <Form.Control
-                  name="qualification"
-                  value={formData.qualification}
+                  name="title"
+                  value={formData.title}
                   onChange={handleChange}
                   type="text"
-                  placeholder="Enter Qualification"
+                  // placeholder="Ex. MBBS, MD,.."
                 />
-              </Form.Group>
-
-              {/* <Form.Group as={Col} controlId="formGridPassword">
-                <Form.Label>
-                  Specialization<span style={{ color: "red" }}> *</span>
-                </Form.Label>
-                <Form.Control
-                  name="specialization"
-                  value={formData.specialization}
-                  onChange={handleChange}
-                  type="text"
-                  placeholder="Enter Specialization"
-                />
-              </Form.Group> */}
-              <Form.Group as={Col} controlId="formGridSpecialization">
-                <Form.Label>
-                  Specialization<span style={{ color: "red" }}> *</span>
-                </Form.Label>
-                <Form.Select
-                  name="specialization"
-                  value={formData.specialization}
-                  onChange={handleChange}
-                >
-                  <option value="">Select a specialization</option>
-                  <option value="General Physician">General Physician</option>
-                  <option value="Pediatrics">Pediatrics</option>
-                  <option value="Gastroenterology">Gastroenterology</option>
-                  <option value="Dermatology">Dermatology</option>
-                  <option value="Gynaecology">Gynaecology</option>
-                  <option value="Diabetology">Diabetology</option>
-                  <option value="Psychological Counselling">
-                    Psychological Counselling
-                  </option>
-                </Form.Select>
               </Form.Group>
             </Row>
+
+          
 
             {/* Description */}
             <Form.Group className="mb-3" controlId="formGridAddress1">
@@ -443,7 +379,7 @@ const Dcform = () => {
                 </Form.Label>
                 <Form.Control
                   name="imp_doc"
-                  onChange={fileSelectedHandlerDoc}
+                  // onChange={fileSelectedHandlerDoc}
                   type="file"
                 />
                 {formData.imp_doc !== undefined ? (
@@ -458,63 +394,10 @@ const Dcform = () => {
                 )}
               </Form.Group>
 
-              <Form.Group as={Col} controlId="formFileMultiple">
-                <Form.Label>
-                  Video Link<span style={{ color: "red" }}> *</span>
-                </Form.Label>
-                <Form.Control
-                  value={formData.v_clip}
-                  name="v_clip"
-                  onChange={handleChange}
-                  type="text"
-                />
-              </Form.Group>
+              
             </Row>
 
-            {/* Photo and Sign */}
-            <Row className="mb-3">
-              <Form.Group as={Col} controlId="formFileMultiple">
-                <Form.Label>
-                  Photo<span style={{ color: "red" }}> *</span>
-                </Form.Label>
-                <Form.Control
-                  name="photo_doc"
-                  onChange={fileSelectedHandlerPhoto}
-                  type="file"
-                />
-                {formData.imp_doc !== undefined ? (
-                  <>
-                    Your Previous Photo: &nbsp;
-                    <a href={formData.photo_doc} target="_blank">
-                      Click Here
-                    </a>
-                  </>
-                ) : (
-                  <></>
-                )}
-              </Form.Group>
-
-              <Form.Group as={Col} controlId="formFileMultiple">
-                <Form.Label>
-                  Signature<span style={{ color: "red" }}> *</span>
-                </Form.Label>
-                <Form.Control
-                  name="sign_doc"
-                  onChange={fileSelectedHandlerSign}
-                  type="file"
-                />
-                {formData.sign_doc !== undefined ? (
-                  <>
-                    Your Previous Signature: &nbsp;
-                    <a href={formData.imp_doc} target="_blank">
-                      Click Here
-                    </a>
-                  </>
-                ) : (
-                  <></>
-                )}
-              </Form.Group>
-            </Row>
+         
             <center>
               <Button
                 variant="primary"
@@ -528,9 +411,10 @@ const Dcform = () => {
           </Form>
         </div>
       </section>
+      
     </div>
   );
 
 }
 
-export default Dcform
+export default LabForm

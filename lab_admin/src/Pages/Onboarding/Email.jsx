@@ -1,15 +1,15 @@
 import React from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
-import Lottie from "lottie-react";
-import login from "../../lotties/login.json";
+
 import { ToastContainer, toast } from "react-toastify";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Bar from "../../components/Navbar/Navbar";
 import { Link } from "react-router-dom";
+import "./Email.css"
+
 
 import axios from "axios";
-import Header from "../../components/Navbar/header";
+import Header from "../../components/Header/header";
 
 const Email = () => {
   const [email, setEmail] = useState("");
@@ -112,8 +112,7 @@ const Email = () => {
   };
   return (
     <>
-      {/* <Bar /> */}
-      <Header/>
+      <Header />
       {/* <center> */}
         <Container>
           
@@ -154,7 +153,6 @@ const Email = () => {
           </Col>
 
           <Col xs={12} lg={5} md={12}>
-            <Lottie animationData={login} className="loti-img" style={style} />
           </Col>
         </Row>
       </Container>

@@ -9,6 +9,7 @@ import axios from "axios";
 import Table from 'react-bootstrap/Table';
 
 import '../Dcform.css'
+import Header from "./Navbar/header";
 
 
 export default function AddPrescription() {
@@ -98,6 +99,8 @@ export default function AddPrescription() {
     };
   
   return (
+    <>  
+    <Header/>
     <div class="container">
       <Row> 
       <Col>  
@@ -257,5 +260,6 @@ export default function AddPrescription() {
     </Col>
     </Row>
   </div>
+  </>
   )
 }

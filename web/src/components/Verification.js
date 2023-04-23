@@ -2,13 +2,14 @@ import React from 'react'
 import Bar from './Navbar/Navbar'
 import '../Dcform.css'
 import { Link } from 'react-router-dom';
+import Header from './Navbar/header';
 
 
 
 export default function Verification() {
   return (
     <>
-    <Bar/>
+    <Header/>
     <br></br><br></br>
 <div className='container'>  
     <div class="section-title">

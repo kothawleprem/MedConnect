@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import CardList from "./CardList";
 
 import axios from 'axios';
+import Header from "../../components/Navbar/header";
 
 const data = [
   { id: 1, name: "John Doe", email: "johndoe@example.com", phone: "555-1234" },
@@ -68,7 +69,7 @@ function AdminPanel() {
 
   return (
     <>
-      {/* <Bar/> */}
+      <Header/>
       <Container>
         <br />
         <br />

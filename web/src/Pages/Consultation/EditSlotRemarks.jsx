@@ -8,6 +8,7 @@ import Row from "react-bootstrap/Row";
 import Form from "react-bootstrap/Form";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
+import Header from "../../components/Navbar/header";
 
 const EditSlotRemarks = () => {
   const { state } = useLocation();
@@ -110,7 +111,7 @@ const EditSlotRemarks = () => {
   console.log(slotData);
   return (
     <>
-      <Bar />
+      <Header />
       <br></br>
       <br></br>
       <div className="container">
