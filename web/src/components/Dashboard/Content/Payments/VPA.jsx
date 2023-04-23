@@ -97,7 +97,11 @@ const VPA = () => {
                 <Form.Control as="textarea" rows={2} onChange={handleChange} />
                 <br />
                 <p>
-                  Verify VPA First: <a onClick={verifyVPA}>Click here</a>
+                  Verify VPA First:{" "}
+                  <u>
+                    <a onClick={verifyVPA}>Click here</a>
+                  </u>{" "}
+                  &nbsp; &nbsp;
                   {verified === false ? <>Not Yet Verified</> : <>Verified</>}
                   {/* {verified} */}
                 </p>

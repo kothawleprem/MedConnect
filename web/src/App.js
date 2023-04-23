@@ -23,7 +23,7 @@ import AdminPanel from "./Pages/Admin/AdminPanel";
 import PayoutList from "./Pages/Admin/PayoutList";
 import QRPayments from "./Pages/Admin/QRPayments";
 
-// import Video from "./components/Video/video";
+import Video from "./components/Video/video";
 
 import Home from "./LandingPage/Home"
 
@@ -54,7 +54,7 @@ function App() {
         <Route path='/payout' element={<PayoutList/>} />
         <Route path='/qrpayments' element={<QRPayments/>}/>
 
-        {/* <Route path="/video" element={<Video/>}/> */}
+        <Route path="/video" element={<Video/>}/>
 
 
 

@@ -7,6 +7,30 @@ import axios from 'axios';
 
 const DashRecentPatients = () => {
   const [patients, setPatients] = useState()
+
+  const temp_patients = [
+    {
+      id: 1,
+      patient_name: "Priya Patel",
+      consultation_id: "CONS-12345",
+      date: "2023-04-22",
+      city: "Mumbai",
+    },
+    {
+      id: 2,
+      patient_name: "Rahul Sharma",
+      consultation_id: "12346",
+      date: "2023-04-21",
+      city: "Delhi",
+    },
+    {
+      id: 3,
+      patient_name: "Neha Singh",
+      consultation_id: "12347",
+      date: "2023-04-20",
+      city: "Bangalore",
+    },
+  ];
   useEffect(() => {
     const token = localStorage.getItem("token");
     const config = {

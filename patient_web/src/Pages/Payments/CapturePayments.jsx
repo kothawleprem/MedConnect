@@ -14,11 +14,11 @@ const CapturePayments = () => {
     const payment_intent = urlParams.get("payment_intent");
     const slot_id = urlParams.get("slot_id")
 
-    const token = localStorage.getItem("token");
+    const patient_token = localStorage.getItem("patient_token");
     const config = {
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Token ${token}`,
+        Authorization: `Token ${patient_token}`,
       },
     };
     const data = {

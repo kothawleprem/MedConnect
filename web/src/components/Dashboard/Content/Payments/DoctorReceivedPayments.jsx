@@ -6,6 +6,45 @@ import axios from "axios";
 const DoctorReceivedPayments = () => {
   const [payments, setPayments] = useState([]);
   const [payouts, setPayouts] = useState([])
+
+  const temp_payments = [
+    {
+      consultation_id: 1,
+      date: "2023-04-25",
+      fees: 1500,
+      view_url: "https://example.com/consultation/1",
+    },
+    {
+      consultation_id: 2,
+      date: "2023-04-27",
+      fees: 2000,
+      view_url: "https://example.com/consultation/2",
+    },
+    {
+      consultation_id: 3,
+      date: "2023-04-29",
+      fees: 1000,
+      view_url: "https://example.com/consultation/3",
+    },
+  ];
+
+  const temp_payouts = [
+    {
+      payout_id: 1,
+      date: "2023-04-25",
+      amount: 5000,
+    },
+    {
+      payout_id: 2,
+      date: "2023-04-27",
+      amount: 8000,
+    },
+    {
+      payout_id: 3,
+      date: "2023-04-29",
+      amount: 10000,
+    },
+  ];
   useEffect(() => {
     const token = localStorage.getItem("token");
     const config = {
@@ -40,12 +79,12 @@ const DoctorReceivedPayments = () => {
   };
 
   const renderPayoutRows = () => {
-    return payments.map((payment) => {
+    return payouts.map((payment) => {
       return (
         <tr key={payment.consultation_id}>
-          <td>{payment.consultation_id}</td>
+          <td>{payment.payout_id}</td>
           <td>{payment.date}</td>
-          <td>{payment.fees}</td>
+          <td>{payment.amount}</td>
         </tr>
       );
     });
@@ -77,13 +116,13 @@ const DoctorReceivedPayments = () => {
             </Card>
           </Col>
           <Col>
-            Total Payment Disperesed: Amount
+            Total Payment dispersed: Rs. 25000
             <br />
-            Total Payment to be Dispersed: Amount
+            Total Payment to be disperse: Rs. 1000
             <br />
             <Card>
               <Card.Title style={{ margin: "10px" }}>
-                Payments by Patients
+                Recent Payouts
               </Card.Title>
               <Table hover responsive>
                 <thead>

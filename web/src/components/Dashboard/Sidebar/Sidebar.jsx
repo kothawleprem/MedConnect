@@ -53,6 +53,16 @@ const Sidebar = (props) => {
 
         <div className="sidemenu">
           <Nav.Link
+            onClick={() => props.onClickButton("Scheduling")}
+            className="sidemenu"
+            href="#"
+          >
+            <FaUser className="mr-2" /> {isMobile ? null : "Scheduling"}
+          </Nav.Link>
+        </div>
+
+        <div className="sidemenu">
+          <Nav.Link
             onClick={() => props.onClickButton("Appointments")}
             className="sidemenu"
             href="#"
@@ -78,12 +88,11 @@ const Sidebar = (props) => {
             className="sidemenu"
             href="#"
           >
-            <FaCog className="mr-2" /> {isMobile ? null : "Settings"}
+            <FaCog className="mr-2" /> {isMobile ? null : "Instant"}
           </Nav.Link>
         </div>
       </Nav>
     </div>
-    
   );
 };
 

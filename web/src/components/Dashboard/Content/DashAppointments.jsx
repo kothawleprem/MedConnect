@@ -4,6 +4,24 @@ import axios from 'axios';
 
 const DashAppointments = () => {
   const [slots, setSlots] = useState();
+
+  const temp_slots = [
+    {
+      slot_id: 1,
+      patient_name: "John Doe",
+      start_time: "10:00:00",
+    },
+    {
+      slot_id: 2,
+      patient_name: "Jane Smith",
+      start_time: "11:00:00",
+    },
+    {
+      slot_id: 3,
+      patient_name: "Bob Johnson",
+      start_time: "12:00:00",
+    },
+  ];
  
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -41,11 +59,11 @@ const DashAppointments = () => {
             >
               <Card.Body>
                 <div className="appoint">
-                  <img
+                  {/* <img
                     alt=""
                     src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
                     className="appoint-img"
-                  />
+                  /> */}
 
                   <Card.Title style={{ marginLeft: "10px", fontSize: "18px" }}>
                     {slot.patient_name}

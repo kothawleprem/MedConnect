@@ -7,7 +7,7 @@ import {
   Navigate,
 } from "react-router-dom";
 
-// import Video from "./components/video";
+import Video from "./components/video";
 import Home from "./Pages/LandingPage/Home";
 
 import PreVideo from "./components/preVideo";
@@ -39,8 +39,8 @@ function App() {
 
     useEffect(() => {
       // Check if user has a valid authentication token
-      const token = localStorage.getItem("authToken");
-      if (token) {
+      const patient_token = localStorage.getItem("patient_token");
+      if (patient_token) {
         // TODO: Validate the token on the server-side
         setIsAuthenticated(true);
       } else {
@@ -53,8 +53,8 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
-          {/* <Route path="/preVideo" element={<PreVideo />} /> */}
-          {/* <Route path="/video" element={<Video />}/>  */}
+          <Route path="/preVideo" element={<PreVideo />} /> */
+          /* <Route path="/video" element={<Video />}/> 
           {/* <Route path="/bookapointment" element={<Book />}/> */}
           <Route path="/verify" element={<Verify />} />
           <Route path="/search" element={<SearchDoctors />} />

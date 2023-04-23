@@ -37,6 +37,7 @@
 	border-radius: 20px;
 	border-color: rgb(255, 255, 255);
 	width: 250px;
+	margin-left: 100px;
 }
 
 .videoElementOut{
@@ -108,7 +109,6 @@
 }
 
 .caller {
-	margin-top: 30px;
 	width: 400px;
 	height: 75px;
 }

@@ -35,7 +35,7 @@ export default function ViewAppointment() {
   const handleClick = () => {
     navigate("/video", {
       state:{
-        "consultation_id": 11
+        "consultation_id": consultation_id
       }
     }
     )
@@ -44,7 +44,7 @@ export default function ViewAppointment() {
   const prescriptionPageClick = () => {
     navigate("/addprescription", {
       state:{
-        "consultation_id":11
+        "consultation_id":consultation_id
       }
     });
   }

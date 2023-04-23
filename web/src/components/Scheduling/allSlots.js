@@ -76,12 +76,12 @@ const AllSlots = () => {
       };
       axios
         .get(
-          `http://127.0.0.1:8000/api/consultation/slot_list/?status=None`,
+          `http://${process.env.REACT_APP_API_URL}/api/consultation/slot_list/?status=None`,
           config
         )
         .then((response) => {
           const data = response.data;
-          console.log(response ,"tdyahj");
+          console.log(response, "tdyahj");
           setTodaySlots(data[0]);
           setTommorowSlots(data[1]);
         });

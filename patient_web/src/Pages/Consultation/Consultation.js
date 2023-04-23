@@ -18,11 +18,11 @@ export default function Consultation() {
     const navigate = useNavigate()
 
     useEffect(() => {
-      const token = localStorage.getItem("token");
+      const patient_token = localStorage.getItem("patient_token");
       const config = {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Token ${token}`,
+          Authorization: `Token ${patient_token}`,
         },
       };
       axios
@@ -59,7 +59,11 @@ export default function Consultation() {
           <div className="consultation-main-info">
             <Row>
               <Col xl={3} md={3} xs={12}>
-                <Button onClick={() => navigate("/prevideo")}>Join Meeting</Button>
+                <Button onClick={() => navigate("/prevideo", {
+                  state:{
+                    consultation_id: consultation_id
+                  }
+                })}>Join Meeting</Button>
               </Col>
             </Row>
             <br />

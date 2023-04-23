@@ -11,16 +11,16 @@ const Appointment = () => {
   const [slots, setSlots] = useState();
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const patient_token = localStorage.getItem("patient_token");
     const config = {
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Token ${token}`,
+        Authorization: `Token ${patient_token}`,
       },
     };
     axios
       .get(
-        "http://127.0.0.${process.env.REACT_APP_API_URL}:8000/api/consultation/slot_list/?status=True",
+        `http://${process.env.REACT_APP_API_URL}:8000/api/consultation/slot_list/?status=True`,
         config
       )
       .then(function (response) {

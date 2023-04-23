@@ -89,7 +89,7 @@ const Verify = () => {
                   });
                 }
               } else {
-                navigate("/scheduling", {
+                navigate("/dashboard", {
                   state: {
                     email: email,
                   },

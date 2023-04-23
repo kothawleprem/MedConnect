@@ -14,7 +14,7 @@ export default function Payments() {
   const [clientSecret, setClientSecret] = useState("");
 
   const { state } = useLocation()
-  const amount = state.amount
+  const amount = state.amount * 100
   const slot_id = state.slot_id
   console.log(amount, state)
 

@@ -85,13 +85,13 @@ def generate_prescription(patient_name, doctor_name, medicine_list, logo_path, r
     c.setStrokeColor(colors.grey)
     c.line(12, 490, 570, 490)
     c.setFont("Courier", 13)
-    # for i, medicine in enumerate(medicine_list):
-    #     c.drawString(12, 475 - i * 25, medicine[0])
-    #     c.drawString(97, 475 - i * 25, medicine[1])
-    #     c.drawString(242, 475 - i * 25, medicine[2])
-    #     c.drawString(346, 475 - i * 25, medicine[3])
-    #     c.drawString(440, 475 - i * 25, medicine[4])
-    #
+    for i, medicine in enumerate(medicine_list):
+        c.drawString(12, 475 - i * 25, medicine[0])
+        c.drawString(97, 475 - i * 25, medicine[1])
+        c.drawString(242, 475 - i * 25, medicine[2])
+        c.drawString(346, 475 - i * 25, medicine[3])
+        c.drawString(440, 475 - i * 25, medicine[4])
+
     c.setFont("Courier-Bold", 18)
     c.drawString(12, 280, "Next Investigation / Other Remarks")
     style = getSampleStyleSheet()["Normal"]
