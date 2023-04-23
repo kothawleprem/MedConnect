@@ -123,7 +123,7 @@ const Email = () => {
             <Col xs={12} lg={6} md={12} >
               <Form>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
-                  <h2 style={{fontWeight:800}} >Login </h2>
+                  <h2 style={{fontWeight:800}} >Get Start </h2>
                   <br/>
                   <Form.Label>Email address</Form.Label>
                   <Form.Control
@@ -153,6 +153,14 @@ const Email = () => {
           </Col>
 
           <Col xs={12} lg={5} md={12}>
+
+          <p style={{fontSize:'40px',color:'black',fontWeight:'600'}}>Take Your Lab Online <br/> </p>
+          <br/>
+          <p style={{fontSize:'40px',color:'black',fontWeight:'600'}}>with  <span style={{color:'#fe7865'}}>MedConnect </span> </p>
+            <br/>
+            <img style={{height:'450px',width:'850px'}} src='https://img.freepik.com/free-vector/type-coronavirus-test_23-2148542394.jpg'></img>
+           
+
           </Col>
         </Row>
       </Container>

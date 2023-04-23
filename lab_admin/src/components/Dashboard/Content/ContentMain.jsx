@@ -10,7 +10,7 @@ const ContentMain = () => {
   return (
     <div>
       <Row>
-        <Col style={{fontWeight:'500'}}>Manage Packages</Col>
+        <Col style={{fontWeight:'600',fontSize:'25px'}}>Manage Packages</Col>
       </Row>
       <br />
       <div >
