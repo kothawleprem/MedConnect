@@ -23,16 +23,6 @@ export default function Footer() {
                         </div> 
                     </div>
                   
-                    <div class="col-lg-3 col-md-4 col-sm-5" style={{marginLeft:'200px'}}>
-                        <div class="footer-link mt-10">
-                            <h5 class="f-title">Services</h5>
-                            <ul>
-                                <li><Link to="/search">Consult Doctors</Link></li>
-                                <li><Link to="/bySpecialization">Search for doctors</Link></li>
-                                <li><Link to="/team">Lab testing</Link></li>
-                            </ul>
-                        </div> 
-                    </div>
     
                     <div class="col-lg-3 col-md-5 col-sm-7">
                         <div class="footer-info mt-10">

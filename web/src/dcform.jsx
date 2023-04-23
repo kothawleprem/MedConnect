@@ -13,8 +13,7 @@ import './Dcform.css'
 import Header from './components/Navbar/header';
 
 const initialFormData = Object.freeze({
-  fname: undefined,
-  lname: undefined,
+  name: undefined,
   gender: undefined,
   dob: undefined,
   mob_no: undefined,
@@ -23,7 +22,6 @@ const initialFormData = Object.freeze({
   state: undefined,
   pincode: undefined,
   Reg_no: undefined,
-  title: undefined,
   qualification: undefined,
   specialization: undefined,
   desc: undefined,
@@ -87,8 +85,7 @@ const Dcform = () => {
           //  console.log(m_value.current, f_value, o_value)
              updateFormData({
                ...formData,
-               fname: data.first_name,
-               lname: data.last_name,
+               name: data.name,
                gender: data.gender,
                dob: data.dob,
                mob_no: data.phone,
@@ -97,7 +94,6 @@ const Dcform = () => {
                state: data.state,
                pincode: data.pincode,
                Reg_no: data.reg_no,
-               title: data.title,
                qualification: data.qualification,
                specialization: data.specialization,
                desc: data.description,
@@ -161,8 +157,7 @@ const Dcform = () => {
       e.preventDefault()
       console.log(formData);
       const data = {
-        first_name: formData.fname,
-        last_name: formData.lname,
+        name: formData.name,
         gender: formData.gender,
         dob: formData.dob,
         phone: formData.mob_no,
@@ -171,7 +166,6 @@ const Dcform = () => {
         state: formData.state,
         pincode: formData.pincode,
         reg_no: formData.Reg_no,
-        title: formData.title,
         qualification: formData.qualification,
         specialization: formData.specialization,
         description: formData.desc,
@@ -214,7 +208,7 @@ const Dcform = () => {
         <div class="container" >
           <div class="section-title">
             <h2>Fill The Form</h2>
-            
+
           </div>
 
           <Form style={{marginLeft:'300px',width:'700px'}}>
@@ -222,29 +216,18 @@ const Dcform = () => {
             <Row className="mb-3">
               <Form.Group as={Col} controlId="formGridEmail">
                 <Form.Label>
-                  First Name<span style={{ color: "red" }}> *</span>
+                   Name<span style={{ color: "red" }}> *</span>
                 </Form.Label>
                 <Form.Control
                   type="text"
-                  name="fname"
-                  value={formData.fname}
+                  name="name"
+                  value={formData.name}
                   onChange={handleChange}
-                  placeholder="Enter First Name"
+                  placeholder="Enter Name"
                 />
               </Form.Group>
 
-              <Form.Group as={Col} controlId="formGridPassword">
-                <Form.Label>
-                  Last Name<span style={{ color: "red" }}> *</span>
-                </Form.Label>
-                <Form.Control
-                  type="text"
-                  name="lname"
-                  value={formData.lname}
-                  onChange={handleChange}
-                  placeholder="Enter Last Name"
-                />
-              </Form.Group>
+            
             </Row>
 
             {/* Gender */}
@@ -385,19 +368,6 @@ const Dcform = () => {
                   placeholder="Enter Registration No"
                 />
               </Form.Group>
-
-              <Form.Group as={Col} controlId="formGridPassword">
-                <Form.Label>
-                  Title<span style={{ color: "red" }}> *</span>
-                </Form.Label>
-                <Form.Control
-                  name="title"
-                  value={formData.title}
-                  onChange={handleChange}
-                  type="text"
-                  placeholder="Ex. MBBS, MD,.."
-                />
-              </Form.Group>
             </Row>
 
             {/* Qualification and specialization */}
@@ -415,7 +385,7 @@ const Dcform = () => {
                 />
               </Form.Group>
 
-              <Form.Group as={Col} controlId="formGridPassword">
+              {/* <Form.Group as={Col} controlId="formGridPassword">
                 <Form.Label>
                   Specialization<span style={{ color: "red" }}> *</span>
                 </Form.Label>
@@ -426,6 +396,27 @@ const Dcform = () => {
                   type="text"
                   placeholder="Enter Specialization"
                 />
+              </Form.Group> */}
+              <Form.Group as={Col} controlId="formGridSpecialization">
+                <Form.Label>
+                  Specialization<span style={{ color: "red" }}> *</span>
+                </Form.Label>
+                <Form.Select
+                  name="specialization"
+                  value={formData.specialization}
+                  onChange={handleChange}
+                >
+                  <option value="">Select a specialization</option>
+                  <option value="General Physician">General Physician</option>
+                  <option value="Pediatrics">Pediatrics</option>
+                  <option value="Gastroenterology">Gastroenterology</option>
+                  <option value="Dermatology">Dermatology</option>
+                  <option value="Gynaecology">Gynaecology</option>
+                  <option value="Diabetology">Diabetology</option>
+                  <option value="Psychological Counselling">
+                    Psychological Counselling
+                  </option>
+                </Form.Select>
               </Form.Group>
             </Row>
 
@@ -537,7 +528,6 @@ const Dcform = () => {
           </Form>
         </div>
       </section>
-      
     </div>
   );
 
