@@ -107,7 +107,7 @@ const CreateSlot = () => {
   return (
     <>
       <br></br>
-      <h2>Schedule Your Appointment Slots</h2>
+      <h4>Schedule Your Appointment Slots</h4>
       <br></br>
       <p>Select Date</p>
       <Row>
@@ -165,10 +165,10 @@ const CreateSlot = () => {
               {/* <button >Add Slot</button> */}
             </Card>
           </Tab>
-          <img
+          {/* <img
             style={{ width: "150px", height: "150px" }}
             src="assets/sch.png"
-          />
+          /> */}
 
           <Tab eventKey="tomorrow" title={tomorrow}>
             <Card body style={{ width: "30rem" }}>
