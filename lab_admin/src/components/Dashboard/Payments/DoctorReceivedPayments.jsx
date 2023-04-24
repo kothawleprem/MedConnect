@@ -7,7 +7,7 @@ const DoctorReceivedPayments = () => {
   const [payments, setPayments] = useState([]);
   const [payouts, setPayouts] = useState([])
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("lab_token");
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -16,7 +16,7 @@ const DoctorReceivedPayments = () => {
     };
     axios
       .get(
-        `http://${process.env.REACT_APP_API_URL}/api/doctors/received_payments/`,
+        `http://localhost:8000/api/lab/received_payments/`,
         config
       )
       .then(function (response) {
@@ -29,11 +29,10 @@ const DoctorReceivedPayments = () => {
   const renderTableRows = () => {
     return payments.map((payment) => {
       return (
-        <tr key={payment.consultation_id}>
-          <td>{payment.consultation_id}</td>
+        <tr key={payment.appointment_id}>
+          <td>{payment.appointment_id}</td>
           <td>{payment.date}</td>
           <td>{payment.fees}</td>
-          <td>View</td>
         </tr>
       );
     });
@@ -63,10 +62,9 @@ const DoctorReceivedPayments = () => {
               <Table hover responsive>
                 <thead>
                   <tr style={{ color: "grey", fontWeight: 500 }}>
-                    <th>Consultation Id</th>
+                    <th>Appointment Id</th>
                     <th>Date</th>
                     <th>Fees</th>
-                    <th>View Consultation</th>
                   </tr>
                 </thead>
                 <tbody className="ap-table">
@@ -77,10 +75,7 @@ const DoctorReceivedPayments = () => {
             </Card>
           </Col>
           <Col>
-            Total Payment Disperesed: Amount
-            <br />
-            Total Payment to be Dispersed: Amount
-            <br />
+           
             <Card>
               <Card.Title style={{ margin: "10px" }}>
                 Payments by Patients

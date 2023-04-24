@@ -9,8 +9,8 @@ import {
 export default function CheckoutForm(props) {
   const stripe = useStripe();
   const elements = useElements();
-  const slot_id = props.slot
-  console.log(slot_id)
+  const package_id = props.package
+  console.log(package_id)
 
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState(null);
@@ -62,7 +62,7 @@ export default function CheckoutForm(props) {
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: `http://localhost:3000/capturePayments?slot_id=${slot_id}`,
+        return_url: `http://localhost:3000/capturePayments?package_id=${package_id}`,
       },
     });
 

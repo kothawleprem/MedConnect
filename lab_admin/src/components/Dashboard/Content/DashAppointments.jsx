@@ -99,9 +99,7 @@ const authorization = "Basic " + btoa(projectId + ":" + projectSecretKey);
             <td> 
 
                  <Form.Group as={Col} controlId="formFileMultiple">
-                <Form.Label>
-                  Upload Document<span style={{ color: "red" }}> *</span>
-                </Form.Label>
+               
                 <Form.Control
                   name="imp_doc"
                   onChange={fileSelectedHandlerDoc}

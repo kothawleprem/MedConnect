@@ -15,13 +15,13 @@ export default function Payments() {
 
   const { state } = useLocation()
   const amount = state.amount * 100
-  const slot_id = state.slot_id
+  const package_id = state.package_id;
   console.log(amount, state)
 
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads
     fetch(
-      `http://${process.env.REACT_APP_API_URL}/api/consultation/payments/`,
+      `http://localhost:8000/api/lab/payments/`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -44,7 +44,7 @@ export default function Payments() {
     <div className="App">
       {clientSecret && (
         <Elements options={options} stripe={stripePromise}>
-          <CheckoutForm slot={slot_id}/>
+          <CheckoutForm package={package_id}/>
         </Elements>
       )}
     </div>

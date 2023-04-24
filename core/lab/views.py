@@ -11,7 +11,11 @@ import random
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
-from .models import LabModel, LabProfileModel, LabVerificationModel, PackageModel
+import os
+import stripe
+
+from patients.models import PatientModel
+from .models import LabModel, LabProfileModel, LabVerificationModel, PackageModel, AppointmentModel
 
 from core.emails import sendOTP
 
@@ -261,3 +265,113 @@ class PackageView(APIView):
             response.append(res)
         return Response(response, status=status.HTTP_200_OK)
 
+
+class LabsView(APIView):
+
+    def get(self, request):
+        labs = LabModel.objects.all()
+        response = []
+        for lab in labs:
+            lab_profile = LabProfileModel.objects.get(lab=lab)
+            res = {
+                "id": lab.id,
+                "name":lab_profile.name,
+                "description": lab_profile.description,
+                "city": lab_profile.city
+            }
+            response.append(res)
+        return Response(response, status=status.HTTP_200_OK)
+
+class LabsPackageView(APIView):
+
+    def get(self, request):
+        labid = request.GET["labid"]
+        print(labid)
+        lab = LabModel.objects.get(id=labid)
+        packages = PackageModel.objects.filter(lab=lab)
+        response = []
+        for package in packages:
+            res = {
+                "id": package.id,
+                "name":package.name,
+                "description":package.description,
+                "price":package.price,
+                "no_tests":package.no_tests
+            }
+            response.append(res)
+        return Response(response, status=status.HTTP_200_OK)
+
+class LabPaymentView(APIView):
+
+    def post(self, request):
+        try:
+            amount = request.data.get("amount")
+            print(amount)
+            # Create a PaymentIntent with the order amount and currency
+            intent = stripe.PaymentIntent.create(
+                amount=amount,
+                currency='inr',
+                automatic_payment_methods={
+                    'enabled': True,
+                },
+            )
+            print("payment completed", intent)
+            return Response({
+                'clientSecret': intent['client_secret']
+            })
+        except Exception as e:
+            return Response("error")
+
+class LabConfirmPaymentView(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    #for patient
+    def post(self,request):
+        user = request.user
+        patient = PatientModel.objects.get(user=user)
+        package_id = request.data.get("package_id")
+        package = PackageModel.objects.get(id=package_id)
+        stripe_id = request.data.get("stripe_id")
+        if(not AppointmentModel.objects.filter(stripe_id=stripe_id).exists()):
+            appointment = AppointmentModel.objects.create(stripe_id=stripe_id, patient=patient, package=package,payment_completed=True)
+            return Response(appointment.id, status=status.HTTP_200_OK)
+        return Response("NOT OK", status=status.HTTP_404_NOT_FOUND)
+
+class LabAppointmentsView(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+        lab = LabModel.objects.get(user=user)
+        appointments = AppointmentModel.objects.filter(package__lab=lab)
+        response = []
+        for appointment in appointments:
+            res = {
+                "id": appointment.id,
+                "package_id": appointment.package.id,
+                "package_name": appointment.package.name,
+                "patient_email": appointment.patient.user.email,
+                "date": "25-04-2023",
+            }
+            response.append(res)
+        return Response(response, status=status.HTTP_200_OK)
+
+class LabDashPayments(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+        consultation = AppointmentModel.objects.filter(package__lab__user=user, completed=True)
+        response = []
+        for con in consultation:
+            res = {
+                "appointment_id": con.id,
+                "date": "23-05-2023",
+                "package_id": con.package.id,
+                "fees": con.package.price,
+            }
+            response.append(res)
+        return Response(response, status=status.HTTP_200_OK)

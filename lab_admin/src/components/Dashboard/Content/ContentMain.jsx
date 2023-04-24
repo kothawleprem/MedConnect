@@ -17,12 +17,12 @@ const ContentMain = () => {
         <Stats />
       </div>
       <br />
-      <Row>
+      {/* <Row>
         <Col >
           <DashAppointments/>
         </Col>
 
-      </Row>
+      </Row> */}
     </div>
   );
 }

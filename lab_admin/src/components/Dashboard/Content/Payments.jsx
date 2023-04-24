@@ -7,7 +7,6 @@ const Payments = () => {
   return (
     <>
       <VPA/>
-      button to see payouts
       <DoctorReceivedPayments/>
     </>
   )

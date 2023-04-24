@@ -11,7 +11,8 @@ function Packageview() {
     const { state } = useLocation();
     const navigate = useNavigate()
 
-    const { packageId } = state;
+    const { labId } = state;
+    console.log(labId);
 
      const [data, setData] = useState("");
      const pdata = [
@@ -25,17 +26,15 @@ function Packageview() {
 
     useEffect(() => {
         axios
-        .post(
-          `http://${process.env.REACT_APP_API_URL}/api//`,
-          data,
-        //   config
-        )
-        .then((response) => {
-          console.log(response.data);
-          setData(response.data)
-          
-        })
-        .catch((error) => console.log(error));
+          .get(
+            `http://127.0.0.1:8000/api/lab/labs_package/?labid=${labId}`
+            //   config
+          )
+          .then((response) => {
+            console.log(response.data);
+            setData(response.data);
+          })
+          .catch((error) => console.log(error));
    
 
      
@@ -48,7 +47,7 @@ function Packageview() {
     navigate("/payments", {
         state: {
           amount: item.price,
-          slot_id: item.id,
+          package_id: item.id,
         },
       })
     // const patient_token = localStorage.getItem("patient_token");
@@ -85,46 +84,46 @@ function Packageview() {
 
   return (
     <>
-    <Header/>
-  <Container> 
-    Packageview {packageId} 
-
-    <Row>
-    <Col lg={4}>
-        <Card>
-            <Card.Body>  
-            <h5>Lab: {packageId}</h5>
-            <h6>About {packageId}:</h6>
-            </Card.Body>
-           
-        </Card>
-        </Col>
-    </Row>
-
-    <Row> 
-
-
-    {pdata.map((item) => (
-
-    <Col xl={3} lg={3} md={4} sm={12}>
-    <Card className='statscard'>
-        <Card.Body>  
-        <div>
-            <p>Packages Id: {packageId}</p>
-            <Card.Title>Packages Name:{item.name}</Card.Title>
-            <p>Packages description:{item.description}</p>
-            <Card.Subtitle>Packages price:{item.price}</Card.Subtitle>
-            <br/>
-            <Button className='main-btn'  onClick={() => handleSubmit(item)} > Book now</Button>  
-        </div>
-        </Card.Body>
-    </Card>
-    </Col>
+      <Header />
+      <Container>
+        Packageview {labId}
+        <Row>
+          <Col lg={4}>
+            <Card>
+              <Card.Body>
+                <h5>Lab: {labId}</h5>
+                <h6>About {labId}:</h6>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+        <Row>
+          {data.length > 0 && data.map((item) => (
+            <Col xl={3} lg={3} md={4} sm={12}>
+              <Card className="statscard">
+                <Card.Body>
+                  <div>
+                    <p>Packages Id: {item.id}</p>
+                    <Card.Title>Packages Name:{item.name}</Card.Title>
+                    <p>Packages description:{item.description}</p>
+                    <Card.Subtitle>Packages price:{item.price}</Card.Subtitle>
+                    <br />
+                    <Button
+                      className="main-btn"
+                      onClick={() => handleSubmit(item)}
+                    >
+                      {" "}
+                      Book now
+                    </Button>
+                  </div>
+                </Card.Body>
+              </Card>
+            </Col>
           ))}
-    </Row>
-    </Container>
+        </Row>
+      </Container>
     </>
-  )
+  );
 }
 
 export default Packageview

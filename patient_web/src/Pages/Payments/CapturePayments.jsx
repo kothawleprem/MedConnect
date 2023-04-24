@@ -15,7 +15,7 @@ const CapturePayments = () => {
     const urlParams = new URLSearchParams(queryString);
 
     const payment_intent = urlParams.get("payment_intent");
-    const slot_id = urlParams.get("slot_id")
+    const package_id = urlParams.get("package_id");
 
     const patient_token = localStorage.getItem("patient_token");
     const config = {
@@ -25,19 +25,19 @@ const CapturePayments = () => {
       },
     };
     const data = {
-      slot_id: slot_id,
+      package_id: package_id,
       stripe_id: payment_intent
     };
 
     axios
       .post(
-        `http://${process.env.REACT_APP_API_URL}/api/consultation/confirm_payment/`,
+        `http://localhost:8000/api/lab/lab_confirm_payment/`,
         data,
         config
       )
       .then(function (response) {
-        setPaymentId(response.data.payment_id);
-        console.log(response.data.payment_id);
+        // setPaymentId(response.data.payment_id);
+        // console.log(response.data.payment_id);
       });
     
   },[])

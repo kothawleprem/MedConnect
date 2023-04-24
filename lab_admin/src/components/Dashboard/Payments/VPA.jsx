@@ -15,13 +15,15 @@ const VPA = () => {
     };
 
     const verifyVPA = () => {
+      console.log("verifyy")
       const dvconfig = {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${process.env.BEARER_TOKEN}`,
-          "x-api-key": `${process.env.VPA_KEY}`,
+          Authorization: `Bearer ${process.env.REACT_APP_BEARER_TOKEN}`,
+          "x-api-key": `${process.env.REACT_APP_VPA_KEY}`,
         },
       };
+      console.log(upiId, dvconfig)
 
       axios.get(
         `https://production.deepvue.tech/v1/verification/upi?vpa=${upiId}`, dvconfig
@@ -79,7 +81,7 @@ const VPA = () => {
         .get(`http://${process.env.REACT_APP_API_URL}/api/doctors/vpa/`, config)
         .then(function (response) {
           const data = response.data;
-          setUpiId(data);
+          setUpiId(data.upiId);
           console.log(data);
         });
     }, []);
@@ -88,22 +90,30 @@ const VPA = () => {
       <Container>
         <Row>
           <Col xl={6} lg={6} md={6} sm={12}>
-            UPI Id: {upiId.upiId}
+            UPI Id: {upiId}
           </Col>
           <Col xl={6} lg={6} md={6} sm={12}>
             <Card>
               <Card.Body>
                 <Card.Title>Update UpiId</Card.Title>
                 <Form.Control as="textarea" rows={2} onChange={handleChange} />
-                <br />
                 <p>
-                  Verify VPA First: <a onClick={verifyVPA}>Click here</a>
-                  {verified === false ? <>Not Yet Verified</> : <>Verified</>}
+                  &nbsp; Verify VPA First:
+                  <b>
+                    <button onClick={verifyVPA}>Click here</button>
+                  </b>
+                  {verified === false ? (
+                    <>&nbsp; Not Yet Verified</>
+                  ) : (
+                    <>
+                      VPA Verified <br />
+                      <Button onClick={handleSubmit} type="submit">
+                        Submit
+                      </Button>
+                    </>
+                  )}
                   {/* {verified} */}
                 </p>
-                <Button onClick={handleSubmit} type="submit">
-                  Submit
-                </Button>
               </Card.Body>
             </Card>
           </Col>

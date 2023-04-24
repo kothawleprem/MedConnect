@@ -8,7 +8,7 @@ const Appointments = () => {
 
 
     useEffect(() => {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("lab_token");
       const config = {
         headers: {
           "Content-Type": "application/json",
@@ -17,7 +17,7 @@ const Appointments = () => {
       };
       axios
         .get(
-          `http://${process.env.REACT_APP_API_URL}/api/doctors/received_payments/`,
+          `http://localhost:8000/api/lab/lab_appointments/`,
           config
         )
         .then(function (response) {
@@ -31,11 +31,12 @@ const Appointments = () => {
     const renderTableRows = () => {
       return appointments.map((appointment) => {
         return (
-          <tr key={appointment.consultation_id}>
-            <td>{appointment.consultation_id}</td>
-            <td>{appointment.start_time}</td>
-            <td>{appointment.end_time}</td>
+          <tr key={appointment.id}>
+            <td>{appointment.id}</td>
             <td>{appointment.date}</td>
+            <td>{appointment.package_id}</td>
+            <td>{appointment.package_name}</td>
+            <td>{appointment.patient_email}</td>
             <td>View</td>
           </tr>
         );
@@ -53,10 +54,12 @@ const Appointments = () => {
         <Table hover responsive>
           <thead>
             <tr style={{ color: "grey", fontWeight: 500 }}>
-              <th>Name</th>
+              <th>Id</th>
+              <th>Package Id.</th>
               <th>Date</th>
               <th>Package name</th>
-              <th>view</th>
+              <th>Patient Name</th>
+              <th>View</th>
             </tr>
           </thead>
           <tbody className="ap-table">
