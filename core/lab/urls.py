@@ -1,7 +1,7 @@
 from django.urls import path
 
 from .views import EmailView, VerifyEmailView, LabProfileView, LabRequestVerificationView, PackageView, LabsView, \
-    LabsPackageView, LabPaymentView, LabConfirmPaymentView, LabAppointmentsView, LabDashPayments
+    LabsPackageView, LabPaymentView, LabConfirmPaymentView, LabAppointmentsView, LabDashPayments, AppointmentView
 
 urlpatterns = [
     path('email/', EmailView.as_view(), name="email"),
@@ -15,4 +15,5 @@ urlpatterns = [
     path('lab_confirm_payment/', LabConfirmPaymentView.as_view(), name="lab_confirm_payment"),
     path('lab_appointments/', LabAppointmentsView.as_view(), name="lab_appointments"),
     path('received_payments/', LabDashPayments.as_view(), name="received_payments"),
+    path('view_appointment/', AppointmentView.as_view(), name="appointment")
 ]

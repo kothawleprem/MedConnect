@@ -25,8 +25,9 @@ const AddPackage = () => {
     console.log(formData)
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/lab/package/",
-        formData, config
+        `http://${process.env.REACT_APP_API_URL}/api/lab/package/`,
+        formData,
+        config
       );
       console.log(response.data);
       if (response.status === 201) {

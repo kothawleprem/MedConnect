@@ -1,10 +1,12 @@
 
 import React, {useState,useEffect} from 'react'
 import axios from 'axios';
-import {Card, Table, Container, Row, Col } from "react-bootstrap"
+import {Card, Table, Container, Row, Col, Button } from "react-bootstrap"
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const Appointments = () => {
     const [appointments,setAppointments] = useState([])
+    const navigate = useNavigate()
 
 
     useEffect(() => {
@@ -17,7 +19,7 @@ const Appointments = () => {
       };
       axios
         .get(
-          `http://localhost:8000/api/lab/lab_appointments/`,
+          `http://${process.env.REACT_APP_API_URL}/api/lab/lab_appointments/`,
           config
         )
         .then(function (response) {
@@ -33,11 +35,11 @@ const Appointments = () => {
         return (
           <tr key={appointment.id}>
             <td>{appointment.id}</td>
-            <td>{appointment.date}</td>
             <td>{appointment.package_id}</td>
+            <td>{appointment.date}</td>
             <td>{appointment.package_name}</td>
             <td>{appointment.patient_email}</td>
-            <td>View</td>
+            <td><Button onClick={() => {navigate("/viewappointment", { state: {appointment_id: appointment.id}})}}>View</Button></td>
           </tr>
         );
       });

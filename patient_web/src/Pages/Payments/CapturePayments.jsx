@@ -31,7 +31,7 @@ const CapturePayments = () => {
 
     axios
       .post(
-        `http://localhost:8000/api/lab/lab_confirm_payment/`,
+        `http://${process.env.REACT_APP_API_URL}/api/lab/lab_confirm_payment/`,
         data,
         config
       )

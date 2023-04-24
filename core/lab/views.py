@@ -375,3 +375,32 @@ class LabDashPayments(APIView):
             }
             response.append(res)
         return Response(response, status=status.HTTP_200_OK)
+
+class AppointmentView(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self,request):
+        appointment_id = request.GET["appointment_id"]
+        appointment = AppointmentModel.objects.get(id=appointment_id)
+        res = {
+            "id": appointment.id,
+            "package_id": appointment.package.id,
+            "package_name": appointment.package.name,
+            "patient_email": appointment.patient.user.email,
+            "report": appointment.report,
+            "status": appointment.status,
+            "date": "25-04-2023",
+        }
+        return Response(res, status=status.HTTP_200_OK)
+
+    def patch(self, request):
+        appointment_id = request.data.get("appointment_id")
+        report = request.data.get("report")
+        status_ = request.data.get("status")
+        print(report, status_)
+        appointment = AppointmentModel.objects.get(id=appointment_id)
+        appointment.report = report
+        appointment.status = status_
+        appointment.save()
+        return Response("ok", status=status.HTTP_202_ACCEPTED)

@@ -21,7 +21,7 @@ import io from "socket.io-client";
 import "./video.css";
 import { Grid } from "@mui/material";
 
-  const socket = io.connect("http://192.168.0.103:5000");
+  const socket = io.connect("http://192.168.248.88:5000");
 
 
 const Video = () => {

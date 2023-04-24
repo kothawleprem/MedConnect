@@ -1,14 +1,21 @@
 import React, { useState ,useEffect} from "react";
 import { Card, Button ,Modal,Row,Col } from "react-bootstrap";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 
 const CardList = ({ data }) => {
 
     const [selectedCard, setSelectedCard] = useState(null);
+    const navigate = useNavigate()
 
     const handleCardClick = (item) => {
-        setSelectedCard(item);
+      console.log(item.doctor_id)
+        navigate("/adminFormView", {
+          state: {
+            doctor_id: item.doctor_id,
+          },
+        });
       };
     
       const handleCloseModal = () => {
@@ -66,7 +73,7 @@ const CardList = ({ data }) => {
             </Card.Body>
           </Card>
         ))}
-        <Modal
+        {/* <Modal
           show={selectedCard !== null}
           onHide={handleCloseModal}
           size="lg"
@@ -126,7 +133,7 @@ const CardList = ({ data }) => {
               </>
             )}
           </Modal.Body>
-        </Modal>
+        </Modal> */}
       </div>
     </>
   );

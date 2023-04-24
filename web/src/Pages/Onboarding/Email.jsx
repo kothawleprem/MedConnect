@@ -71,44 +71,47 @@ const Email = () => {
           email: email["email"],
         };
 
-      // axios
-      //   .post("http://127.0.0.1:8000/api/doctors/email/", data, config)
-      //   .then((response) => {
-      //     console.log(response.data);
-      //     navigate("/otp", {
-      //       state: {
-      //         email: email["email"],
-      //       },
-      //     });
-      //   })
-      //   .catch((error) => console.log(error));
+        // axios
+        //   .post("http://${process.env.REACT_APP_API_URL}/api/doctors/email/", data, config)
+        //   .then((response) => {
+        //     console.log(response.data);
+        //     navigate("/otp", {
+        //       state: {
+        //         email: email["email"],
+        //       },
+        //     });
+        //   })
+        //   .catch((error) => console.log(error));
 
-      fetch(`http://${process.env.REACT_APP_API_URL}/api/doctors/email/`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          // add any additional headers here, such as authorization tokens
-        },
-        body: JSON.stringify(data),
-      })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
-          return response.json();
+        fetch(`http://${process.env.REACT_APP_API_URL}/api/doctors/email/`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            // add any additional headers here, such as authorization tokens
+          },
+          body: JSON.stringify(data),
         })
-        .then((data) => {
-          console.log(data);
-          navigate("/otp", {
-            state: {
-              email: email["email"],
-            },
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            console.log(data);
+            navigate("/otp", {
+              state: {
+                email: email["email"],
+              },
+            });
+          })
+          .catch((error) => {
+            console.error(
+              "There was a problem with the fetch operation:",
+              error
+            );
           });
-        })
-        .catch((error) => {
-          console.error("There was a problem with the fetch operation:", error);
-        });
-    }
+      }
   };
   return (
     <>

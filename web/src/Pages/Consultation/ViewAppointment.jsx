@@ -68,7 +68,11 @@ export default function ViewAppointment() {
       remarks: remarks,
     };
     axios
-      .patch(`http://127.0.0.1:8000/api/consultation/slot/`, data, config)
+      .patch(
+        `http://${process.env.REACT_APP_API_URL}/api/consultation/slot/`,
+        data,
+        config
+      )
       .then((response) => {
         console.log(response.status);
         if (response.status === 202) {

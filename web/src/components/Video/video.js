@@ -19,7 +19,7 @@ import { Grid } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import "./video.css";
-const socket = io.connect("http://192.168.0.103:5000");
+const socket = io.connect("http://192.168.248.88:5000");
 
 const Video = () => {
   const { state } = useLocation();

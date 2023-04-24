@@ -27,7 +27,7 @@ function Packageview() {
     useEffect(() => {
         axios
           .get(
-            `http://127.0.0.1:8000/api/lab/labs_package/?labid=${labId}`
+            `http://${process.env.REACT_APP_API_URL}/api/lab/labs_package/?labid=${labId}`
             //   config
           )
           .then((response) => {

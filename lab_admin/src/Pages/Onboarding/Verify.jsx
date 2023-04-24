@@ -25,7 +25,6 @@ const Verify = () => {
       console.log(OTP)
     }
     const handleSubmit = (e) => {
-      
       e.preventDefault();
       console.log("clicked");
       if (OTP.length === 0) {
@@ -40,21 +39,20 @@ const Verify = () => {
           theme: "light",
         });
         navigate("/otp", {
-            state: {
-              email: email,
-            },
-          });
-      } 
-      else {
+          state: {
+            email: email,
+          },
+        });
+      } else {
         const data = {
           email: email,
-          otp: OTP
+          otp: OTP,
         };
 
         const config = {
           headers: {
-            'Content-Type': 'application/json',
-          }
+            "Content-Type": "application/json",
+          },
         };
 
         axios
@@ -113,72 +111,69 @@ const Verify = () => {
             }
           })
           .catch((error) => console.log(error));
-
-
       }
 
-        //  fetch(`http://127.0.0.1:8000/api/doctors/verify_email/`, {
-        //    method: "POST",
-        //    headers: {
-        //      Accept: "application/json",
-        //      "Content-Type": "application/json",
-        //    },
-        //    body: JSON.stringify(res),
-        //  }).then(async (response) => {
-        //    const res = await response.json();
-        //    status = response.status;
-        //    console.log("status", status);
-        //    if (status === 200) {
-        //      var token = res["token"];
-        //      // console.log(token)
-        //      localStorage.setItem("email", email);
-        //      localStorage.setItem("token", token);
-        //      var verified = res["verified"]
-        //      var hasReq = res["hasReq"]
-        //     if (verified === false){
-        //       if( hasReq === 0){
-        //         navigate("/dcform", {
-        //           state: {
-        //             email: email,
-        //           },
-        //         });
-        //       }
-        //       else{
-        //         navigate("/status", {
-        //           state: {
-        //             email: email,
-        //           },
-        //         });
-        //       }
-        //     }
-        //     else{
-        //       navigate("/scheduling", {
-        //         state: {
-        //           email: email,
-        //         },
-        //       });
-        //     }
-        //    } else {
-        //      console.log("incorrect otp");
-        //      toast.warn("Incorrect OTP!", {
-        //        position: "top-right",
-        //        autoClose: 5000,
-        //        hideProgressBar: false,
-        //        closeOnClick: true,
-        //        pauseOnHover: true,
-        //        draggable: true,
-        //        progress: undefined,
-        //        theme: "dark",
-        //      });
-        //      navigate("/verify", {
-        //        state: {
-        //          email: email,
-        //        },
-        //      });
-        //    }
-        //  });
-         
-     };
+      //  fetch(`http://${process.env.REACT_APP_API_URL}/api/doctors/verify_email/`, {
+      //    method: "POST",
+      //    headers: {
+      //      Accept: "application/json",
+      //      "Content-Type": "application/json",
+      //    },
+      //    body: JSON.stringify(res),
+      //  }).then(async (response) => {
+      //    const res = await response.json();
+      //    status = response.status;
+      //    console.log("status", status);
+      //    if (status === 200) {
+      //      var token = res["token"];
+      //      // console.log(token)
+      //      localStorage.setItem("email", email);
+      //      localStorage.setItem("token", token);
+      //      var verified = res["verified"]
+      //      var hasReq = res["hasReq"]
+      //     if (verified === false){
+      //       if( hasReq === 0){
+      //         navigate("/dcform", {
+      //           state: {
+      //             email: email,
+      //           },
+      //         });
+      //       }
+      //       else{
+      //         navigate("/status", {
+      //           state: {
+      //             email: email,
+      //           },
+      //         });
+      //       }
+      //     }
+      //     else{
+      //       navigate("/scheduling", {
+      //         state: {
+      //           email: email,
+      //         },
+      //       });
+      //     }
+      //    } else {
+      //      console.log("incorrect otp");
+      //      toast.warn("Incorrect OTP!", {
+      //        position: "top-right",
+      //        autoClose: 5000,
+      //        hideProgressBar: false,
+      //        closeOnClick: true,
+      //        pauseOnHover: true,
+      //        draggable: true,
+      //        progress: undefined,
+      //        theme: "dark",
+      //      });
+      //      navigate("/verify", {
+      //        state: {
+      //          email: email,
+      //        },
+      //      });
+      //    }
+      //  });
+    };
   return (
     <>
            <Header />

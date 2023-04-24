@@ -344,17 +344,17 @@ class PrescriptionView(APIView):
         logo_path = "https://raw.githubusercontent.com/kothawleprem/MedConnect/main/templates/medconnect_logo.jpg"
         rx_path = "https://raw.githubusercontent.com/kothawleprem/MedConnect/main/templates/rx_logo.jpg"
         print("list",med_list)
-        # filename = generate_prescription(patient_name, doctor_name, med_list, logo_path, rx_path, doctor_signature,
-        #                                  prescription_no,
-        #                                  consultation_id, doctor_email, medconnect_id, reg_no, doctor_location,
-        #                                  consultation.patient.id,
-        #                                  patient_location, date, remarks, doctor_title)
-        # print(filename)
-        # email_prescription(patient_profile.patient.user.email, patient_profile.first_name, doctor_profile.name,
-        #                    "http://127.0.0.1:8000/media/" + filename)
-        # rx = PrescriptionModel.objects.get(id=prescription_no)
-        # rx.prescription_file = "http://0.0.0.0:8000/media/" + filename
-        # rx.save()
+        filename = generate_prescription(patient_name, doctor_name, med_list, logo_path, rx_path, doctor_signature,
+                                         prescription_no,
+                                         consultation_id, doctor_email, medconnect_id, reg_no, doctor_location,
+                                         consultation.patient.id,
+                                         patient_location, date, remarks, doctor_title)
+        print(filename)
+        email_prescription(patient_profile.patient.user.email, patient_profile.first_name, doctor_profile.name,
+                           "http://192.168.248.88:8000/media/" + filename)
+        rx = PrescriptionModel.objects.get(id=prescription_no)
+        rx.prescription_file = "http://192.168.248.88:8000/media/" + filename
+        rx.save()
         consultation.completed = True
         consultation.save()
         # print(consultation_id, doctor_id, patient_id, medicine_list, remarks)

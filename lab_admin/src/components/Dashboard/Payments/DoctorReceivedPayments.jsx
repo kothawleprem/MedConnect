@@ -16,7 +16,7 @@ const DoctorReceivedPayments = () => {
     };
     axios
       .get(
-        `http://localhost:8000/api/lab/received_payments/`,
+        `http://${process.env.REACT_APP_API_URL}/api/lab/received_payments/`,
         config
       )
       .then(function (response) {

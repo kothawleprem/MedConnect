@@ -85,14 +85,14 @@ const AllSlots = () => {
           setTodaySlots(data[0]);
           setTommorowSlots(data[1]);
         });
-        // fetch(
-        //   `http://127.0.0.1:8000/api/consultation/slot_list/?doctor_id=3&date=2023-01-26`
-        // ).then(async (response) => {
-        //   const result = await response.json();
-        //   console.log(result)
-        //   setTodaySlots(result[0]);
-        //   setTommorowSlots(result[1])
-        // });
+      // fetch(
+      //   `http://${process.env.REACT_APP_API_URL}/api/consultation/slot_list/?doctor_id=3&date=2023-01-26`
+      // ).then(async (response) => {
+      //   const result = await response.json();
+      //   console.log(result)
+      //   setTodaySlots(result[0]);
+      //   setTommorowSlots(result[1])
+      // });
     },[])
   return (
     <>

@@ -36,34 +36,33 @@ class AdminDoctorVerificationListView(APIView):
         response = []
 
         for r in requests:
-            status_ = VerificationStatusModel.objects.get(id=r['status_id'])
+            status_ = r['status']
             doctor_profile = DoctorProfileModel.objects.get(id=r['doctor_id'])
-            print(required_status.upper(), status_.status)
-            if (required_status.upper() == 'PENDING' and status_.status == 'PENDING'):
+            if (required_status.upper() == 'PENDING' and status_ == 'PENDING'):
                 res = {
                     "request_id": r['id'],
                     "doctor_id": r['doctor_id'],
                     "doctor_name": doctor_profile.name,
                     "email": doctor_profile.doctor.user.email,
-                    "status": status_.status
+                    "status": status_
                 }
                 response.append(res)
-            if (required_status.upper() == 'ACCEPTED' and status_.status == 'ACCEPTED'):
+            if (required_status.upper() == 'ACCEPTED' and status_ == 'ACCEPTED'):
                 res = {
                     "request_id": r['id'],
                     "doctor_id": r['doctor_id'],
                     "doctor_name": doctor_profile.name,
                     "email": doctor_profile.doctor.user.email,
-                    "status": status_.status
+                    "status": status_
                 }
                 response.append(res)
-            if (required_status.upper() == 'REJECTED' and status_.status == 'REJECTED'):
+            if (required_status.upper() == 'REJECTED' and status_ == 'REJECTED'):
                 res = {
                     "request_id": r['id'],
                     "doctor_id": r['doctor_id'],
                     "doctor_name": doctor_profile.name,
                     "email": doctor_profile.doctor.user.email,
-                    "status": status_.status
+                    "status": status_
                 }
                 response.append(res)
             if (required_status.upper() == "ALL"):
@@ -72,7 +71,7 @@ class AdminDoctorVerificationListView(APIView):
                     "doctor_id": r['doctor_id'],
                     "doctor_name": doctor_profile.name,
                     "email": doctor_profile.doctor.user.email,
-                    "status": status_.status
+                    "status": status_
                 }
                 response.append(res)
         return Response(response, status=status.HTTP_200_OK)
@@ -171,7 +170,31 @@ class DoctorPayoutListView(APIView):
                 response.append(res)
         return Response(response, status=status.HTTP_200_OK)
 
+class DoctorFormView(APIView):
 
+    def get(self, request):
+        doctor_id = request.GET["doctor_id"]
+        doctor_profile = DoctorProfileModel.objects.get(doctor__id=doctor_id)
+        response = {
+            'name': doctor_profile.name,
+            'description': doctor_profile.description,
+            'city': doctor_profile.city,
+            'reg_no': doctor_profile.reg_no,
+            'signature': doctor_profile.signature,
+            'state': doctor_profile.state,
+            'files': doctor_profile.files,
+            'video': doctor_profile.video,
+            'specialization': doctor_profile.specialization.name,
+            'qualification': doctor_profile.qualification,
+            'dob': doctor_profile.dob,
+            'gender': doctor_profile.gender,
+            'photo': doctor_profile.photo,
+            'phone': doctor_profile.phone,
+            'address': doctor_profile.address,
+            'pincode': doctor_profile.pincode,
+        }
+        # TODO SERIALIZED OUTPUT
+        return Response(response, status=status.HTTP_200_OK)
 
 
 

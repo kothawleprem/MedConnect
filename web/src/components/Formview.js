@@ -63,8 +63,7 @@ const Formview = () => {
             const data = response.data
             updateFormData({
               ...formData,
-              fname: data.first_name,
-              lname: data.last_name,
+              name: data.name,
               gender: data.gender,
               dob: data.dob,
               mob_no: data.phone,

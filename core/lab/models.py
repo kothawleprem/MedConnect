@@ -36,6 +36,7 @@ class AppointmentModel(models.Model):
     package = models.ForeignKey(PackageModel, models.CASCADE)
     patient = models.ForeignKey(PatientModel, models.CASCADE)
     report = models.URLField(null=True)
+    status = models.CharField(max_length=255, default="APPROVED")
     payment_completed = models.BooleanField(default=False)
     completed = models.BooleanField(default=False)
     canceled = models.BooleanField(default=False)

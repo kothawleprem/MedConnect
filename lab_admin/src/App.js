@@ -9,6 +9,7 @@ import LabForm from './components/LabForm';
 import Addpackage from './Pages/Package/Addpackage';
 import Status from './components/Status';
 import Dashboard from './Pages/Dashboard/dashboard';
+import ViewAppointment from './Pages/Package/ViewAppointment';
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
 
 
       <Route path="/addpackage" element={<Addpackage />} />
+      <Route path="/viewappointment" element={<ViewAppointment/>}/>
 
 
     </Routes>

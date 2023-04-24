@@ -20,14 +20,11 @@ export default function Payments() {
 
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads
-    fetch(
-      `http://localhost:8000/api/lab/payments/`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ amount: amount }),
-      }
-    )
+    fetch(`http://${process.env.REACT_APP_API_URL}/api/lab/payments/`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ amount: amount }),
+    })
       .then((res) => res.json())
       .then((data) => setClientSecret(data.clientSecret));
   }, []);

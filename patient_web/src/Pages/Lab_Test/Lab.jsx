@@ -13,15 +13,12 @@ export default function Lab() {
 
   useEffect(() => {
       axios
-      .get(
-        `http://127.0.0.1:8000/api/lab/view_labs`,
-      )
-      .then((response) => {
-        console.log(response.data);
-        setData(response.data)
-
-      })
-      .catch((error) => console.log(error));
+        .get(`http://${process.env.REACT_APP_API_URL}/api/lab/view_labs`)
+        .then((response) => {
+          console.log(response.data);
+          setData(response.data);
+        })
+        .catch((error) => console.log(error));
 
   }, [])
 

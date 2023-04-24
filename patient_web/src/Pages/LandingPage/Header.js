@@ -47,7 +47,7 @@ export default function Header() {
                                 
                            
                             </ul> 
-                          <Link style={{ textDecoration: 'none' }} to="/email" >   <p className="main-btn btn-lg">Login</p>  </Link> 
+                          {/* <Link style={{ textDecoration: 'none' }} to="/email" >   <p className="main-btn btn-lg">Login</p>  </Link>  */}
                         </div>
                     </nav> 
                 </div>
