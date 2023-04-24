@@ -24,7 +24,7 @@ function Scheduling() {
             <br/>
             <br/>
             <br/>
-            <h2>All Slots for the Day</h2>
+            <h4>All Slots for the Day</h4>
             <AllSlots/>
           </Col>
         </Row>
