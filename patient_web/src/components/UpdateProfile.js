@@ -6,56 +6,48 @@ import axios from 'axios';
 
 const UpdateProfile = () => {
   const [showModal, setShowModal] = useState(false);
-  const [user, setUser] = useState("");
 
-  const [firstName, setFirstName] = useState(user.firstName);
-  const [lastName, setLastName] = useState(user.lastName);
-  const [city, setCity] = useState(user.city);
-  const [mobileNo, setMobileNo] = useState(user.mobileNo);
+  const [firstName, setFirstName] = useState();
+  const [lastName, setLastName] = useState();
+  const [city, setCity] = useState();
+  const [mobileNo, setMobileNo] = useState();
 
   const handleClose = () => setShowModal(false);
   const handleShow = () => setShowModal(true);
 
-  useEffect(() => {
-    const patient_token = localStorage.getItem("patient_token");
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    const data = {
+      f_name:firstName,
+      l_name:lastName,
+      city:city,
+      mobile_no:mobileNo
+
+    };
+
+    const token = localStorage.getItem("token")
     const config = {
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Token ${patient_token}`,
+        "Authorization": `Token ${token}`
       },
     };
+
     axios
-      .get(
-        // `http://${process.env.REACT_APP_API_URL}/api/patients/manage_consultations`,
-        config
-      )
-      .then(function (response) {
-        const data = response.data;
-        setUser(data);
-        console.log(data);
-      });
-  }, []);
-
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    try {
-      const response = await axios.put(
-        // `https://example.com/api/users/${user.id}`,
-        {
-          firstName,
-          lastName,
-          city,
-          mobileNo,
+      .post(`http://${process.env.REACT_APP_API_URL}/api/paitent/profile/`, data, config)
+      .then((response) => {
+        console.log(response.data);
+        if (response.status === 201) {
+           console.log("profile updated");
+           setShowModal(false);
         }
-      );
-      console.log(response.data);
-      setShowModal(false);
-    } catch (error) {
-      console.error(error);
-    }
+      })
+      .catch((error) => console.log(error));
+
   };
+
+
+
 
   return (
     <>

@@ -99,9 +99,11 @@ const Profile = () => {
 
                 {/* <Card.Title style={{ fontSize: '30px', fontWeight: 600, color: '#4365CD' }}>VIDEO</Card.Title> */}
 
-                <video width="550" height="300" controls >
-                  <source src={'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'} type="video/mp4" />
-                </video>
+                {/* <video width="550" height="300" controls >
+                  <source src={'https://drive.google.com/file/d/1HJv69WOCbTW9qngB2vzuSrTCn8_FHAdZ/preview'} type="video/mp4" />
+                </video> */}
+
+                <iframe src="https://drive.google.com/file/d/1HJv69WOCbTW9qngB2vzuSrTCn8_FHAdZ/preview" width="550" height="300" allow="autoplay"></iframe>
               </Card.Body>
             </Card>
        
